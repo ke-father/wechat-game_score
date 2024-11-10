@@ -1,19 +1,21 @@
+import DataManager from "../global/DataManager";
+
 Component({
   data: {
     selected: 0,
     footerList: [
       {
-        pagePath: "/pages/index",
+        pagePath: "/pages/index/index",
         iconName: "home",
         text: "比赛"
       },
       {
-        pagePath: "/pages/index",
+        pagePath: "/pages/record/index",
         iconName: "record",
         text: "记录"
       },
       {
-        pagePath: "/pages/index",
+        pagePath: "/pages/me/index",
         iconName: "me",
         text: "我的"
       }
@@ -21,16 +23,26 @@ Component({
   },
 
   methods: {
-    async tabItemTap (e: { target: { dataset: { pagePath: string, index: number } } }) {
-      console.log(e)
-      const data = e.target.dataset
-      const url = data.pagePath
+    getDataManager () {
+      console.log(DataManager.Instance.tabbar)
+      return DataManager.Instance.tabbar
+    },
 
-      await wx.switchTab({ url })
+    async tabItemTap (e: { currentTarget: { dataset: { path: string, index: number } } }) {
+      // 获取绑定的数据
+      const data = e.currentTarget.dataset
+      const { path: url, index: newIndex } = data
+      const oldIndex = this.data.selected
 
-      this.setData({
-        selected: data.index
-      })
+     try {
+       DataManager.Instance.tabbar = newIndex
+       // 切换
+       await wx.switchTab({
+         url,
+       })
+     } catch (e) {
+       DataManager.Instance.tabbar = oldIndex
+     }
     }
   },
 

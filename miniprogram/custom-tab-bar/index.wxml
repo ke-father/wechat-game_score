@@ -1,7 +1,4 @@
 <view class="footer-tab-bar">
-    <!--  分割线-->
-    <view class="footer-tab-bar--parting-line"></view>
-
     <!--  脚部button-->
     <view wx:for="{{footerList}}" wx:key="index" data-path="{{item.pagePath}}"
           data-index="{{index}}" bindtap="tabItemTap"

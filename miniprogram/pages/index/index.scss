@@ -1,6 +1,22 @@
-/**index.scss**/
-page {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
+@import "../../styles/variables";
+
+.home {
+  &-content {
+    padding: 0 $--gap-size 0;
+    display: flex;
+    flex-direction: column;
+    gap: $--gap-size;
+  }
+
+  &-search-box {
+    padding: 0;
+    height: 80rpx;
+    border-radius: 40rpx;
+    overflow: hidden;
+  }
+
+  &-current {
+
+    background: white;
+  }
 }

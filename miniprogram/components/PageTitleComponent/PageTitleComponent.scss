@@ -1,0 +1,24 @@
+.page-title {
+  margin-bottom: 16rpx;
+  padding-top: 40rpx;
+  background: white;
+
+  &-content {
+    gap: 20rpx;
+    padding: 0 20rpx;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 80rpx;
+
+    &--title {
+      font-size: 32rpx;
+      color: #333333;
+    }
+
+    &--subtitle {
+      font-size: 22rpx;
+      color: #777;
+    }
+  }
+}

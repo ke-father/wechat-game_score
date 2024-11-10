@@ -1,4 +1,4 @@
-//tab-bar
-$--tab-bar-text-normal-color: #7A7E83;
-$--tab-bar-text-active-color: #3cc51f;
-$--tab-bar-parting-line-color: #7A7E83;
+@import "./tabbarVariables";
+
+
+$--gap-size: 16rpx;

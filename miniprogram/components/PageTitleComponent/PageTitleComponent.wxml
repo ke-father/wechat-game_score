@@ -1,0 +1,7 @@
+<view class="page-title">
+    <view class="page-title-content">
+        <text class="page-title-content--title">{{ title }}</text>
+
+        <text class="page-title-content--subtitle">用于比赛计分，内容复盘等</text>
+    </view>
+</view>
