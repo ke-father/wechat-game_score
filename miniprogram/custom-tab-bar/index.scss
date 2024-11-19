@@ -9,8 +9,7 @@
   height: $--tab-bar-height;
   background: $--tab-bar-bg-color;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  justify-items: center;
+  grid-template-columns: repeat(2, 1fr);
   padding-bottom: env(safe-area-inset-bottom);
 
   &-item {

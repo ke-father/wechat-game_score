@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "page-title": "/components/PageTitleComponent/PageTitleComponent",
+    "page-card": "/components/CardComponent/CardComponent"
+  }
+}

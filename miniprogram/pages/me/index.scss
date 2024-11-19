@@ -4,3 +4,26 @@ page {
   display: flex;
   flex-direction: column;
 }
+
+.me {
+  .page-title {
+    box-sizing: border-box;
+    background: linear-gradient(to bottom, rgba(255,140,0,1), rgba(255,255,255,0));
+    height: 300rpx;
+    padding: 150rpx 40rpx 0;
+
+    .user {
+      display: grid;
+      grid-template-columns: 100rpx 1fr;
+      gap: 40rpx;
+      align-items: center;
+
+      &-avatar {
+        width: 110rpx;
+        height: 110rpx;
+        border-radius: 50%;
+        box-shadow: 0 0 10rpx 2rpx rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+}

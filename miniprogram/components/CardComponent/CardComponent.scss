@@ -1,0 +1,16 @@
+.card {
+  background: white;
+  box-shadow: 0 3px 10px 0 rgba(238,238,238,.5);
+  padding: 30rpx;
+  border-radius: 20rpx;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 200rpx 1fr;
+
+  &-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+  }
+}

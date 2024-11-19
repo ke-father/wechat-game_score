@@ -1,0 +1,10 @@
+<!--avatar-->
+<view name="avatar-component" class="avatar {{ showPosition === 'left' ? 'avatar-left' : 'avatar-right' }}">
+    <image wx:if="{{ showPosition === 'left' }}" src="{{ avatarUrl }}"></image>
+<!--    <slot name="avatar"></slot>-->
+
+    <text wx:if="{{ showNickname }}">{{ nickname }}</text>
+<!--    <slot name="nickname"></slot>-->
+
+    <image wx:if="{{ showPosition === 'right' }}" src="{{ avatarUrl }}"></image>
+</view>

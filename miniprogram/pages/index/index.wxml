@@ -5,24 +5,29 @@
 
     <view class="home-content">
         <!--    搜索框-->
-        <mp-searchbar placeholder="请输入想要创建的比赛类型" ext-class="home-search-box" cancel="{{false}}"></mp-searchbar>
+        <mp-searchbar placeholder="请输入想要创建的比赛类型" ext-class="home-search-box"
+                      cancel="{{false}}"></mp-searchbar>
 
         <!--    是否有正在比赛的内容-->
-        <view wx:if="{{currentGameStatus}}" class="home-current">
-            <text>当前正在比赛的内容</text>
+        <view wx:if="{{currentGameStatus}}" class="home-gaming">
+<!--            动态模板-->
+            <category-basketball></category-basketball>
         </view>
 
         <!--    可以用于创建的比赛-->
         <view class="home-create">
             <!--        比赛分类-->
-            <view class="home-create-game--category">
-                <text>比赛分类</text>
+            <view class="home-create-category">
+                <mp-tabbar ext-class="home-create-category-tabs" current="{{currentCreateType}}" bindchange="handleChangeCreateType" list="{{ categoryList }}"></mp-tabbar>
             </view>
 
             <!--        比赛列表-->
-            <view class="home-create-game--list">
-                <view>
-                </view>
+            <view class="home-create-category-list">
+                <scroll-view class="home-create-category-list" scroll-y="true" bindchange="{{handleChangeCreateType}}">
+                    <view class="home-create-category-list-item" wx:for="{{currentCreateTypes[currentCategoryId]}}" wx:key="categoryId" wx:for-item="item">
+                        <text>{{ item.name }}</text>
+                    </view>
+                </scroll-view>
             </view>
         </view>
     </view>

@@ -1,11 +1,17 @@
 @import "../../styles/variables";
 
 .home {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
   &-content {
-    padding: 0 $--gap-size 0;
+    flex: 1;
+    height: 0;
+    padding: 0 $gap-size 0;
     display: flex;
     flex-direction: column;
-    gap: $--gap-size;
+    gap: $gap-size;
   }
 
   &-search-box {
@@ -15,8 +21,74 @@
     overflow: hidden;
   }
 
-  &-current {
-
+  &-gaming {
     background: white;
+    height: 320rpx;
+  }
+
+  &-create {
+    flex: 1;
+    height: 0;
+    display: flex;
+    flex-direction: column;
+
+    &-category {
+      padding: 0 30rpx;
+      background: white;
+      box-shadow: 0 3px 10px 0 rgba(238,238,238,.5);
+      z-index: 1;
+
+      &-tabs {
+        background: white;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        display: flex;
+        gap: 40rpx;
+      }
+
+      &-list {
+        overflow-y: scroll;
+
+        &-item {
+          margin-top: 1px;
+          padding: 30rpx 30rpx;
+          background: white;
+        }
+      }
+
+      .weui-tabbar__item {
+        padding: 16rpx 0;
+        white-space: nowrap;
+      }
+
+      .weui-bar__item_on {
+        position: relative;
+
+        .weui-tabbar__label {
+          color: #409eff;
+          display: grid;
+          gap: 4rpx;
+
+          &::after {
+            margin: 0 auto;
+            content: '';
+            display: block;
+            width: 40rpx;
+            height: 4rpx;
+            background: radial-gradient(circle 20px at center, #409eff, rgba(255, 255, 255, 0.2));
+            border-radius: 2rpx;
+          }
+        }
+      }
+
+      .weui-tabbar__icon {
+        display: none;
+      }
+
+      .weui-tabbar__label {
+        padding: 16rpx 0;
+        font-size: 28rpx;
+      }
+    }
   }
 }

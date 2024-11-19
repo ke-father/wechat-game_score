@@ -1,4 +1,21 @@
 <!--index.wxml-->
-<view>
-  <text>我的</text>
+<view class="me">
+  <!--  页面title-->
+  <view class="page-title">
+    <view class="user">
+      <image class="user-avatar" src="/assets/images/dog.jpg" mode="scaleToFill"></image>
+
+      <text class="user-name">请点击登录</text>
+    </view>
+  </view>
+
+<!--  比赛内容-->
+  <view class="game-content">
+
+    <page-card>
+    </page-card>
+
+    <page-card>
+    </page-card>
+  </view>
 </view>

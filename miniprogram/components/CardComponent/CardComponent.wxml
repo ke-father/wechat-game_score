@@ -1,0 +1,12 @@
+<view class="card">
+    <view class="card-header">
+        <text class="card-header-title">我是标题</text>
+
+<!--        <slot name="header"></slot>-->
+        <text class="card-header-subtitle">这里是更多></text>
+    </view>
+
+    <view class="card-content">
+        <slot name="content"></slot>
+    </view>
+</view>

@@ -1,0 +1,73 @@
+.gaming {
+  &-content {
+    height: 320rpx;
+    display: grid;
+    grid-template-columns: 1fr 150rpx 1fr;
+    justify-content: center;
+    align-items: center;
+
+    &-item {
+      height: 100%;
+      display: grid;
+      grid-template-rows: 100rpx 220rpx;
+
+      & > text {
+        text-align: center;
+        font-size: 100rpx;
+        font-weight: 700;
+      }
+    }
+
+    &--separator {
+      height: 100%;
+      display: grid;
+      grid-template-rows: 100rpx 220rpx;
+      position: relative;
+
+      &-line {
+        //height: 100rpx;
+      }
+
+      image {
+        height: 100%;
+        width: 100%;
+      }
+
+      &-logo::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle 40px at 50% 60%, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+        /* 上面这行代码的含义：以中心为圆心（circle at center）创建径向渐变，
+        圆心处颜色是不透明的白色（rgba(255, 255, 255, 1)），到最外层变为完全透明（rgba(255, 255, 255, 0)） */
+        pointer-events: none; /* 确保伪元素不会拦截图片的交互事件，比如点击等 */
+        z-index: 1; /* 让伪元素在图片之上，以实现覆盖效果 */
+      }
+    }
+  }
+
+  &-info {
+    z-index: 2;
+    width: 100%;
+    position: absolute;
+    top: 10%;
+    gap: 30rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+
+    &--quarter {
+      font-size: 50rpx;
+      font-weight: 700;
+    }
+
+    &--time {
+      font-size: 50rpx;
+    }
+  }
+}

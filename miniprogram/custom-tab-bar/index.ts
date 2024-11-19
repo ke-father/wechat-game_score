@@ -14,11 +14,11 @@ Component({
         iconName: "record",
         text: "记录"
       },
-      {
-        pagePath: "/pages/me/index",
-        iconName: "me",
-        text: "我的"
-      }
+      // {
+      //   pagePath: "/pages/me/index",
+      //   iconName: "me",
+      //   text: "我的"
+      // }
     ]
   },
 

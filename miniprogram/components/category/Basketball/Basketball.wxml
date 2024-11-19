@@ -1,0 +1,30 @@
+<view class="gaming-content">
+    <!--                主场队伍-->
+    <view class="gaming-content-item gaming-content--homeTeam">
+        <avatar-component nickname="{{ homeTeam.name }}" avatarUrl="{{ homeTeam.avatarUrl }}"></avatar-component>
+
+        <text>{{ homeTeam.score }}</text>
+    </view>
+
+    <!--                分割-->
+    <view class="gaming-content--separator">
+        <view class="gaming-content--separator-line" />
+
+        <!--                    中间的比赛类型logo-->
+        <image class="gaming-content--separator-logo" src="/assets/images/basketBallTeam/basketBall_logo.png"></image>
+
+        <!--                    比赛信息-->
+        <view class="gaming-info">
+            <text class="gaming-info--quarter">{{ quarter }}</text>
+
+            <text class="gaming-info--time">{{ time }}</text>
+        </view>
+    </view>
+
+    <!--                客场队伍-->
+    <view class="gaming-content-item gaming-content--homeTeam">
+        <avatar-component nickname="{{ awayTeam.name }}" avatarUrl="{{ awayTeam.avatarUrl }}" showPosition="right"></avatar-component>
+
+        <text>{{ awayTeam.score }}</text>
+    </view>
+</view>

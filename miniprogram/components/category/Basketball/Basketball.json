@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "avatar-component": "/components/AvatarComponent/AvatarComponent"
+  }
+}
