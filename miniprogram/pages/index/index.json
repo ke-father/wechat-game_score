@@ -3,6 +3,7 @@
     "page-title": "/components/PageTitleComponent/PageTitleComponent",
     "mp-searchbar": "weui-miniprogram/searchbar/searchbar",
     "mp-tabbar": "weui-miniprogram/tabbar/tabbar",
+    "mp-dialog": "weui-miniprogram/dialog/dialog",
     "category-basketball": "/components/category/Basketball/Basketball"
   }
 }

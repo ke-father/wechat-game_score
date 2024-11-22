@@ -21,13 +21,20 @@ type ICreateTypeList = Array<ICreateType>
  *
  */
 type IData = {
+  // 当前收否存在已关注比赛或正在进行的比赛内容
   currentGameStatus: boolean,
+  // 可创建比赛分类
   categoryList: Array<ICategory>,
+  // 当前选中的比赛分类
   currentCategoryId: number,
+  // 可创建比赛分类下的可创建比赛内容
   currentCreateTypes: {
     [key: number]: ICreateTypeList
   },
-  currentCreateType: number
+  // 选择创建的比赛内容
+  currentCreateType: number,
+  // 创建比赛提示登录控制弹框
+  showLoginDialog: boolean
 }
 
 /**
@@ -39,9 +46,16 @@ type IHandleChangeCreateType = {
   detail: { index: number, item: ICategory }
 }
 
+// 自定义方法
 type ICustom = {
+  // 关于 创建比赛tab栏的更改
   handleChangeCreateType: (event: IHandleChangeCreateType) => void
+  // 获取可创建比赛列表
   getCreateTypeList: (categoryId: number) => Promise<ICreateTypeList>
+  // 点击创建比赛
+  onCreateGameClick: (createGameInfo: number) => void
+  // 跳转比赛信息填写页面
+  skipCreateGamePage: () => void
 }
 
 Page<IData, ICustom>({
@@ -55,10 +69,27 @@ Page<IData, ICustom>({
     // 当前可用创建类型
     currentCreateTypes: {},
     // 当前激活的创建类型
-    currentCreateType: 0
+    currentCreateType: 0,
+    showLoginDialog: false
   },
 
-  // 关于 tab栏的更改
+  onCreateGameClick (createGameInfo: ICreateType) {
+    console.log(createGameInfo)
+    // TODO 校验登录状态
+    const loginStatus = DataManager.Instance.loginStatus
+    // TODO 已登录跳转比赛信息填写页面
+    if (loginStatus) return this.skipCreateGamePage()
+    // TODO 未登录拉起弹框询问是否使用登录服务
+    this.setData({
+      showLoginDialog: true
+    })
+  },
+
+  skipCreateGamePage () {
+    console.log('跳转比赛信息填写页面')
+  },
+
+
   async handleChangeCreateType({detail: {item}}) {
     const currentCategoryId = item.categoryId
 
@@ -68,10 +99,9 @@ Page<IData, ICustom>({
       currentCategoryId,
       currentCreateTypes: this.data.currentCreateTypes
     })
-
-    console.log(this.data.currentCreateTypes)
   },
 
+  // 获取可创建比赛列表
   async getCreateTypeList (categoryId) {
     // this.data.currentCategoryId = categoryId
     console.log(categoryId)
@@ -94,7 +124,6 @@ Page<IData, ICustom>({
   },
 
   async onLoad(){
-    console.log(DataManager.Instance.tabbar)
     // 更改footerBar状态
     this.getTabBar().setData({
       selected: DataManager.Instance.tabbar,
@@ -130,7 +159,5 @@ Page<IData, ICustom>({
       currentCategoryId,
       currentCreateTypes: this.data.currentCreateTypes
     })
-
-    console.log(this.data.currentCreateTypes)
   }
 })

@@ -13,6 +13,17 @@ class DataManager extends Singleton {
         return super.GetInstance<DataManager>();
     }
 
+    // 登录状态
+    #_loginStatus = false
+
+    get loginStatus() {
+        return this.#_loginStatus
+    }
+
+    set loginStatus(value) {
+        this.#_loginStatus = value
+    }
+
     // 会话key
     #_sessionKey = getStorage<string>(String(SESSION_KEY))
 
