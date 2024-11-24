@@ -24,7 +24,7 @@
             <!--        比赛列表-->
             <view class="home-create-category-list">
                 <scroll-view class="home-create-category-list" scroll-y="true" bindchange="{{handleChangeCreateType}}">
-                    <view class="home-create-category-list-item" wx:for="{{currentCreateTypes[currentCategoryId]}}" wx:key="categoryId" wx:for-item="item" bind:tap="onCreateGameClick">
+                    <view class="home-create-category-list-item" wx:for="{{currentCreateTypes[currentCategoryId]}}" wx:key="categoryId" wx:for-item="item" data-game-info="{{item}}" bind:tap="onCreateGameClick">
                         <text>{{ item.name }}</text>
                     </view>
                 </scroll-view>
@@ -32,16 +32,21 @@
         </view>
     </view>
 
-<!--    创建比赛提示弹框-->
-    <mp-dialog show="{{ showLoginDialog }}" mask-closable="{{false}}">
-<!--        提示-->
-        <view class="tips">
+    <dialog-component
+            openDialog="{{ showLoginDialog }}"
+            bind:closeDialog="listenDialogClose">
+        <view class="dialog-title" slot="title">
             <icon type="info" />
-            <text>不登录也可创建比赛内容，但无法获取关注过得比赛与创建过的比赛记录</text>
+            <text>是否登录以获取更多功能？</text>
         </view>
 
-        <view class="content">
-            是否登录以获取更多功能？
+        <view class="dialog-content" slot="content">
+            不登录也可创建比赛内容，但无法获取关注过得比赛与创建过的比赛记录
         </view>
-    </mp-dialog>
+
+        <view class="dialog-footer" slot="footer">
+            <button type="primary" bindtap="onLoginTipsDialogConfirm">登陆</button>
+            <button bindtap="onLoginTipsDialogCancel">不登录</button>
+        </view>
+    </dialog-component>
 </view>

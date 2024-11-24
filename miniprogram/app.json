@@ -2,7 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/record/index",
-    "pages/me/index"
+    "pages/me/index",
+    "pages/createGame/index",
+    "pages/runGame/index"
   ],
   "tabBar": {
     "custom": true,

@@ -1,22 +1,35 @@
 .page-title {
   margin-bottom: 16rpx;
-  padding-top: 40rpx;
-  background: white;
+  padding: 40rpx 20rpx;
+
+  .slot-content:empty + &-content {
+    display: flex;
+  }
 
   &-content {
     gap: 20rpx;
-    padding: 0 20rpx;
-    display: flex;
+    padding: 0;
+    display: none;
     justify-content: flex-start;
     align-items: center;
     height: 80rpx;
 
+    .slot-title:empty + &--title {
+      display: block;
+    }
+
     &--title {
+      display: none;
       font-size: 32rpx;
       color: #333333;
     }
 
+    .slot-subtitle:empty + &--subtitle {
+      display: block;
+    }
+
     &--subtitle {
+      display: none;
       font-size: 22rpx;
       color: #777;
     }

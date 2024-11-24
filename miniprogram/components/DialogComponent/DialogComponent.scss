@@ -1,0 +1,40 @@
+.common {
+  &-dialog {
+    .weui-dialog__hd {
+      padding:0;
+    }
+
+    .weui-dialog__bd  {
+      padding: 0;
+      margin-bottom: 0;
+    }
+
+    .weui-dialog__ft {}
+
+    &--main {
+      padding: 64rpx 48rpx;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20rpx
+    }
+
+    &--title {
+      width: 100%;
+      text-align: center;
+      font-size: 28rpx;
+      color: #333333;
+    }
+
+    &--content {
+      width: 100%;
+      color: #333333;
+      font-size: 32rpx;
+    }
+
+    &--footer {
+      margin-top: 40rpx;
+      width: 100%;
+    }
+  }
+}

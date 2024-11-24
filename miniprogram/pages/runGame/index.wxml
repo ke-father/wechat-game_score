@@ -1,0 +1,17 @@
+<view class="run-game">
+    <view class="run-game-title">
+        <!--            返回按钮-->
+        <mp-icon icon="back" size="12" bindtap="onBackClick"></mp-icon>
+
+        <!--            比赛logo-->
+        <image class="run-game-title--logo" src="../../assets/images/basketBallTeam/basketBall_logo.png"></image>
+
+        <!--            比赛名称-->
+        <text class="run-game-title--name">篮球联赛</text>
+
+<!--        设置比赛名称与logo-->
+        <mp-icon extClass="run-game-title--modify" icon="pencil" size="12" bindtap="onModifyGameNameAndLogo"></mp-icon>
+    </view>
+
+    <view class="run-game-content"></view>
+</view>

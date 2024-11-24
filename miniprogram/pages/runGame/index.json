@@ -1,6 +1,6 @@
 {
-  "component": true,
   "usingComponents": {
+    "page-title": "/components/PageTitleComponent/PageTitleComponent",
     "mp-icon": "weui-miniprogram/icon/icon"
   }
 }

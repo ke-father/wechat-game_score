@@ -1,4 +1,9 @@
 page {
   height: calc(100% - 120rpx);
   background-color: #eeeeee;
+
+  .weui-dialog__root {
+    z-index: 99999;
+  }
 }
+

@@ -92,3 +92,18 @@
     }
   }
 }
+
+.dialog {
+  &-footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40rpx;
+
+    button {
+      margin: 0;
+      width: auto;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+<!--    创建比赛提示弹框-->
+<mp-dialog
+        ext-class="common-dialog"
+        show="{{ openDialog }}"
+        mask-closable="{{false}}"
+        title="{{ dialogTitle }}"
+        buttons="{{ dialogButtons }}">
+    <view class="common-dialog--main">
+        <view class="common-dialog--title">
+            <slot name="title"></slot>
+        </view>
+
+        <view class="common-dialog--content">
+            <slot name="content"></slot>
+        </view>
+
+        <view class="common-dialog--footer">
+            <slot name="footer"></slot>
+        </view>
+    </view>
+</mp-dialog>

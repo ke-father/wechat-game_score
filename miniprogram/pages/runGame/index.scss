@@ -1,0 +1,39 @@
+.run-game {
+  &-title {
+    position: fixed;
+    top: 5%;
+    left: 24rpx;
+    padding: 20rpx;
+    width: fit-content;
+    background: white;
+    border-radius: 200rpx;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+   //&--content {
+   //  display: flex;
+   //  justify-content: flex-start;
+   //  align-items: center;
+   //}
+
+    &--logo {
+      margin-left: 12rpx;
+      width: 52rpx;
+      height: 52rpx;
+      border-radius: 80rpx;
+    }
+
+    &--name {
+      margin-left: 8rpx;
+      color: #333333;
+      font-size: 28rpx;
+    }
+
+    &--modify {
+      margin-left: 16rpx;
+    }
+  }
+
+  &-content {}
+}
