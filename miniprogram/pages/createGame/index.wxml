@@ -2,34 +2,78 @@
     <!--  页面title-->
     <page-title showBack="{{true}}" bind:onBackClick="listenBackClick">
         <view slot="title">{{ name }}</view>
-        <view slot="subtitle"></view>
     </page-title>
 
     <!--    页面内容-->
     <view class="create-game-content">
         <mp-form models="{{createGameInfo}}" rules="{{createGameInfoRules}}" bindsuccess="handleCreateGameSuccess"
                  bindfail="handleCreateGameFail">
-            <mp-cells title="测试" footer="测试">
-                <!--                scroll容器-->
-                <scroll-view>
-<!--                    比赛名称-->
-                    <mp-cell title="比赛名称" prop="gameName" value="{{createGameInfo.gameName}}">
-                        <input placeholder="请输入比赛名称"></input>
+            <scroll-view scroll-y class="form-scroll">
+                <!-- 比赛基本信息 -->
+                <mp-cells title="基本信息">
+                    <mp-cell title="比赛名称" prop="gameName">
+                        <input model:value="{{createGameInfo.gameName}}" placeholder="请输入比赛名称"/>
                     </mp-cell>
 
-                    <mp-cell title="比赛队伍" inline="{{true}}">
-                        <!--                    比赛队伍名称-->
-                        <mp-cell prop="gameTeam[0]" value="{{gameTeam[0].teamName}}" inline="{{true}}">
-                            <input placeholder="请输入比赛队伍名称"></input>
-                        </mp-cell>
-                        <!--                    比赛队伍名称-->
-                        <mp-cell prop="gameTeam[1]" value="{{gameTeam[1].teamName}}" inline="{{true}}">
-                            <input placeholder="请输入比赛队伍名称"></input>
-                        </mp-cell>
+                    <mp-cell title="比赛Logo">
+                        <view class="upload-area" bindtap="onUploadGameLogo">
+                            <image wx:if="{{createGameInfo.gameLogo}}" src="{{createGameInfo.gameLogo}}" mode="aspectFit"/>
+                            <text wx:else>点击上传Logo</text>
+                        </view>
                     </mp-cell>
-                </scroll-view>
-            </mp-cells>
+
+                    <mp-cell title="比赛节数" prop="quarters">
+                        <picker model:value="{{createGameInfo.quarters}}" range="{{[2,4]}}" bindchange="onQuartersChange">
+                            <view>{{createGameInfo.quarters || '请选择节数'}}节</view>
+                        </picker>
+                    </mp-cell>
+                </mp-cells>
+
+                <!-- 队伍信息 -->
+                <mp-cells title="队伍信息">
+                    <view class="team-info">
+                        <!-- 主队 -->
+                        <view class="team-info-item">
+                            <view class="team-info-item--title">主队信息</view>
+                            <view class="team-info-item--content">
+                                <view class="input-box">
+                                    <input model:value="{{createGameInfo.gameTeam[0].teamName}}" 
+                                           placeholder="请输入主队名称"/>
+                                </view>
+                                <view class="upload-area" data-team-index="0" bindtap="onUploadTeamLogo">
+                                    <image wx:if="{{createGameInfo.gameTeam[0].teamLogo}}" 
+                                           src="{{createGameInfo.gameTeam[0].teamLogo}}" 
+                                           mode="aspectFit"/>
+                                    <text wx:else>上传队徽</text>
+                                </view>
+                            </view>
+                        </view>
+
+                        <!-- 客队 -->
+                        <view class="team-info-item">
+                            <view class="team-info-item--title">客队信息</view>
+                            <view class="team-info-item--content">
+                                <view class="input-box">
+                                    <input model:value="{{createGameInfo.gameTeam[1].teamName}}" 
+                                           placeholder="请输入客队名称"/>
+                                </view>
+                                <view class="upload-area" data-team-index="1" bindtap="onUploadTeamLogo">
+                                    <image wx:if="{{createGameInfo.gameTeam[1].teamLogo}}" 
+                                           src="{{createGameInfo.gameTeam[1].teamLogo}}" 
+                                           mode="aspectFit"/>
+                                    <text wx:else>上传队徽</text>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </mp-cells>
+            </scroll-view>
         </mp-form>
+
+        <!-- 底部按钮 -->
+        <view class="footer-btn" bindtap="handleCreateGameSuccess">
+            开始比赛
+        </view>
     </view>
 </view>
 

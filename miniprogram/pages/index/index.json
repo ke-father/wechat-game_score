@@ -4,6 +4,7 @@
     "mp-searchbar": "weui-miniprogram/searchbar/searchbar",
     "mp-tabbar": "weui-miniprogram/tabbar/tabbar",
     "dialog-component": "/components/DialogComponent/DialogComponent",
-    "category-basketball": "/components/category/Basketball/Basketball"
+    "category-basketball": "/components/category/Basketball/Basketball",
+    "mp-half-screen-dialog": "weui-miniprogram/half-screen-dialog/half-screen-dialog"
   }
 }

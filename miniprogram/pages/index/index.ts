@@ -1,10 +1,12 @@
 import DataManager from "../../global/DataManager";
 import { formatParams } from "../../utils/util";
+import { getCurrentGame, IGame } from '../../api/game'
 
 // 比赛分类
 type ICategory = {
   text: string,
-  categoryId: number
+  categoryId: number,
+  isRecent?: boolean
 }
 
 // 创建类型
@@ -38,9 +40,29 @@ type IData = {
   // 选择创建的比赛内容
   currentCreateType: number,
   // 创建比赛提示登录控制弹框
-  showLoginDialog: boolean
+  showLoginDialog: boolean,
   // 点击创建的比赛id
-  gamePlayStyle: ICreateType
+  gamePlayStyle: ICreateType,
+  // 显示更多分类
+  showCategoryDialog: boolean,
+  visibleCategories: Array<ICategory>;
+  showMoreBtn: boolean;
+  scrollIntoView: string;
+  showHomeScoreAnim: boolean;
+  showAwayScoreAnim: boolean;
+  homeScoreChange: number;
+  awayScoreChange: number;
+  team1Fouls: number;
+  team2Fouls: number;
+  foulAnimating: boolean;
+  team1Timeouts: number;
+  team2Timeouts: number;
+  timeoutAnimating: boolean;
+  team1Score: number;
+  team2Score: number;
+  animatingScore: boolean;
+  currentGame?: IGame;
+  loading: boolean;
 }
 
 /**
@@ -66,6 +88,26 @@ type ICustom = {
   onLoginTipsDialogConfirm: () => void
   // 关于登陆提示的取消
   onLoginTipsDialogCancel: () => void
+  // 显示更多分类
+  showMoreCategories: () => void
+  // 关闭分类弹窗
+  onCategoryDialogClose: () => void
+  // 选择分类
+  handleCategorySelect: (e: any) => void
+  // 显示得分动画
+  showScoreAnimation: (isHome: boolean, score: number) => void
+  // 在得分更新的地方调用动画
+  onScoreChange: (isHome: boolean, score: number) => void
+  // 添加犯规动画方法
+  addFoul: (isTeam1: boolean) => void
+  // 添加暂停动画方法
+  useTimeout: (isTeam1: boolean) => void
+  // 更新分数的动画方法
+  updateScore: (isTeam1: boolean, addScore: number) => void
+  // 获取当前比赛
+  fetchCurrentGame: () => void
+  // 判断分类标题展示更多
+  onTabScroll: (e: any) => void
 }
 
 Page<IData, ICustom>({
@@ -82,11 +124,32 @@ Page<IData, ICustom>({
     currentCreateType: 0,
     // 是否展示弹框
     showLoginDialog: false,
-    // 记录创建点击的id
-    gamePlayStyle: null!
+    // 记创建点击的id
+    gamePlayStyle: null!,
+    // 显示更多分类
+    showCategoryDialog: false,
+    visibleCategories: [],
+    showMoreBtn: false,
+    scrollIntoView: '',
+    showHomeScoreAnim: false,
+    showAwayScoreAnim: false,
+    homeScoreChange: 0,
+    awayScoreChange: 0,
+    team1Fouls: 0,
+    team2Fouls: 0,
+    foulAnimating: false,
+    team1Timeouts: 3,  // 初始暂停次数
+    team2Timeouts: 3,  // 初始暂停次数
+    timeoutAnimating: false,
+    team1Score: 0,
+    team2Score: 0,
+    animatingScore: false,
+    currentGame: undefined,
+    loading: true
   },
 
   onCreateGameClick (event: any) {
+    this.useTimeout(true)
     const gameInfo: ICreateType = event.currentTarget.dataset.gameInfo
 
     // 记录点击
@@ -140,15 +203,31 @@ Page<IData, ICustom>({
     console.log(this.data.gamePlayStyle)
   },
 
-  async handleChangeCreateType({detail: {item}}) {
-    const currentCategoryId = item.categoryId
+  async handleChangeCreateType(e: any) {
+    // 处理两种不同的调用方式
+    let index: number;
+    let categoryId: number;
 
-    this.data.currentCreateTypes[currentCategoryId] = await this.getCreateTypeList(item.categoryId)
+    if (e.detail) {
+      // 来自mp-tabbar的事件
+      index = e.detail.index;
+      categoryId = this.data.categoryList[index].categoryId;
+    } else {
+      // 来自点击事件
+      index = e.currentTarget.dataset.index;
+      categoryId = this.data.categoryList[index].categoryId;
+    }
+
+    // 如果没有缓存的创建类型，则获取
+    if (!this.data.currentCreateTypes[categoryId]) {
+      this.data.currentCreateTypes[categoryId] = await this.getCreateTypeList(categoryId);
+    }
 
     this.setData({
-      currentCategoryId,
+      currentCreateType: index,
+      currentCategoryId: categoryId,
       currentCreateTypes: this.data.currentCreateTypes
-    })
+    });
   },
 
   // 获取可创建比赛列表
@@ -182,21 +261,18 @@ Page<IData, ICustom>({
     // 获取分类列表
     const categoryList = await new Promise<Array<ICategory>>((resolve) => {
       resolve([
-        { text: '篮球', categoryId: 1 },
+        { text: '篮球', categoryId: 1, isRecent: true },
         { text: '足球', categoryId: 2 },
-        { text: '德州', categoryId: 3 },
-        { text: '德州', categoryId: 3 },
-        { text: '德州', categoryId: 3 },
-        { text: '德州', categoryId: 3 },
-        { text: '德州', categoryId: 3 },
-        { text: '德州', categoryId: 3 },
-        { text: '德州', categoryId: 3 },
-        { text: '德州', categoryId: 3 },
-        { text: '德州', categoryId: 3 },
-        { text: '德州', categoryId: 3 },
-        { text: '德州', categoryId: 3 },
-        { text: '德州', categoryId: 3 },
-        { text: '德州', categoryId: 3 },
+        { text: '排球', categoryId: 3 },
+        { text: '乒乓球', categoryId: 4 },
+        { text: '羽毛球', categoryId: 5 },
+        { text: '网球', categoryId: 6 },
+        { text: '台球', categoryId: 7 },
+        { text: '保龄球', categoryId: 8 },
+        { text: '高尔夫', categoryId: 9 },
+        { text: '棒球', categoryId: 10 },
+        { text: '橄榄球', categoryId: 11 },
+        { text: '冰球', categoryId: 12 }
       ])
     })
 
@@ -204,10 +280,190 @@ Page<IData, ICustom>({
 
     this.data.currentCreateTypes[currentCategoryId] = await this.getCreateTypeList(currentCategoryId)
 
+    // 更新数据
     this.setData({
-      categoryList,
+      categoryList,  // 确保设置完整的分类列表
+      visibleCategories: categoryList.slice(0, 7),
       currentCategoryId,
       currentCreateTypes: this.data.currentCreateTypes
     })
+
+    // 获取当前比赛数据
+    await this.fetchCurrentGame()
+  },
+
+  // 获取当前比赛数据
+  async fetchCurrentGame() {
+    try {
+      this.setData({ loading: true })
+      const res = await getCurrentGame()
+
+      if (res.code === 0 && res.data.hasGame) {
+        const game = res.data.game!
+        this.setData({
+          currentGameStatus: true,
+          currentGame: game,
+          team1Score: game.teams[0].score,
+          team2Score: game.teams[1].score,
+          team1Fouls: game.teams[0].fouls,
+          team2Fouls: game.teams[1].fouls,
+          team1Timeouts: game.teams[0].timeouts,
+          team2Timeouts: game.teams[1].timeouts
+        })
+      } else {
+        this.setData({ currentGameStatus: false })
+      }
+    } catch (error) {
+      console.error('获取当前比赛失败:', error)
+      this.setData({ currentGameStatus: false })
+    } finally {
+      this.setData({ loading: false })
+    }
+  },
+
+  // 显示更多分类
+  showMoreCategories() {
+    this.setData({
+      showCategoryDialog: true
+    });
+  },
+
+  // 关闭分类弹窗
+  onCategoryDialogClose() {
+    this.setData({
+      showCategoryDialog: false
+    });
+  },
+
+  // 选择分类
+  handleCategorySelect(e) {
+    const category = e.currentTarget.dataset.category;
+
+    // 更新分类列表顺序，保持最多7个可见分类
+    const newVisibleCategories = [
+        category,
+        ...this.data.visibleCategories
+            .filter(item => item.categoryId !== category.categoryId)
+    ].slice(0, 7);
+
+    this.setData({
+        visibleCategories: newVisibleCategories,
+        currentCategoryId: category.categoryId,
+        currentCreateType: 0,
+        showCategoryDialog: false
+    });
+
+    // 如果没有缓存的创建类型，则获取
+    if (!this.data.currentCreateTypes[category.categoryId]) {
+        this.getCreateTypeList(category.categoryId).then(types => {
+            this.setData({
+                [`currentCreateTypes.${category.categoryId}`]: types
+            });
+        });
+    }
+  },
+
+  onTabScroll(e) {
+    // 根据滚动位置判断是否显示更多按钮
+    const { scrollLeft, scrollWidth, width } = e.detail;
+    this.setData({
+      showMoreBtn: scrollLeft + width + 50 >= scrollWidth
+    });
+  },
+
+  // 显示得分动画
+  showScoreAnimation(isHome: boolean, score: number) {
+    if (isHome) {
+      this.setData({
+        homeScoreChange: score,
+        showHomeScoreAnim: true
+      });
+      setTimeout(() => {
+        this.setData({ showHomeScoreAnim: false });
+      }, 600);  // 配合新的动画时长
+    } else {
+      this.setData({
+        awayScoreChange: score,
+        showAwayScoreAnim: true
+      });
+      setTimeout(() => {
+        this.setData({ showAwayScoreAnim: false });
+      }, 600);  // 配合新的动画时长
+    }
+  },
+
+  // 在得分更新的地方调用动画
+  onScoreChange(isHome: boolean, score: number) {
+    this.showScoreAnimation(isHome, score);
+    // 更新实际比分...
+  },
+
+  // 添加犯规动画方法
+  addFoul(isTeam1: boolean) {
+    if (this.data.foulAnimating) return;  // 防止动画重叠
+
+    const currentFouls = isTeam1 ? this.data.team1Fouls : this.data.team2Fouls;
+    if (currentFouls >= 5) return;  // 最大犯规数限制
+
+    // 设置动画状态
+    this.setData({
+      foulAnimating: true,
+      [isTeam1 ? 'team1Fouls' : 'team2Fouls']: currentFouls + 1
+    });
+
+    // 动画结束后重置状态
+    setTimeout(() => {
+      this.setData({
+        foulAnimating: false
+      });
+    }, 400);
+  },
+
+  // 添加暂停动画方法
+  useTimeout(isTeam1: boolean) {
+    if (this.data.timeoutAnimating) return;  // 防止动画重叠
+
+    const currentTimeouts = isTeam1 ? this.data.team1Timeouts : this.data.team2Timeouts;
+    if (currentTimeouts <= 0) return;  // 检查是否还有剩余暂停
+
+    // 设置动画状态
+    this.setData({
+      timeoutAnimating: true,
+      [isTeam1 ? 'team1Timeouts' : 'team2Timeouts']: currentTimeouts - 1
+    });
+
+    // 动画结束后重置状态
+    setTimeout(() => {
+      this.setData({
+        timeoutAnimating: false
+      });
+    }, 400);
+  },
+
+  // 更新分数的动画方法
+  updateScore(isTeam1: boolean, addScore: number) {
+    if (this.data.animatingScore) return;  // 防止动画重叠
+
+    const currentScore = isTeam1 ? this.data.team1Score : this.data.team2Score;
+    const targetScore = currentScore + addScore;
+    let currentStep = currentScore;
+
+    this.setData({ animatingScore: true });
+
+    const animateStep = () => {
+      if (currentStep < targetScore) {
+        currentStep += 1;
+        this.setData({
+          [isTeam1 ? 'team1Score' : 'team2Score']: currentStep
+        });
+
+        // 继续动画
+        setTimeout(animateStep, 50);  // 每50ms增加1分
+      } else {
+        this.setData({ animatingScore: false });
+      }
+    };
+
+    animateStep();
   }
 })

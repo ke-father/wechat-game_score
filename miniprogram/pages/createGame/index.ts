@@ -34,6 +34,8 @@ interface ICreateGameInfoData{
     gameLogo?: string
     // 比赛队伍
     gameTeam?: IGameTeamInfo[]
+    // 比赛节数
+    quarters?: number
 }
 
 // 规则
@@ -70,6 +72,9 @@ interface ICreateGameCustom {
     handleCreateGameSuccess: (detail: { trigger: 'change' | 'validate' }) => void
     // 关于比赛校验失败
     handleCreateGameFail: (detail: { trigger: 'change' | 'validate', errors: any[] }) => void
+    onUploadGameLogo: () => void
+    onUploadTeamLogo: (e: WechatMiniprogram.TouchEvent) => void
+    onQuartersChange: (e: WechatMiniprogram.PickerChange) => void
 }
 
 
@@ -79,19 +84,30 @@ const GameInfoRules: ICreateGameInfoRules[] = [
         name: "gameName",
         rules: {
             required: true
-        }
+        },
+        message: "请输入比赛名称"
+    },
+    {
+        name: "quarters",
+        rules: {
+            required: true
+        },
+        message: "请设置比赛节数"
     }
 ]
 
 // 比赛信息内容
 const GameInfoData: ICreateGameInfoData = {
     gameName: '',
+    quarters: 4,
     gameTeam: [
         {
-            teamName: ''
+            teamName: '',
+            teamLogo: ''
         },
         {
-            teamName: ''
+            teamName: '',
+            teamLogo: ''
         }
     ]
 }
@@ -125,5 +141,44 @@ Page<ICreateGameData, ICreateGameCustom>({
         const query: IRouteQuery = options
 
         this.setData(query)
+    },
+
+    async onUploadGameLogo() {
+        try {
+            const res = await wx.chooseImage({
+                count: 1,
+                sizeType: ['compressed'],
+                sourceType: ['album', 'camera']
+            })
+            
+            this.setData({
+                'createGameInfo.gameLogo': res.tempFilePaths[0]
+            })
+        } catch (e) {
+            console.error('上传失败', e)
+        }
+    },
+
+    async onUploadTeamLogo(e) {
+        const teamIndex = e.currentTarget.dataset.teamIndex
+        try {
+            const res = await wx.chooseImage({
+                count: 1,
+                sizeType: ['compressed'],
+                sourceType: ['album', 'camera']
+            })
+            
+            this.setData({
+                [`createGameInfo.gameTeam[${teamIndex}].teamLogo`]: res.tempFilePaths[0]
+            })
+        } catch (e) {
+            console.error('上传失败', e)
+        }
+    },
+
+    onQuartersChange(e) {
+        this.setData({
+            'createGameInfo.quarters': Number(e.detail.value)
+        })
     }
 });

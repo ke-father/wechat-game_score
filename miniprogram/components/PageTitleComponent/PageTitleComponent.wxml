@@ -1,20 +1,16 @@
 <view class="page-title" style="background: {{ background }}">
-    <view class="slot-content">
-        <slot name="content"></slot>
-    </view>
-
-    <view class="page-title-content">
-        <mp-icon wx:if="{{showBack}}" icon="back" size="12" bindtap="handleBack"></mp-icon>
-
-        <view class="slot-title">
-            <slot name="title"></slot>
+    <view class="page-title-content" style="padding-top: {{statusBarHeight}}px">
+        <!-- 返回按钮 -->
+        <view wx:if="{{showBack}}" class="back-button" bindtap="handleBack">
+            <mp-icon icon="back" size="{{12}}" color="#333"></mp-icon>
         </view>
-        <!--        标题-->
-        <text class="page-title-content--title">{{ title }}</text>
 
-        <view class="slot-subtitle">
-            <slot name="subtitle"></slot>
+        <!-- 标题内容 -->
+        <view class="title-wrapper">
+            <view class="slot-title" wx:if="{{!title}}">
+                <slot name="title"></slot>
+            </view>
+            <text wx:else class="page-title-content--title">{{ title }}</text>
         </view>
-        <text class="page-title-content--subtitle">用于比赛计分，内容复盘等</text>
     </view>
 </view>

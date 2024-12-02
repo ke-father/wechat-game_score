@@ -1,36 +1,49 @@
-interface IResponse <T> {
-    data: T
-    status: boolean,
-    message: string
+import { mockCurrentGameResponse } from '../mock/gameData'
+import { ENV } from '../config/config'
+
+// 模拟请求延迟
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
+interface RequestOptions {
+  url: string;
+  method: 'GET' | 'POST';
+  data?: any;
 }
 
-export default new class {
-    private BASE_URL = 'http://localhost:4949'
-
-    private request (method: 'GET' | 'POST', url: string, data: object, resolve: Function, reject: Function) {
-        wx.request({
-            method,
-            url: `${this.BASE_URL}${url}`,
-            data,
-            success: (res) => {
-                console.log(res)
-                resolve(res.data)
-            },
-            fail: (err) => {
-                reject(err)
-            }
-        })
+class Request {
+  async request<T>(options: RequestOptions): Promise<T> {
+    // 如果是开发环境且启用了mock
+    if (ENV.development && ENV.mock) {
+      await delay(300)  // 模拟网络延迟
+      
+      // 根据不同的 URL 返回不同的 mock 数据
+      if (options.url.includes('/game/current')) {
+        return mockCurrentGameResponse as T
+      }
+      
+      return {} as T
     }
 
-    get <T> (url: string, data: object): Promise<IResponse<T>> {
-        return new Promise((resolve, reject) => {
-            this.request('GET', url, data, resolve, reject)
-        })
+    // 实际的请求逻辑
+    try {
+      const response = await wx.request({
+        ...options,
+      }) as unknown as { data: T }
+      return response.data
+    } catch (error) {
+      console.error('Request failed:', error)
+      throw error
     }
+  }
 
-    post <T> (url: string, data: object): Promise<IResponse<T>> {
-        return new Promise((resolve, reject) => {
-            this.request('POST', url, data, resolve, reject)
-        })
-    }
+  get<T>(options: Omit<RequestOptions, 'method'>): Promise<T> {
+    return this.request<T>({ ...options, method: 'GET' });
+  }
+
+  post<T>(options: Omit<RequestOptions, 'method'>): Promise<T> {
+    return this.request<T>({ ...options, method: 'POST' });
+  }
 }
+
+const request = new Request();
+export default request;

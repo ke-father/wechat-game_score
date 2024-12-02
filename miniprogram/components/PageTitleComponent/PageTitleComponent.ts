@@ -1,20 +1,32 @@
-interface IPageTitleData {}
+interface IPageTitleData {
+    // 状态栏高度
+    statusBarHeight: number;
+}
 
-interface IPageTitleProperty {
-    // 头部展示标题
-    title: string
-    // 是否展示返回按钮
-    showBack: boolean,
-    // 背景色
-    background: string
+type PropertyType = StringConstructor | BooleanConstructor;
+
+type IPageTitleProperty = {
+    title: {
+        type: StringConstructor;
+        value?: string;
+    };
+    showBack: {
+        type: BooleanConstructor;
+        value?: boolean;
+    };
+    background: {
+        type: StringConstructor;
+        value?: string;
+    };
 }
 
 interface IPageTitleMethod {
     // 操作倒退
-    handleBack: () => void
+    handleBack: () => void;
+    // 添加字符串索引签名
+    [key: string]: (...args: any[]) => any;
 }
 
-// @ts-ignore
 Component<IPageTitleData, IPageTitleProperty, IPageTitleMethod>({
     options: {
         multipleSlots: true
@@ -27,7 +39,7 @@ Component<IPageTitleData, IPageTitleProperty, IPageTitleMethod>({
         },
         title: {
             type: String,
-            value: '比赛记录'
+            value: ''
         },
         background: {
             type: String,
@@ -35,11 +47,23 @@ Component<IPageTitleData, IPageTitleProperty, IPageTitleMethod>({
         }
     },
 
-    data: {},
+    data: {
+        statusBarHeight: 0
+    },
+
+    lifetimes: {
+        attached() {
+            // 获取状态栏高度
+            const systemInfo = wx.getSystemInfoSync();
+            this.setData({
+                statusBarHeight: systemInfo.statusBarHeight
+            });
+        }
+    },
 
     methods: {
-        handleBack () {
-            this.triggerEvent('onBackClick')
+        handleBack() {
+            this.triggerEvent('onBackClick');
         }
     }
 });

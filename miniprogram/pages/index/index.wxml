@@ -9,28 +9,144 @@
                       cancel="{{false}}"></mp-searchbar>
 
         <!--    是否有正在比赛的内容-->
-        <view wx:if="{{currentGameStatus}}" class="home-gaming">
-<!--            动态模板-->
-            <category-basketball></category-basketball>
+        <view wx:if="{{currentGameStatus && currentGame}}" class="home-gaming">
+            <view class="home-gaming-header">
+                <view class="game-logo">
+                    <image src="{{currentGame.gameLogo}}" mode="aspectFit"></image>
+                </view>
+                <view class="game-info">
+                    <text class="game-name">{{currentGame.gameName}}</text>
+                    <text class="game-status">{{currentGame.gameStatus === 1 ? '进行中' : '已暂停'}}</text>
+                </view>
+            </view>
+
+            <!-- 比分展示区域 -->
+<!--            <view class="score-board">-->
+<!--                <view class="team-info">-->
+<!--                    <image class="team-logo" src="{{currentGame.teams[0].teamLogo}}" mode="aspectFit"></image>-->
+<!--                    <text class="team-name">{{currentGame.teams[0].teamName}}</text>-->
+<!--                    <text class="team-score {{animatingScore ? 'updating' : ''}}">{{team1Score}}</text>-->
+<!--                </view>-->
+<!--                <text class="vs-text">VS</text>-->
+<!--                <view class="team-info">-->
+<!--                    <image class="team-logo" src="{{currentGame.teams[1].teamLogo}}" mode="aspectFit"></image>-->
+<!--                    <text class="team-name">{{currentGame.teams[1].teamName}}</text>-->
+<!--                    <text class="team-score {{animatingScore ? 'updating' : ''}}">{{team2Score}}</text>-->
+<!--                </view>-->
+<!--            </view>-->
+
+            <!-- 状态栏 -->
+<!--            <view class="game-status-bar">-->
+<!--                &lt;!&ndash; 左队状态 &ndash;&gt;-->
+<!--                <view class="team-status">-->
+<!--                    <view class="status-row">-->
+<!--                        <view class="status-dots foul-dots">-->
+<!--                            <view class="dot foul {{index < team1Fouls ? 'active' : ''}} {{foulAnimating ? 'activating' : ''}}" -->
+<!--                                  wx:for="{{[0,1,2,3,4]}}" -->
+<!--                                  wx:key="index">-->
+<!--                            </view>-->
+<!--                        </view>-->
+<!--                        <view class="status-dots timeout-dots">-->
+<!--                            <view class="dot timeout {{index < team1Timeouts ? 'active' : ''}} {{timeoutAnimating ? 'activating' : ''}}" -->
+<!--                                  wx:for="{{[0,1,2]}}" -->
+<!--                                  wx:key="index">-->
+<!--                            </view>-->
+<!--                        </view>-->
+<!--                    </view>-->
+<!--                </view>-->
+<!--                -->
+<!--                &lt;!&ndash; 右队状态 &ndash;&gt;-->
+<!--                <view class="team-status">-->
+<!--                    <view class="status-row">-->
+<!--                        <view class="status-dots foul-dots">-->
+<!--                            <view class="dot foul {{index < team2Fouls ? 'active' : ''}} {{foulAnimating ? 'activating' : ''}}" -->
+<!--                                  wx:for="{{[0,1,2,3,4]}}" -->
+<!--                                  wx:key="index">-->
+<!--                            </view>-->
+<!--                        </view>-->
+<!--                        <view class="status-dots timeout-dots">-->
+<!--                            <view class="dot timeout {{index < team2Timeouts ? 'active' : ''}} {{timeoutAnimating ? 'activating' : ''}}" -->
+<!--                                  wx:for="{{[0,1,2]}}" -->
+<!--                                  wx:key="index">-->
+<!--                            </view>-->
+<!--                        </view>-->
+<!--                    </view>-->
+<!--                </view>-->
+<!--            </view>-->
+
+            <!-- 得分动画容器 -->
+<!--            <view class="score-animation-container">-->
+<!--                &lt;!&ndash; 主队得分动画 &ndash;&gt;-->
+<!--                <view class="score-animation home-team {{showHomeScoreAnim ? 'active' : ''}}" -->
+<!--                      data-score="{{homeScoreChange}}">-->
+<!--                    +{{homeScoreChange}}-->
+<!--                </view>-->
+<!--                &lt;!&ndash; 客队得分动画 &ndash;&gt;-->
+<!--                <view class="score-animation away-team {{showAwayScoreAnim ? 'active' : ''}}" -->
+<!--                      data-score="{{awayScoreChange}}">-->
+<!--                    +{{awayScoreChange}}-->
+<!--                </view>-->
+<!--            </view>-->
         </view>
 
         <!--    可以用于创建的比赛-->
         <view class="home-create">
             <!--        比赛分类-->
             <view class="home-create-category">
-                <mp-tabbar ext-class="home-create-category-tabs" current="{{currentCreateType}}" bindchange="handleChangeCreateType" list="{{ categoryList }}"></mp-tabbar>
-            </view>
-
-            <!--        比赛列表-->
-            <view class="home-create-category-list">
-                <scroll-view class="home-create-category-list" scroll-y="true" bindchange="{{handleChangeCreateType}}">
-                    <view class="home-create-category-list-item" wx:for="{{currentCreateTypes[currentCategoryId]}}" wx:key="categoryId" wx:for-item="item" data-game-info="{{item}}" bind:tap="onCreateGameClick">
-                        <text>{{ item.name }}</text>
+                <scroll-view
+                    scroll-x
+                    class="home-create-category-tabs"
+                    enable-flex
+                    scroll-with-animation
+                    show-scrollbar="{{false}}">
+                    <view class="tab-list">
+                        <view class="tab-item {{currentCreateType === index ? 'active' : ''}}"
+                              wx:for="{{visibleCategories}}"
+                              wx:key="index"
+                              data-index="{{index}}"
+                              bindtap="handleChangeCreateType">
+                            {{item.text}}
+                        </view>
+                        <view class="tab-item more-category" bindtap="showMoreCategories">
+                            <text>更多</text>
+                            <mp-icon icon="arrow" size="12" color="#666"></mp-icon>
+                        </view>
                     </view>
                 </scroll-view>
             </view>
+
+            <!--        比赛列表-->
+            <scroll-view class="home-create-category-list" scroll-y>
+                <view class="home-create-category-list-item"
+                      wx:for="{{currentCreateTypes[currentCategoryId]}}"
+                      wx:key="categoryId"
+                      data-game-info="{{item}}"
+                      data-socre="3"
+                      bind:tap="onCreateGameClick">
+                    <text>{{ item.name }}</text>
+                </view>
+            </scroll-view>
         </view>
     </view>
+
+    <!-- 分类选择弹出层 -->
+    <mp-half-screen-dialog
+        show="{{showCategoryDialog}}"
+        title="选择分类"
+        bindclose="onCategoryDialogClose"
+        ext-class="category-dialog-container">
+        <view class="category-dialog">
+            <view class="category-grid">
+                <block wx:for="{{categoryList}}" wx:key="categoryId">
+                    <view class="category-item {{item.categoryId === currentCategoryId ? 'active' : ''}} {{item.isRecent ? 'recent' : ''}}"
+                          data-category="{{item}}"
+                          bindtap="handleCategorySelect">
+                        <text>{{item.text}}</text>
+                    </view>
+                </block>
+            </view>
+        </view>
+    </mp-half-screen-dialog>
 
     <dialog-component
             openDialog="{{ showLoginDialog }}"
