@@ -18,5 +18,18 @@ Component({
         // 比赛时间
         time: '9:28'
     },
-    methods: {}
+
+    methods: {
+        fetchGameData () {},
+
+        handleScorePlus () {
+            const getScoreAnimation = this.selectComponent('#home-score-ani')
+            getScoreAnimation.onScoreChange(3)
+        }
+    },
+
+    lifetimes: {
+        created() {
+        }
+    }
 });

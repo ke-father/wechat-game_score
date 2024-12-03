@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["miniprogram-api-typings"],
     "strictNullChecks": true,
     "noImplicitAny": true,
     "module": "CommonJS",

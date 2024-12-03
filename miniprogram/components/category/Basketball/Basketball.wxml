@@ -1,9 +1,11 @@
 <view class="gaming-content">
+    <button bind:tap="handleScorePlus">加分</button>
+
     <!--                主场队伍-->
     <view class="gaming-content-item gaming-content--homeTeam">
         <avatar-component nickname="{{ homeTeam.name }}" avatarUrl="{{ homeTeam.avatarUrl }}"></avatar-component>
 
-        <text>{{ homeTeam.score }}</text>
+        <animation-get-score id="home-score-ani" initScore="{{ homeTeam.score }}" scoreChange="{{ homeTeam.scoreChange }}"></animation-get-score>
     </view>
 
     <!--                分割-->

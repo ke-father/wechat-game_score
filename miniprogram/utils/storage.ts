@@ -5,7 +5,7 @@ export default function (): { setStorage: <T> (key: string, data: T) => Promise<
                 key,
                 data,
                 encrypt: true,
-                success: (res) => resolve(res.data),
+                success: (res) => resolve(res as T),
                 fail: (err) => reject(err)
             })
         })

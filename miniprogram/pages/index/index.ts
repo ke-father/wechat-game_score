@@ -94,16 +94,10 @@ type ICustom = {
   onCategoryDialogClose: () => void
   // 选择分类
   handleCategorySelect: (e: any) => void
-  // 显示得分动画
-  showScoreAnimation: (isHome: boolean, score: number) => void
-  // 在得分更新的地方调用动画
-  onScoreChange: (isHome: boolean, score: number) => void
   // 添加犯规动画方法
   addFoul: (isTeam1: boolean) => void
   // 添加暂停动画方法
   useTimeout: (isTeam1: boolean) => void
-  // 更新分数的动画方法
-  updateScore: (isTeam1: boolean, addScore: number) => void
   // 获取当前比赛
   fetchCurrentGame: () => void
   // 判断分类标题展示更多
@@ -371,33 +365,6 @@ Page<IData, ICustom>({
     });
   },
 
-  // 显示得分动画
-  showScoreAnimation(isHome: boolean, score: number) {
-    if (isHome) {
-      this.setData({
-        homeScoreChange: score,
-        showHomeScoreAnim: true
-      });
-      setTimeout(() => {
-        this.setData({ showHomeScoreAnim: false });
-      }, 600);  // 配合新的动画时长
-    } else {
-      this.setData({
-        awayScoreChange: score,
-        showAwayScoreAnim: true
-      });
-      setTimeout(() => {
-        this.setData({ showAwayScoreAnim: false });
-      }, 600);  // 配合新的动画时长
-    }
-  },
-
-  // 在得分更新的地方调用动画
-  onScoreChange(isHome: boolean, score: number) {
-    this.showScoreAnimation(isHome, score);
-    // 更新实际比分...
-  },
-
   // 添加犯规动画方法
   addFoul(isTeam1: boolean) {
     if (this.data.foulAnimating) return;  // 防止动画重叠
@@ -438,32 +405,5 @@ Page<IData, ICustom>({
         timeoutAnimating: false
       });
     }, 400);
-  },
-
-  // 更新分数的动画方法
-  updateScore(isTeam1: boolean, addScore: number) {
-    if (this.data.animatingScore) return;  // 防止动画重叠
-
-    const currentScore = isTeam1 ? this.data.team1Score : this.data.team2Score;
-    const targetScore = currentScore + addScore;
-    let currentStep = currentScore;
-
-    this.setData({ animatingScore: true });
-
-    const animateStep = () => {
-      if (currentStep < targetScore) {
-        currentStep += 1;
-        this.setData({
-          [isTeam1 ? 'team1Score' : 'team2Score']: currentStep
-        });
-
-        // 继续动画
-        setTimeout(animateStep, 50);  // 每50ms增加1分
-      } else {
-        this.setData({ animatingScore: false });
-      }
-    };
-
-    animateStep();
   }
 })

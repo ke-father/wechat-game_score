@@ -1,0 +1,14 @@
+<view class="get-score">
+    <view class="get-score--container">
+        {{score}}
+    </view>
+
+    <!-- 得分动画容器 -->
+    <view class="score-animation-container">
+        <!-- 主队得分动画 -->
+        <view class="score-animation home-team {{showScoreAnim ? 'active' : ''}}"
+              data-score="{{scoreChange}}" style="top: {{viewStyle.$animation-y}}; left: {{viewStyle.$animation-x}}">
+            +{{scoreChange}}
+        </view>
+    </view>
+</view>
