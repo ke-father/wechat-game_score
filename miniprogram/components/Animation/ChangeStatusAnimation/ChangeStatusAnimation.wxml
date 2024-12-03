@@ -1,0 +1,6 @@
+<view class="status-dots {{ order === 'asc' ? 'asc-dot' : 'desc-dot' }}">
+    <view class="dot foul {{index < currentTriggerTime ? 'active' : ''}} {{animating ? 'activating' : ''}}"
+          wx:for="{{new Array(triggerTime)}}"
+          wx:key="index">
+    </view>
+</view>

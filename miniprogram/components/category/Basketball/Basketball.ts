@@ -24,6 +24,7 @@ Component({
 
         handleScorePlus () {
             const getScoreAnimation = this.selectComponent('#home-score-ani')
+            console.log(getScoreAnimation)
             getScoreAnimation.onScoreChange(3)
         }
     },

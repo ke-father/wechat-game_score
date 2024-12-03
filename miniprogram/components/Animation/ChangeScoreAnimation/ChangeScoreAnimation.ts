@@ -15,7 +15,7 @@ Component({
         // 当前分数
         score: 0,
         // 获得分数
-        getData: 0,
+        scoreChange: 0,
         // 是否展示得分动画
         showScoreAnim: false,
         // 得分动画配置
@@ -23,15 +23,9 @@ Component({
             // 加分动画时长
             scoreChangeDuration: 600,
             // 得分动画时长
-            scoreDuration: 600,
+            scoreDuration: 300,
             // 缩放大小
             animationStartScale: 0.8
-        },
-        viewStyle: {
-            '$animation-duration': '0.6s',
-            '$animation-start-scale': '0.8',
-            '$animation-x': '10%',
-            '$animation-y': '28%'
         }
     },
 
@@ -71,20 +65,10 @@ Component({
             this.setData({
                 score: this.properties.initScore
             })
-        },
-
-        ready() {
-            const query = this.createSelectorQuery()
-            query.select('.get-score--container').boundingClientRect(rect => {
-                const { top, left } = rect
-                this.data.viewStyle['$animation-x'] = `${left}px`
-                this.data.viewStyle['$animation-y'] = `${top}px`
-                this.data.viewStyle['$animation-duration'] = `${this.properties.propAnimationConfig?.scoreDuration || this.data.animationConfig.scoreDuration}ms`
-                this.data.viewStyle['$animation-start-scale'] = `${this.properties.propAnimationConfig?.animationStartScale || this.data.animationConfig.animationStartScale}`
-            }).exec()
         }
     },
 
+    externalClasses: ['show-score'],
     export () {
         return {
             onScoreChange: this.onScoreChange

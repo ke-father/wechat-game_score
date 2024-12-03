@@ -1,7 +1,12 @@
 $animation-duration: 0.6s;
 $animation-start-scale: 0.8;
-$animation-x: 48%;
-$animation-y: 28%;
+$animation-x: 100%;
+$animation-y: 0;
+
+.get-score {
+  display: inline-block;
+  position: relative;
+}
 
 .score-animation-container {
   position: absolute;

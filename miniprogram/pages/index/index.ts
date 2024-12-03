@@ -94,8 +94,6 @@ type ICustom = {
   onCategoryDialogClose: () => void
   // 选择分类
   handleCategorySelect: (e: any) => void
-  // 添加犯规动画方法
-  addFoul: (isTeam1: boolean) => void
   // 添加暂停动画方法
   useTimeout: (isTeam1: boolean) => void
   // 获取当前比赛
@@ -129,11 +127,6 @@ Page<IData, ICustom>({
     showAwayScoreAnim: false,
     homeScoreChange: 0,
     awayScoreChange: 0,
-    team1Fouls: 0,
-    team2Fouls: 0,
-    foulAnimating: false,
-    team1Timeouts: 3,  // 初始暂停次数
-    team2Timeouts: 3,  // 初始暂停次数
     timeoutAnimating: false,
     team1Score: 0,
     team2Score: 0,
@@ -363,27 +356,6 @@ Page<IData, ICustom>({
     this.setData({
       showMoreBtn: scrollLeft + width + 50 >= scrollWidth
     });
-  },
-
-  // 添加犯规动画方法
-  addFoul(isTeam1: boolean) {
-    if (this.data.foulAnimating) return;  // 防止动画重叠
-
-    const currentFouls = isTeam1 ? this.data.team1Fouls : this.data.team2Fouls;
-    if (currentFouls >= 5) return;  // 最大犯规数限制
-
-    // 设置动画状态
-    this.setData({
-      foulAnimating: true,
-      [isTeam1 ? 'team1Fouls' : 'team2Fouls']: currentFouls + 1
-    });
-
-    // 动画结束后重置状态
-    setTimeout(() => {
-      this.setData({
-        foulAnimating: false
-      });
-    }, 400);
   },
 
   // 添加暂停动画方法
