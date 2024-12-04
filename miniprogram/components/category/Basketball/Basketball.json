@@ -2,6 +2,7 @@
   "component": true,
   "usingComponents": {
     "avatar-component": "/components/AvatarComponent/AvatarComponent",
-    "animation-get-score": "../../Animation/ChangeScoreAnimation/ChangeScoreAnimation"
+    "animation-change-score": "../../Animation/ChangeScoreAnimation/ChangeScoreAnimation",
+    "animation-change-status": "../../Animation/ChangeStatusAnimation/ChangeStatusAnimation"
   }
 }

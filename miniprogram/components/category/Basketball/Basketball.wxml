@@ -3,15 +3,19 @@
     <view class="gaming-content-item gaming-content--homeTeam">
         <avatar-component nickname="{{ homeTeam.name }}" avatarUrl="{{ homeTeam.avatarUrl }}"></avatar-component>
 
-        <animation-get-score id="home-score-ani" show-score="show-score" initScore="{{ homeTeam.score }}" scoreChange="{{ homeTeam.scoreChange }}"></animation-get-score>
+        <animation-change-score id="home-score-ani" show-score="show-score" initScore="{{ homeTeam.score }}"
+                                scoreChange="{{ homeTeam.scoreChange }}"></animation-change-score>
+
+        <animation-change-status id="home-status-ani" triggerTime="{{triggerTime}}" currentTriggerTime="{{currentTriggerTime}}" dot-style="home-dot-foul-style" dot-active-style="home-dot-foul-active-style"></animation-change-status>
     </view>
 
     <!--                分割-->
     <view class="gaming-content--separator">
-        <view class="gaming-content--separator-line" />
+        <button bind:tap="handleScorePlus">加分</button>
+        <view class="gaming-content--separator-line"/>
 
         <!--                    中间的比赛类型logo-->
-<!--        <image class="gaming-content&#45;&#45;separator-logo" src="/assets/images/basketBallTeam/basketBall_logo.png"></image>-->
+        <!--        <image class="gaming-content&#45;&#45;separator-logo" src="/assets/images/basketBallTeam/basketBall_logo.png"></image>-->
 
         <!--                    比赛信息-->
         <view class="gaming-info">
@@ -23,8 +27,10 @@
 
     <!--                客场队伍-->
     <view class="gaming-content-item gaming-content--homeTeam">
-        <avatar-component nickname="{{ awayTeam.name }}" avatarUrl="{{ awayTeam.avatarUrl }}" showPosition="right"></avatar-component>
+        <avatar-component nickname="{{ awayTeam.name }}" avatarUrl="{{ awayTeam.avatarUrl }}"
+                          showPosition="right"></avatar-component>
 
-        <animation-get-score id="home-score-ani" show-score="show-score" initScore="{{ awayTeam.score }}" scoreChange="{{ awayTeam.scoreChange }}"></animation-get-score>
+        <animation-change-score id="home-score-ani" show-score="show-score" initScore="{{ awayTeam.score }}"
+                             scoreChange="{{ awayTeam.scoreChange }}"></animation-change-score>
     </view>
 </view>

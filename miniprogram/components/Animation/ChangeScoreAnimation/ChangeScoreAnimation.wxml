@@ -1,7 +1,7 @@
 <view class="get-score">
-    <view class="get-score--container show-score">
+    <text class="get-score--container show-score">
         {{score}}
-    </view>
+    </text>
 
     <!-- 得分动画容器 -->
     <view class="score-animation-container">

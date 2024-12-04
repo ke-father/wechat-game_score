@@ -4,8 +4,15 @@ $animation-x: 100%;
 $animation-y: 0;
 
 .get-score {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
+
+  &--container {
+    margin: 0;
+    line-height: 1;
+  }
 }
 
 .score-animation-container {

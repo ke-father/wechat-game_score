@@ -48,19 +48,6 @@ type IData = {
   visibleCategories: Array<ICategory>;
   showMoreBtn: boolean;
   scrollIntoView: string;
-  showHomeScoreAnim: boolean;
-  showAwayScoreAnim: boolean;
-  homeScoreChange: number;
-  awayScoreChange: number;
-  team1Fouls: number;
-  team2Fouls: number;
-  foulAnimating: boolean;
-  team1Timeouts: number;
-  team2Timeouts: number;
-  timeoutAnimating: boolean;
-  team1Score: number;
-  team2Score: number;
-  animatingScore: boolean;
   currentGame?: IGame;
   loading: boolean;
 }
@@ -94,8 +81,6 @@ type ICustom = {
   onCategoryDialogClose: () => void
   // 选择分类
   handleCategorySelect: (e: any) => void
-  // 添加暂停动画方法
-  useTimeout: (isTeam1: boolean) => void
   // 获取当前比赛
   fetchCurrentGame: () => void
   // 判断分类标题展示更多
@@ -123,20 +108,11 @@ Page<IData, ICustom>({
     visibleCategories: [],
     showMoreBtn: false,
     scrollIntoView: '',
-    showHomeScoreAnim: false,
-    showAwayScoreAnim: false,
-    homeScoreChange: 0,
-    awayScoreChange: 0,
-    timeoutAnimating: false,
-    team1Score: 0,
-    team2Score: 0,
-    animatingScore: false,
     currentGame: undefined,
     loading: true
   },
 
   onCreateGameClick (event: any) {
-    this.useTimeout(true)
     const gameInfo: ICreateType = event.currentTarget.dataset.gameInfo
 
     // 记录点击
@@ -356,26 +332,5 @@ Page<IData, ICustom>({
     this.setData({
       showMoreBtn: scrollLeft + width + 50 >= scrollWidth
     });
-  },
-
-  // 添加暂停动画方法
-  useTimeout(isTeam1: boolean) {
-    if (this.data.timeoutAnimating) return;  // 防止动画重叠
-
-    const currentTimeouts = isTeam1 ? this.data.team1Timeouts : this.data.team2Timeouts;
-    if (currentTimeouts <= 0) return;  // 检查是否还有剩余暂停
-
-    // 设置动画状态
-    this.setData({
-      timeoutAnimating: true,
-      [isTeam1 ? 'team1Timeouts' : 'team2Timeouts']: currentTimeouts - 1
-    });
-
-    // 动画结束后重置状态
-    setTimeout(() => {
-      this.setData({
-        timeoutAnimating: false
-      });
-    }, 400);
   }
 })

@@ -9,8 +9,7 @@
   &-content {
     flex: 1;
     height: 0;
-    padding: 24rpx;
-    padding-bottom: calc(24rpx + 100rpx + env(safe-area-inset-bottom));
+    padding: 24rpx 24rpx calc(24rpx + 100rpx + env(safe-area-inset-bottom));
     display: flex;
     flex-direction: column;
     gap: 24rpx;
@@ -27,6 +26,9 @@
   }
 
   &-gaming {
+    height: 320rpx;
+    display: flex;
+    flex-direction: column;
     background: #fff;
     border-radius: 16rpx;
     padding: 16rpx;
@@ -87,39 +89,9 @@
         }
     }
 
-    :global(.score-board) {
-        transform: scale(0.85);
-        transform-origin: top center;
-        margin: -16rpx -24rpx -8rpx;
-        display: flex !important;
-        align-items: center !important;
-        min-height: 120rpx !important;
-
-        :global(.team-score) {
-            font-size: 40rpx !important;
-            line-height: 1.2 !important;
-            margin: auto 0 !important;
-            transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-
-            &.updating {
-                transform: scale(1.1);
-                color: #07c160 !important;
-            }
-        }
-
-        :global(.team-name) {
-            font-size: 26rpx !important;
-            line-height: 1.2 !important;
-            margin: 4rpx 0 !important;
-            font-weight: 500 !important;
-        }
-
-        :global(.vs-text) {
-            font-size: 28rpx !important;
-            margin: auto 16rpx !important;
-            line-height: 1.2 !important;
-            color: #999 !important;
-        }
+    &-content {
+      flex: 1;
+      height: 0;
     }
   }
 
@@ -278,8 +250,7 @@
   }
 
   .category-dialog {
-    padding: 32rpx 24rpx;
-    padding-bottom: calc(32rpx + env(safe-area-inset-bottom));
+    padding: 32rpx 24rpx calc(32rpx + env(safe-area-inset-bottom));
     min-height: 60vh;
 
     .category-grid {

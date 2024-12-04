@@ -27,43 +27,8 @@
             </view>
 
             <!-- 比分展示区域 -->
-            <Category-View-BasketBall></Category-View-BasketBall>
-
-            <!-- 状态栏 -->
-                        <view class="game-status-bar">
-                            <!-- 左队状态 -->
-                            <view class="team-status">
-                                <view class="status-row">
-
-                                    <view class="status-dots timeout-dots">
-                                        <view class="dot timeout {{index < team1Timeouts ? 'active' : ''}} {{timeoutAnimating ? 'activating' : ''}}"
-                                              wx:for="{{[0,1,2]}}"
-                                              wx:key="index">
-                                        </view>
-                                    </view>
-                                </view>
-                            </view>
-
-                            <!-- 右队状态 -->
-                            <view class="team-status">
-                                <view class="status-row">
-                                    <view class="status-dots foul-dots">
-                                        <view class="dot foul {{index < team2Fouls ? 'active' : ''}} {{foulAnimating ? 'activating' : ''}}"
-                                              wx:for="{{[0,1,2,3,4]}}"
-                                              wx:key="index">
-                                        </view>
-                                    </view>
-                                    <view class="status-dots timeout-dots">
-                                        <view class="dot timeout {{index < team2Timeouts ? 'active' : ''}} {{timeoutAnimating ? 'activating' : ''}}"
-                                              wx:for="{{[0,1,2]}}"
-                                              wx:key="index">
-                                        </view>
-                                    </view>
-                                </view>
-                            </view>
-                        </view>
+            <Category-View-BasketBall class="home-gaming-content"></Category-View-BasketBall>
         </view>
-
         <!--    可以用于创建的比赛-->
         <view class="home-create">
             <!--        比赛分类-->
