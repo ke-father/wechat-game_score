@@ -1,0 +1,18 @@
+//主队样式
+.home-dot-foul-style {
+  background: rgba(255, 87, 34, 0.15);
+}
+
+.home-dot-foul-active-style {
+  background: #ff5722;
+  box-shadow: 0 0 4rpx rgba(255, 87, 34, 0.3);
+}
+
+.home-dot-pause-style {
+  background: #2196f3;
+  box-shadow: 0 0 4rpx rgba(33, 150, 243, 0.3);
+}
+
+.home-dot-pause-active-style {
+  background: rgba(33, 150, 243, 0.15);
+}

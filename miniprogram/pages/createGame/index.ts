@@ -1,4 +1,6 @@
 // 路由参数
+import {formatParams} from "../../utils/util";
+
 interface IRouteQuery {
     // 比赛方式id
     gamePlayStyleId: number
@@ -120,8 +122,14 @@ Page<ICreateGameData, ICreateGameCustom>({
         name: null!
     },
 
-    handleCreateGameSuccess (detail) {
+    async handleCreateGameSuccess (detail) {
         console.log(detail)
+        const formatUrl = formatParams('/pages/gaming/index', {
+            id: '1'
+        })
+        await wx.navigateTo({
+            url: formatUrl
+        })
     },
 
     handleCreateGameFail (detail) {

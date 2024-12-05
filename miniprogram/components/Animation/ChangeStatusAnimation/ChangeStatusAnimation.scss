@@ -26,14 +26,11 @@
       width: 12rpx;
       height: 6rpx;
       border-radius: 3rpx;
-      background: #2196f3;
-      box-shadow: 0 0 4rpx rgba(33, 150, 243, 0.3);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       transform-origin: left center;
       position: relative;
 
       &.active {
-        background: rgba(33, 150, 243, 0.15);
         animation: descDotActivate 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
       }
 

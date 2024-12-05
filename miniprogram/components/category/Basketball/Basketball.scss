@@ -1,7 +1,9 @@
+@use "./DotsStyle";
+
 .gaming {
   &-content {
     width: 100%;
-    height: 0;
+    height: 100%;
     display: grid;
     grid-template-columns: 1fr 150rpx 1fr;
     justify-content: center;
@@ -10,7 +12,7 @@
     &-item {
       height: 100%;
       display: grid;
-      grid-template-rows: 60rpx 100rpx 6rpx;
+      grid-template-rows: 60rpx auto 6rpx;
       text-align: center;
 
       .show-score {
@@ -18,46 +20,13 @@
         font-size: 100rpx;
         font-weight: 700;
       }
-
-      //主队样式
-      .home-dot-foul-style {
-        background: rgba(255, 87, 34, 0.15);
-      }
-
-      .home-dot-foul-active-style {
-        background: #ff5722;
-        box-shadow: 0 0 4rpx rgba(255, 87, 34, 0.3);
-      }
     }
 
     &--separator {
       height: 100%;
       display: grid;
-      grid-template-rows: 80rpx 190rpx;
+      grid-template-rows: 60rpx auto;
       position: relative;
-
-      &-line {
-        //height: 100rpx;
-      }
-
-      image {
-        height: 100%;
-        width: 100%;
-      }
-
-      &-logo::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: radial-gradient(circle 40px at 50% 60%, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
-        /* 上面这行代码的含义：以中心为圆心（circle at center）创建径向渐变，
-        圆心处颜色是不透明的白色（rgba(255, 255, 255, 1)），到最外层变为完全透明（rgba(255, 255, 255, 0)） */
-        pointer-events: none; /* 确保伪元素不会拦截图片的交互事件，比如点击等 */
-        z-index: 1; /* 让伪元素在图片之上，以实现覆盖效果 */
-      }
     }
   }
 
@@ -74,12 +43,35 @@
     white-space: nowrap;
 
     &--quarter {
-      font-size: 50rpx;
+      white-space: nowrap;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32rpx;
       font-weight: 700;
+      color: #666666;
     }
 
     &--time {
-      font-size: 50rpx;
+      margin-bottom: 12rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 38rpx;
+    }
+  }
+
+  &-dots {
+    padding: 0 20rpx;
+    display: flex;
+    gap: 16rpx;
+
+    &--home {
+      justify-content: flex-start;
+    }
+
+    &--away {
+      justify-content: flex-end;
     }
   }
 }

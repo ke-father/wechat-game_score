@@ -6,23 +6,26 @@
         <animation-change-score id="home-score-ani" show-score="show-score" initScore="{{ homeTeam.score }}"
                                 scoreChange="{{ homeTeam.scoreChange }}"></animation-change-score>
 
-        <animation-change-status id="home-status-ani" triggerTime="{{triggerTime}}" currentTriggerTime="{{currentTriggerTime}}" dot-style="home-dot-foul-style" dot-active-style="home-dot-foul-active-style"></animation-change-status>
+        <view class="gaming-dots gaming-dots--home">
+            <!--            暂停节点-->
+            <animation-change-status id="home-status-pause-ani" triggerTime="{{pauseTriggerTime}}" order="asc"
+                                     currentTriggerTime="{{homeTeam.pauseCurrentTriggerTime}}" dot-style="home-dot-pause-style"
+                                     dot-active-style="home-dot-pause-active-style"></animation-change-status>
+
+            <!--            犯规节点-->
+            <animation-change-status id="home-status-foul-ani" triggerTime="{{homeTeam.foulTriggerTime}}"
+                                     currentTriggerTime="{{homeTeam.foulTriggerTime}}" dot-style="home-dot-foul-style"
+                                     dot-active-style="home-dot-foul-active-style"></animation-change-status>
+
+        </view>
     </view>
 
     <!--                分割-->
     <view class="gaming-content--separator">
-        <button bind:tap="handleScorePlus">加分</button>
-        <view class="gaming-content--separator-line"/>
-
-        <!--                    中间的比赛类型logo-->
-        <!--        <image class="gaming-content&#45;&#45;separator-logo" src="/assets/images/basketBallTeam/basketBall_logo.png"></image>-->
-
         <!--                    比赛信息-->
-        <view class="gaming-info">
-            <text class="gaming-info--quarter">{{ quarter }}</text>
+        <text class="gaming-info--quarter">{{ quarter }}</text>
 
-            <text class="gaming-info--time">{{ time }}</text>
-        </view>
+        <text class="gaming-info--time">{{ time }}</text>
     </view>
 
     <!--                客场队伍-->
@@ -31,6 +34,18 @@
                           showPosition="right"></avatar-component>
 
         <animation-change-score id="home-score-ani" show-score="show-score" initScore="{{ awayTeam.score }}"
-                             scoreChange="{{ awayTeam.scoreChange }}"></animation-change-score>
+                                scoreChange="{{ awayTeam.scoreChange }}"></animation-change-score>
+
+        <view class="gaming-dots gaming-dots--away">
+        <!--            犯规节点-->
+        <animation-change-status id="home-status-foul-ani" triggerTime="{{homeTeam.foulTriggerTime}}"
+                                 currentTriggerTime="{{homeTeam.foulTriggerTime}}" dot-style="home-dot-foul-style"
+                                 dot-active-style="home-dot-foul-active-style"></animation-change-status>
+
+            <!--            暂停节点-->
+            <animation-change-status id="home-status-pause-ani" triggerTime="{{pauseTriggerTime}}" order="desc"
+                                     currentTriggerTime="{{homeTeam.pauseCurrentTriggerTime}}" dot-style="home-dot-pause-style"
+                                     dot-active-style="home-dot-pause-active-style"></animation-change-status>
+    </view>
     </view>
 </view>

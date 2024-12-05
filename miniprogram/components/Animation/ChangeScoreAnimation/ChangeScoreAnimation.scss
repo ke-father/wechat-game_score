@@ -4,6 +4,7 @@ $animation-x: 100%;
 $animation-y: 0;
 
 .get-score {
+  height: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -11,7 +12,7 @@ $animation-y: 0;
 
   &--container {
     margin: 0;
-    line-height: 1;
+    line-height: 1px;
   }
 }
 

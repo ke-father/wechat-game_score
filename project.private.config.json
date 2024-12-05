@@ -10,9 +10,9 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/runGame/index",
-          "pathName": "pages/runGame/index",
-          "query": "gamePlayStyle=1",
+          "name": "pages/gaming/index",
+          "pathName": "pages/gaming/index",
+          "query": "id=1",
           "launchMode": "default",
           "scene": null
         }

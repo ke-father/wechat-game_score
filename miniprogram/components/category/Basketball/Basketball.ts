@@ -8,18 +8,21 @@ Component({
         homeTeam: {
             name: '主场队伍',
             score: 99,
+            foulTriggerTime: 5,
+            pauseCurrentTriggerTime: 2
         },
+        // 暂停节点总数
+        pauseTriggerTime: 3,
         // 客场队伍
         awayTeam: {
             name: '客场队伍',
             score: 99,
+            foulTriggerTime: 5
         },
         // 比赛节数
-        quarter: 'first',
+        quarter: 'Quarter 1',
         // 比赛时间
-        time: '9:28',
-        triggerTime: 5,
-        currentTriggerTime: 3
+        time: '9:28'
     },
 
     methods: {
@@ -30,9 +33,10 @@ Component({
             // console.log(getScoreAnimation)
             // getScoreAnimation.onScoreChange(3)
 
-            this.data.currentTriggerTime++
+            this.data.homeTeam.foulTriggerTime++
+
             this.setData({
-                currentTriggerTime: this.data.currentTriggerTime
+                homeTeam: this.data.homeTeam
             })
         }
     },

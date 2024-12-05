@@ -1,0 +1,132 @@
+<view class="run-game">
+    <view class="run-game-title">
+        <!--            返回按钮-->
+        <mp-icon icon="back" size="12" bindtap="onBackClick"></mp-icon>
+
+        <!--            比赛logo-->
+        <image class="run-game-title--logo" src="https://aprnine-game-score-application.oss-cn-nanjing.aliyuncs.com/base/basketball/basketBall_logo.png"></image>
+
+        <!--            比赛名称-->
+        <text class="run-game-title--name">篮球联赛</text>
+
+<!--        设置比赛名称与logo-->
+        <mp-icon extClass="run-game-title--modify" icon="pencil" size="12" bindtap="onModifyGameNameAndLogo"></mp-icon>
+    </view>
+
+    <view class="run-game-content">
+        <!-- 比赛信息 -->
+        <view class="game-info">
+            <text class="game-period">Quarter 1</text>
+            <text class="game-time">9:22</text>
+            <text class="game-type">Regular Season</text>
+        </view>
+
+        <!-- 比分展示 -->
+        <view class="score-board">
+            <!-- 主队 -->
+            <view class="team home-team">
+                <image class="team-logo" src="{{homeTeam.logo}}" mode="aspectFit"></image>
+                <text class="team-name">{{homeTeam.name}}</text>
+                <text class="team-score">{{homeTeam.score}}</text>
+                <!-- 暂停指示器 -->
+                <view class="timeout-indicators">
+                    <view class="indicator {{index < homeTeam.timeoutsLeft ? 'active' : ''}}" 
+                          wx:for="{{2}}" wx:key="index"></view>
+                </view>
+            </view>
+
+            <!-- 客队 -->
+            <view class="team away-team">
+                <image class="team-logo" src="{{awayTeam.logo}}" mode="aspectFit"></image>
+                <text class="team-name">{{awayTeam.name}}</text>
+                <text class="team-score">{{awayTeam.score}}</text>
+                <!-- 暂停指示器 -->
+                <view class="timeout-indicators">
+                    <view class="indicator {{index < awayTeam.timeoutsLeft ? 'active' : ''}}" 
+                          wx:for="{{2}}" wx:key="index"></view>
+                </view>
+            </view>
+        </view>
+
+        <!-- 控制按钮 -->
+        <view class="control-buttons">
+            <button class="control-btn" bindtap="onStartGame">Start</button>
+            <button class="control-btn" bindtap="onPauseGame">Pause</button>
+            <button class="control-btn" bindtap="onFoul">Foul</button>
+        </view>
+
+        <!-- 得分按钮 -->
+        <view class="score-buttons">
+            <button class="score-btn" bindtap="onScore" data-points="1">+1</button>
+            <button class="score-btn" bindtap="onScore" data-points="2">+2</button>
+            <button class="score-btn" bindtap="onScore" data-points="3">+3</button>
+            <button class="score-btn minus" bindtap="onScore" data-points="-1">-1</button>
+        </view>
+
+        <!-- 修改队员选择区域 -->
+        <view class="player-selector" 
+              bindtouchstart="handleTouchStart" 
+              bindtouchmove="handleTouchMove"
+              bindtouchend="handleTouchEnd">
+            <text class="section-title">Select Player</text>
+            <view class="player-list" catchtap="handlePlayerTap">
+                <view class="player-item {{currentPlayer === index ? 'active' : ''}}" 
+                      wx:for="{{4}}" wx:key="index"
+                      data-player="{{index}}"
+                      catchtap="selectPlayer">
+                    Player {{index + 1}}
+                </view>
+            </view>
+            <!-- 添加拖动提示器 -->
+            <view class="drag-indicator">
+                <view class="drag-line"></view>
+            </view>
+        </view>
+
+        <!-- 时间轴 -->
+        <view class="timeline">
+            <view class="timeline-container">
+                <!-- 时间标记 -->
+                <view class="time-marks">
+                    <text>0:00</text>
+                    <text>10:00</text>
+                </view>
+                <!-- 进度条 -->
+                <view class="progress-bar">
+                    <view class="progress" style="width: {{gameProgress}}%"></view>
+                    <!-- 时间节点指示器 -->
+                    <view class="quarter-marks">
+                        <view class="quarter-mark" wx:for="{{4}}" wx:key="index" 
+                              style="left: {{index * 25}}%"></view>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <!-- 队员选择抽屉 -->
+        <mp-half-screen-dialog 
+            show="{{showPlayerDrawer}}"
+            title="Player Stats"
+            subTitle="Select a player to record stats"
+            bindclose="onPlayerDrawerClose">
+            <view>
+                <view class="player-stats-list">
+                    <view class="player-stat-item" wx:for="{{4}}" wx:key="index"
+                          bindtap="selectPlayerFromDrawer" data-player="{{index}}">
+                        <view class="player-info">
+<!--                            <image class="player-avatar" src="{{playerAvatars[index]}}" mode="aspectFill"></image>-->
+                            <image class="player-avatar" src="" mode="aspectFill"></image>
+                            <view class="player-details">
+                                <text class="player-name">Player {{index + 1}}</text>
+                                <text class="player-stats">{{playerStats[index].points}} pts</text>
+                                <text class="player-stats">Fouls: {{playerStats[index].fouls}}</text>
+                                <text class="player-stats">FG: {{playerStats[index].fieldGoals}}</text>
+                                <text class="player-stats">FT: {{playerStats[index].freeThrows}}</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </mp-half-screen-dialog>
+    </view>
+</view>

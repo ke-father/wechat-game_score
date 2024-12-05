@@ -4,7 +4,7 @@
     "pages/record/index",
     "pages/me/index",
     "pages/createGame/index",
-    "pages/runGame/index"
+    "pages/gaming/index"
   ],
   "tabBar": {
     "custom": true,
