@@ -27,7 +27,7 @@ interface IPageTitleMethod {
     [key: string]: (...args: any[]) => any;
 }
 
-Component<IPageTitleData, IPageTitleProperty, IPageTitleMethod>({
+Component<IPageTitleData, IPageTitleProperty, IPageTitleMethod, any>({
     options: {
         multipleSlots: true
     },
@@ -54,7 +54,7 @@ Component<IPageTitleData, IPageTitleProperty, IPageTitleMethod>({
     lifetimes: {
         attached() {
             // 获取状态栏高度
-            const systemInfo = wx.getSystemInfoSync();
+            const systemInfo = wx.getWindowInfo();
             this.setData({
                 statusBarHeight: systemInfo.statusBarHeight
             });

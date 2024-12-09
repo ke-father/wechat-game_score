@@ -1,8 +1,9 @@
 .run-game {
   height: 100vh;
   background: #f5f5f5;
-  
+
   &-title {
+    z-index: 999;
     position: fixed;
     top: 5%;
     left: 24rpx;
@@ -35,8 +36,9 @@
     padding: 120rpx 32rpx 32rpx;
 
     .game-info {
-      text-align: center;
-      margin-bottom: 40rpx;
+      height: 100%;
+      display: grid;
+      grid-template-rows: 1fr 1fr;
 
       .game-period {
         font-size: 32rpx;

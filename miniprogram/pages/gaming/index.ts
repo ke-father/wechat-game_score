@@ -75,6 +75,7 @@ Page<IRunGameData, IRunGameCustom>({
     },
 
     onBackClick() {
+        console.log(111)
         wx.navigateBack();
     },
 
@@ -99,7 +100,7 @@ Page<IRunGameData, IRunGameCustom>({
     onScore(e: WechatMiniprogram.TouchEvent) {
         const points = parseInt(e.currentTarget.dataset.points);
         const currentTeam = 'homeTeam'; // TODO: 根据实际选中的队伍确定
-        
+
         this.setData({
             [`${currentTeam}.score`]: this.data[currentTeam].score + points
         });
@@ -121,9 +122,9 @@ Page<IRunGameData, IRunGameCustom>({
 
     selectPlayerFromDrawer(e: WechatMiniprogram.TouchEvent) {
         const player = e.currentTarget.dataset.player;
-        this.setData({ 
+        this.setData({
             currentPlayer: player,
-            showPlayerDrawer: false 
+            showPlayerDrawer: false
         });
     },
 
