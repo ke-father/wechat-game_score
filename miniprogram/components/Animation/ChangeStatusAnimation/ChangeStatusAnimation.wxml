@@ -1,5 +1,6 @@
 <view class="status-dots {{ order === 'asc' ? 'asc-dot' : 'desc-dot' }}">
     <view class="dot {{ item.active ? 'active dot-active-style' : 'dot-style' }} {{animating ? 'activating' : ''}} "
+          wx:if="{{elementDots.length}}"
           wx:for="{{elementDots}}"
           wx:key="index">
     </view>

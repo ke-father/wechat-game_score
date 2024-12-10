@@ -1,5 +1,6 @@
 .status-dots {
   display: flex;
+  flex-wrap: wrap;
   gap: 3rpx;
 
   &.asc-dot {

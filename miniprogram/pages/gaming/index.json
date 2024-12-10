@@ -2,6 +2,8 @@
   "usingComponents": {
     "page-title": "/components/PageTitleComponent/PageTitleComponent",
     "mp-icon": "weui-miniprogram/icon/icon",
-    "mp-half-screen-dialog": "weui-miniprogram/half-screen-dialog/half-screen-dialog"
+    "mp-half-screen-dialog": "weui-miniprogram/half-screen-dialog/half-screen-dialog",
+    "animation-change-score": "/components/Animation/ChangeScoreAnimation/ChangeScoreAnimation",
+    "animation-change-status": "/components/Animation/ChangeStatusAnimation/ChangeStatusAnimation"
   }
 }

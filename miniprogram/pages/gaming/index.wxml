@@ -1,4 +1,4 @@
-<view class="run-game">
+<view class="run-game" mut-bind:tap="handleGlobalClick">
     <page-title background="rgba(0,0,0,0)"></page-title>
 
     <view class="run-game-title">
@@ -28,14 +28,24 @@
         <view class="score-board">
             <!-- 主队 -->
             <view class="team home-team">
-                <image class="team-logo" src="{{homeTeam.logo}}" mode="aspectFit"></image>
-                <text class="team-name">{{homeTeam.name}}</text>
-                <text class="team-score">{{homeTeam.score}}</text>
-                <!-- 暂停指示器 -->
-                <!--                <view class="timeout-indicators">-->
-                <!--                    <view class="indicator {{index < homeTeam.timeoutsLeft ? 'active' : ''}}"-->
-                <!--                          wx:for="{{2}}" wx:key="index"></view>-->
-                <!--                </view>-->
+                <view class="team-info" style="opacity: {{ homeTeam.selected ? 1 : selectedOpacity }}" data-team="homeTeam" mut-bind:tap="handleTeamClick">
+                    <image class="team-logo" src="{{homeTeam.logo}}" mode="aspectFit"></image>
+                    <input class="team-name" data-team="homeTeam" bindinput="handleInput" value="{{homeTeam.name}}" />
+                    <text class="team-score">{{homeTeam.score}}</text>
+                </view>
+
+                <view class="team-dots">
+                    <!--            暂停节点-->
+                    <animation-change-status id="home-status-pause-ani" triggerTime="{{homeTeam.pauseTriggerTime}}"
+                                             currentTriggerTime="{{homeTeam.pauseTriggerTime}}"
+                                             dot-style="dot-pause-style"
+                                             dot-active-style="dot-pause-active-style"></animation-change-status>
+
+                    <!--            犯规节点-->
+                    <animation-change-status id="home-status-foul-ani" triggerTime="{{homeTeam.foulTriggerTime}}"
+                                             currentTriggerTime="{{homeTeam.foulTriggerTime}}" dot-style="dot-foul-style"
+                                             dot-active-style="dot-foul-active-style"></animation-change-status>
+                </view>
             </view>
 
             <!-- 比赛信息 -->
@@ -46,31 +56,48 @@
 
             <!-- 客队 -->
             <view class="team away-team">
-                <image class="team-logo" src="{{awayTeam.logo}}" mode="aspectFit"></image>
-                <text class="team-name">{{awayTeam.name}}</text>
-                <text class="team-score">{{awayTeam.score}}</text>
-                <!-- 暂停指示器 -->
-                <!--                <view class="timeout-indicators">-->
-                <!--                    <view class="indicator {{index < awayTeam.timeoutsLeft ? 'active' : ''}}"-->
-                <!--                          wx:for="{{2}}" wx:key="index"></view>-->
-                <!--                </view>-->
+                <view class="team-info" style="opacity: {{ awayTeam.selected ? 1 : selectedOpacity }}" data-team="awayTeam" mut-bind:tap="handleTeamClick">
+                    <image class="team-logo" src="{{awayTeam.logo}}" mode="aspectFit"></image>
+                    <input class="team-name" data-team="awayTeam" bindinput="handleInput" value="{{awayTeam.name}}" />
+                    <text class="team-score">{{awayTeam.score}}</text>
+                </view>
+
+                <view class="team-dots">
+                    <!--            暂停节点-->
+                    <animation-change-status id="home-status-pause-ani" triggerTime="{{awayTeam.pauseTriggerTime}}"
+                                             currentTriggerTime="{{awayTeam.pauseTriggerTime}}"
+                                             dot-style="dot-pause-style"
+                                             dot-active-style="dot-pause-active-style"></animation-change-status>
+
+                    <!--            犯规节点-->
+                    <animation-change-status id="home-status-foul-ani" triggerTime="{{awayTeam.foulTriggerTime}}"
+                                             currentTriggerTime="{{awayTeam.foulTriggerTime}}" dot-style="dot-foul-style"
+                                             dot-active-style="dot-foul-active-style"></animation-change-status>
+                </view>
             </view>
         </view>
 
         <!-- 控制按钮 -->
         <view class="control-buttons">
-            <button class="control-btn" bindtap="onStartGame">Start</button>
-            <button class="control-btn" bindtap="onPauseGame">Pause</button>
-            <button class="control-btn" bindtap="onFoul">Foul</button>
+            <button class="control-btn" mut-bind:tap="onStartGame">Start</button>
+            <button class="control-btn" mut-bind:tap="onPauseGame">Pause</button>
+            <button class="control-btn" mut-bind:tap="onFoul">Foul</button>
         </view>
 
         <!-- 得分按钮 -->
         <view class="score-buttons">
-            <button class="score-btn" bindtap="onScore" data-points="1">+1</button>
-            <button class="score-btn" bindtap="onScore" data-points="2">+2</button>
-            <button class="score-btn" bindtap="onScore" data-points="3">+3</button>
-            <button class="score-btn minus" bindtap="onScore" data-points="-1">-1</button>
+            <button class="score-btn" mut-bind:tap="onScore" data-points="1">+1</button>
+            <button class="score-btn" mut-bind:tap="onScore" data-points="2">+2</button>
+            <button class="score-btn" mut-bind:tap="onScore" data-points="3">+3</button>
+            <button class="score-btn minus" mut-bind:tap="onScore" data-points="-1">-1</button>
         </view>
+
+<!--        控制按钮-->
+<!--        <view class="control-buttons">-->
+<!--            <button class="control-btn" bindtap="onStartGame">重置操作</button>-->
+<!--            <button class="control-btn" bindtap="onFoul">结束本节</button>-->
+<!--            <button class="control-btn">结束比赛</button>-->
+<!--        </view>-->
 
         <!-- 修改队员选择区域 -->
         <!--        <view class="player-selector"-->

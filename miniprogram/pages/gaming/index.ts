@@ -2,13 +2,20 @@ interface ITeam {
     logo: string;
     name: string;
     score: number;
-    timeoutsLeft: number;
+    pauseTriggerTime: number;
+    foulTriggerTime: number;
+    selected: boolean;
 }
 
 interface IRunGameData {
+    // 展示队伍透明度 选择
+    selectedOpacity: number
+    // 暂停触发次数
+    pauseTriggerTime: number
     homeTeam: ITeam;
     awayTeam: ITeam;
     gameStatus: 'waiting' | 'playing' | 'paused' | 'finished';
+    currentTeam: 'homeTeam' | 'awayTeam' | undefined;
     currentPlayer: number | null;
     showPlayerDrawer: boolean;
     gameProgress: number;
@@ -38,23 +45,35 @@ interface IRunGameCustom {
     handleTouchMove: (e: WechatMiniprogram.TouchEvent) => void;
     handleTouchEnd: (e: WechatMiniprogram.TouchEvent) => void;
     handlePlayerTap: (e: WechatMiniprogram.TouchEvent) => void;
+    handleInput: (e: WechatMiniprogram.Input) => void;
+    handleGlobalClick: (e: WechatMiniprogram.Input) => void;
+    handleTeamClick: (e: WechatMiniprogram.Input) => void;
 }
 
 Page<IRunGameData, IRunGameCustom>({
     data: {
+        selectedOpacity: .7,
+        pauseTriggerTime: 3,
         homeTeam: {
             logo: "https://aprnine-game-score-application.oss-cn-nanjing.aliyuncs.com/base/basketball/CLE_logo.svg",
             name: "Warriors",
             score: 102,
-            timeoutsLeft: 2
+            pauseTriggerTime: 0,
+            foulTriggerTime: 0,
+            // 是否选中
+            selected: false
         },
         awayTeam: {
             logo: "https://aprnine-game-score-application.oss-cn-nanjing.aliyuncs.com/base/basketball/GSW_logo.svg",
             name: "Rockets",
             score: 98,
-            timeoutsLeft: 1
+            pauseTriggerTime: 0,
+            foulTriggerTime: 0,
+            // 是否选中
+            selected: false
         },
         gameStatus: 'playing',
+        currentTeam: undefined,
         currentPlayer: null,
         showPlayerDrawer: false,
         gameProgress: 35,
@@ -89,20 +108,40 @@ Page<IRunGameData, IRunGameCustom>({
     },
 
     onPauseGame() {
-        this.setData({ gameStatus: 'paused' });
+        if (this.data.currentTeam) {
+            // 获取当前队伍暂停次数
+            const currentTeamPauseTriggerTime = this.data[this.data.currentTeam].pauseTriggerTime + 1
+            // 如果当前队伍暂停次数大于设置的触发次数，直接返回
+            if (currentTeamPauseTriggerTime > this.data.pauseTriggerTime) return
+            // 更新数据
+            this.data[this.data.currentTeam].pauseTriggerTime = currentTeamPauseTriggerTime
+
+            // 更新视图
+            this.setData({
+                [this.data.currentTeam]: this.data[this.data.currentTeam]
+            })
+        } else {
+            this.setData({ gameStatus: 'paused' });
+        }
     },
 
     onFoul() {
-        // TODO: 实现犯规记录功能
-        console.log('记录犯规');
+        if (!this.data.currentTeam) return;
+
+        const currentTeamFoulTriggerTime = this.data[this.data.currentTeam].foulTriggerTime + 1
+
+        this.setData({
+            [`${this.data.currentTeam}.foulTriggerTime`]: currentTeamFoulTriggerTime
+        })
     },
 
     onScore(e: WechatMiniprogram.TouchEvent) {
+        if (!this.data.currentTeam) return;
+
         const points = parseInt(e.currentTarget.dataset.points);
-        const currentTeam = 'homeTeam'; // TODO: 根据实际选中的队伍确定
 
         this.setData({
-            [`${currentTeam}.score`]: this.data[currentTeam].score + points
+            [`${this.data.currentTeam}.score`]: this.data[this.data.currentTeam].score + points
         });
     },
 
@@ -162,5 +201,47 @@ Page<IRunGameData, IRunGameCustom>({
         console.log(e)
         // 阻止事件冒泡，确保点击队员时不会触发拖动事件
         // e.stopPropagation();
+    },
+
+    // 处理队伍名称输入
+    handleInput (e) {
+        console.log(e)
+
+        // return {
+        //     // @ts-ignore
+        //     value: this.data[team].name
+        // }
+    },
+
+    // 关于全局点击操作
+    handleGlobalClick () {
+        console.log('global')
+        // 去除队伍选择
+        this.data.homeTeam.selected = false
+        this.data.awayTeam.selected = false
+        this.data.currentTeam = undefined
+
+        this.setData({
+            homeTeam: this.data.homeTeam,
+            awayTeam: this.data.awayTeam
+        })
+    },
+
+    // 关于队伍点击
+    handleTeamClick (e) {
+        // 获取绑定数据
+        const { team } = e.currentTarget.dataset
+
+        // 获取另一个数据内容
+        const otherTeam = team === 'homeTeam' ? 'awayTeam' : 'homeTeam'
+        const teamName = team === 'homeTeam' ? 'homeTeam' : 'awayTeam'
+        this.data[otherTeam].selected = false
+        this.data[teamName].selected = true
+        this.data.currentTeam = team
+
+        this.setData({
+            [otherTeam]: this.data[otherTeam],
+            [teamName]: this.data[teamName]
+        })
     }
 });

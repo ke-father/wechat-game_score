@@ -20,9 +20,9 @@ Component({
         triggerTime: {
             type: Number,
             value: 0,
-            observer: (newVal, oldVal, changedPath) => {
-                console.log(newVal, oldVal, changedPath)
-            }
+            // observer: (newVal, oldVal, changedPath) => {
+            //     console.log(newVal, oldVal, changedPath)
+            // }
         },
 
         // 当前触发次数
@@ -50,6 +50,12 @@ Component({
                 active: false
             }
         ]
+    },
+
+    lifetimes: {
+        attached() {
+            this.start()
+        }
     },
 
     methods: {
