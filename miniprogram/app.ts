@@ -2,6 +2,10 @@
 import { getSessionKey} from "./api/login";
 import DataManager from "./global/DataManager";
 
+interface IAppOption {
+    globalData: any
+}
+
 interface ICustomOptions {
   login: () => void
 }
@@ -9,27 +13,33 @@ interface ICustomOptions {
 App<IAppOption & ICustomOptions>({
   globalData: {},
   onLaunch() {
-    this.login()
+    wx.checkSession({
+      success() {
+        console.log(2222)
+      },
+      fail: () => {
+        console.log(1111)
+        this.login()
+      }
+    })
   },
 
   async login () {
     try {
-      if (DataManager.Instance.openId && DataManager.Instance.sessionKey) return
       await wx.login({
         async success(res) {
           // 发送请求获取对话key
-          let { status, message, data } = await getSessionKey(res.code)
-          if (!status) throw message
+          let data = await getSessionKey(res.code)
 
-          DataManager.Instance.openId = data.openid
+          DataManager.Instance.token = data.openid
           DataManager.Instance.sessionKey = data.session_key
         },
         fail(e) {
-          console.log(e)
+          console.error(e)
         }
       })
     } catch (e) {
-      console.log(e)
+      console.error(e)
     }
   }
 })

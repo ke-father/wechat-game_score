@@ -1,4 +1,4 @@
-import Singleton from "../base/Singleton";
+// import Singleton from "../base/Singleton";
 import Storage from "../utils/storage";
 
 const { setStorage, getStorage } = Storage()
@@ -6,59 +6,62 @@ const { setStorage, getStorage } = Storage()
 // 会话session_key
 const SESSION_KEY = Symbol('session_key')
 // 用户唯一标识id
-const OPEN_ID = Symbol('open_id')
+const TOKEN = Symbol('token')
 
-class DataManager extends Singleton {
-    static get Instance() {
-        return super.GetInstance<DataManager>();
+class DataManager {
+    private _loginStatus: boolean;
+    private _token: string;
+    private _sessionKey: string;
+    private _tabbar: number;
+    constructor() {
+        this._loginStatus = false
+        this._token = getStorage<string>(String(TOKEN))
+        // 会话key
+        this._sessionKey = getStorage<string>(String(SESSION_KEY))
+        this._tabbar = 0
     }
 
-    // 登录状态
-    #_loginStatus = false
+    get Instance() {
+        return this
+    }
 
     get loginStatus() {
-        return this.#_loginStatus
+        return this._loginStatus
     }
 
     set loginStatus(value) {
-        this.#_loginStatus = value
+        this._loginStatus = value
     }
 
-    // 会话key
-    #_sessionKey = getStorage<string>(String(SESSION_KEY))
-
     get sessionKey () {
-        return this.#_sessionKey
+        return this._sessionKey
     }
 
     set sessionKey (value) {
 
-        this.#_sessionKey = value
+        this._sessionKey = value
         setStorage(String(SESSION_KEY), value).then()
     }
 
-    // 用户唯一标识
-    #_openId = getStorage<string>(String(OPEN_ID))
-
-    get openId () {
-        return this.#_openId
+    get token () {
+        return this._token
     }
 
-    set openId (value) {
-        this.#_openId = value
-        setStorage(String(OPEN_ID), value).then()
+    set token (value) {
+        this._token = value
+        setStorage(String(TOKEN), value).then()
     }
 
-
-    #_tabbar = 0
 
     get tabbar() {
-        return this.#_tabbar
+        return this._tabbar
     }
 
     set tabbar(value) {
-        this.#_tabbar = value
+        this._tabbar = value
     }
 }
 
-export default DataManager
+const dataManager = new DataManager()
+
+export default dataManager

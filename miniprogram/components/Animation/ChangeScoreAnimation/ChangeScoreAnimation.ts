@@ -36,9 +36,12 @@ Component({
                 scoreChange: score,
                 showScoreAnim: true
             });
+            const date = this.properties.propAnimationConfig.scoreChangeDuration
+                ? this.properties.propAnimationConfig.scoreChangeDuration
+                : this.data.animationConfig.scoreChangeDuration
             setTimeout(() => {
                 this.setData({ showScoreAnim: false });
-            }, this.properties.propAnimationConfig?.scoreChangeDuration || this.data.animationConfig.scoreChangeDuration);  // 配合新的动画时长
+            }, date);  // 配合新的动画时长
         },
 
         // 在得分更新的地方调用动画
@@ -48,6 +51,9 @@ Component({
             // 更新实际比分...
             // TODO 逐步加分
             let i = score
+            const date = this.properties.propAnimationConfig.scoreDuration
+                ? this.properties.propAnimationConfig.scoreDuration
+                : this.data.animationConfig.scoreDuration
             let timer: number = setInterval(() => {
                 if (i <= 0) return clearInterval(timer)
                 console.log(i)
@@ -56,7 +62,7 @@ Component({
                 })
                 console.log(this.data.score)
                 i--
-            }, this.properties.propAnimationConfig?.scoreDuration || this.data.animationConfig.scoreDuration)
+            }, date)
         },
     },
 

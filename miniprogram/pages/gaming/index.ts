@@ -1,3 +1,6 @@
+import {GAME_STATUS} from "../../types/gameStatus";
+import watch from "../../utils/dataUtils/watch";
+
 interface ITeam {
     logo: string;
     name: string;
@@ -7,24 +10,44 @@ interface ITeam {
     selected: boolean;
 }
 
+interface IGame {
+    // 比赛名称
+    gameName: string;
+    // 比赛logo
+    gameLogo?: string;
+    // 比赛 节点
+    point: number
+    // 单场比赛时间
+    date: number
+}
+
 interface IRunGameData {
+    // 比赛信息
+    game: IGame
     // 展示队伍透明度 选择
     selectedOpacity: number
     // 暂停触发次数
     pauseTriggerTime: number
     homeTeam: ITeam;
     awayTeam: ITeam;
-    gameStatus: 'waiting' | 'playing' | 'paused' | 'finished';
+    // 比赛状态
+    gameStatus: GAME_STATUS;
+    // 当前选择队伍
     currentTeam: 'homeTeam' | 'awayTeam' | undefined;
+    // 当前选择队员
     currentPlayer: number | null;
+    // 展示队员选择抽屉
     showPlayerDrawer: boolean;
+    // 比赛进度
     gameProgress: number;
+    // 比赛节点
     playerStats: {
         points: number;
         fouls: number;
         fieldGoals: string;
         freeThrows: string;
     }[];
+    // 队员展示
     playerAvatars: string[];
     touchStartY: number;
     isDragging: boolean;
@@ -48,10 +71,22 @@ interface IRunGameCustom {
     handleInput: (e: WechatMiniprogram.Input) => void;
     handleGlobalClick: (e: WechatMiniprogram.Input) => void;
     handleTeamClick: (e: WechatMiniprogram.Input) => void;
+    /**
+     * 监听比赛状态变化
+     * @param newValue 新状态
+     * @param oldValue 旧状态
+     */
+    listenGameStatusChange: (newValue: any, oldValue?: any) => void;
 }
 
 Page<IRunGameData, IRunGameCustom>({
     data: {
+        game: {
+            gameLogo: "https://aprnine-game-score-application.oss-cn-nanjing.aliyuncs.com/base/basketball/basketBall_logo.png",
+            gameName: "篮球联赛",
+            point: 0,
+            date: 10 * 60 * 1000
+        },
         selectedOpacity: .7,
         pauseTriggerTime: 3,
         homeTeam: {
@@ -72,7 +107,7 @@ Page<IRunGameData, IRunGameCustom>({
             // 是否选中
             selected: false
         },
-        gameStatus: 'playing',
+        gameStatus: GAME_STATUS.WAITING,
         currentTeam: undefined,
         currentPlayer: null,
         showPlayerDrawer: false,
@@ -93,6 +128,20 @@ Page<IRunGameData, IRunGameCustom>({
         isDragging: false
     },
 
+    // 生命周期 —— 挂载成功后
+    onReady(): void | Promise<void> {
+        watch(this, {
+            'gameStatus': {
+                target: this.data,
+                handler: this.listenGameStatusChange
+            }
+        })
+    },
+
+    listenGameStatusChange (newValue: any, oldValue: any) {
+        console.log(newValue, oldValue)
+    },
+
     onBackClick() {
         console.log(111)
         wx.navigateBack();
@@ -104,9 +153,10 @@ Page<IRunGameData, IRunGameCustom>({
     },
 
     onStartGame() {
-        this.setData({ gameStatus: 'playing' });
+        this.setData({ gameStatus: GAME_STATUS.PLAYING });
     },
 
+    // 暂停
     onPauseGame() {
         if (this.data.currentTeam) {
             // 获取当前队伍暂停次数
@@ -121,7 +171,7 @@ Page<IRunGameData, IRunGameCustom>({
                 [this.data.currentTeam]: this.data[this.data.currentTeam]
             })
         } else {
-            this.setData({ gameStatus: 'paused' });
+            this.setData({ gameStatus: GAME_STATUS.PAUSED });
         }
     },
 

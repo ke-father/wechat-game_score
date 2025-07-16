@@ -7,10 +7,10 @@
 
         <!--            比赛logo-->
         <image class="run-game-title--logo"
-               src="https://aprnine-game-score-application.oss-cn-nanjing.aliyuncs.com/base/basketball/basketBall_logo.png"></image>
+               src="{{ game.gameLogo }}"></image>
 
         <!--            比赛名称-->
-        <text class="run-game-title--name">篮球联赛</text>
+        <text class="run-game-title--name">{{game.gameName}}</text>
 
         <!--        设置比赛名称与logo-->
         <mp-icon extClass="run-game-title--modify" icon="pencil" size="12" bindtap="onModifyGameNameAndLogo"></mp-icon>
@@ -28,9 +28,10 @@
         <view class="score-board">
             <!-- 主队 -->
             <view class="team home-team">
-                <view class="team-info" style="opacity: {{ homeTeam.selected ? 1 : selectedOpacity }}" data-team="homeTeam" mut-bind:tap="handleTeamClick">
+                <view class="team-info" style="opacity: {{ homeTeam.selected ? 1 : selectedOpacity }}"
+                      data-team="homeTeam" mut-bind:tap="handleTeamClick">
                     <image class="team-logo" src="{{homeTeam.logo}}" mode="aspectFit"></image>
-                    <input class="team-name" data-team="homeTeam" bindinput="handleInput" value="{{homeTeam.name}}" />
+                    <input class="team-name" data-team="homeTeam" bindinput="handleInput" value="{{homeTeam.name}}"/>
                     <text class="team-score">{{homeTeam.score}}</text>
                 </view>
 
@@ -43,22 +44,24 @@
 
                     <!--            犯规节点-->
                     <animation-change-status id="home-status-foul-ani" triggerTime="{{homeTeam.foulTriggerTime}}"
-                                             currentTriggerTime="{{homeTeam.foulTriggerTime}}" dot-style="dot-foul-style"
+                                             currentTriggerTime="{{homeTeam.foulTriggerTime}}"
+                                             dot-style="dot-foul-style"
                                              dot-active-style="dot-foul-active-style"></animation-change-status>
                 </view>
             </view>
 
             <!-- 比赛信息 -->
             <view class="game-info">
-                <text class="game-period">Quarter 1</text>
-                <text class="game-time">9:22</text>
+                <text class="game-period">{{ game.point }}</text>
+                <text class="game-time">{{ game.date }}</text>
             </view>
 
             <!-- 客队 -->
             <view class="team away-team">
-                <view class="team-info" style="opacity: {{ awayTeam.selected ? 1 : selectedOpacity }}" data-team="awayTeam" mut-bind:tap="handleTeamClick">
+                <view class="team-info" style="opacity: {{ awayTeam.selected ? 1 : selectedOpacity }}"
+                      data-team="awayTeam" mut-bind:tap="handleTeamClick">
                     <image class="team-logo" src="{{awayTeam.logo}}" mode="aspectFit"></image>
-                    <input class="team-name" data-team="awayTeam" bindinput="handleInput" value="{{awayTeam.name}}" />
+                    <input class="team-name" data-team="awayTeam" bindinput="handleInput" value="{{awayTeam.name}}"/>
                     <text class="team-score">{{awayTeam.score}}</text>
                 </view>
 
@@ -71,7 +74,8 @@
 
                     <!--            犯规节点-->
                     <animation-change-status id="home-status-foul-ani" triggerTime="{{awayTeam.foulTriggerTime}}"
-                                             currentTriggerTime="{{awayTeam.foulTriggerTime}}" dot-style="dot-foul-style"
+                                             currentTriggerTime="{{awayTeam.foulTriggerTime}}"
+                                             dot-style="dot-foul-style"
                                              dot-active-style="dot-foul-active-style"></animation-change-status>
                 </view>
             </view>
@@ -92,12 +96,12 @@
             <button class="score-btn minus" mut-bind:tap="onScore" data-points="-1">-1</button>
         </view>
 
-<!--        控制按钮-->
-<!--        <view class="control-buttons">-->
-<!--            <button class="control-btn" bindtap="onStartGame">重置操作</button>-->
-<!--            <button class="control-btn" bindtap="onFoul">结束本节</button>-->
-<!--            <button class="control-btn">结束比赛</button>-->
-<!--        </view>-->
+        <!--        控制按钮-->
+        <!--        <view class="control-buttons">-->
+        <!--            <button class="control-btn" bindtap="onStartGame">重置操作</button>-->
+        <!--            <button class="control-btn" bindtap="onFoul">结束本节</button>-->
+        <!--            <button class="control-btn">结束比赛</button>-->
+        <!--        </view>-->
 
         <!-- 修改队员选择区域 -->
         <!--        <view class="player-selector"-->

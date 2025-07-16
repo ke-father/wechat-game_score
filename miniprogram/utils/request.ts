@@ -1,8 +1,5 @@
-import { mockCurrentGameResponse } from '../mock/gameData'
-import { ENV } from '../config/config'
-
-// 模拟请求延迟
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+import { API_BASE_URL } from '../config/config'
+import DataManager from "../global/DataManager";
 
 interface RequestOptions {
   url: string;
@@ -11,29 +8,23 @@ interface RequestOptions {
 }
 
 class Request {
-  async request<T>(options: RequestOptions): Promise<T> {
-    // 如果是开发环境且启用了mock
-    if (ENV.development && ENV.mock) {
-      await delay(300)  // 模拟网络延迟
-      
-      // 根据不同的 URL 返回不同的 mock 数据
-      if (options.url.includes('/game/current')) {
-        return mockCurrentGameResponse as T
-      }
-      
-      return {} as T
-    }
-
-    // 实际的请求逻辑
-    try {
-      const response = await wx.request({
+  async request<T = any>(options: RequestOptions): Promise<T> {
+    return new Promise<T>((resolve, reject) => {
+      wx.request({
         ...options,
-      }) as unknown as { data: T }
-      return response.data
-    } catch (error) {
-      console.error('Request failed:', error)
-      throw error
-    }
+        url: `${API_BASE_URL}${options.url}`,
+        header: {
+          token: DataManager.Instance.token
+        },
+        success: (response: any ) => {
+          const { data } = response.data
+          resolve(data)
+        },
+        fail: (error) => {
+          reject(error)
+        }
+      })
+    })
   }
 
   get<T>(options: Omit<RequestOptions, 'method'>): Promise<T> {
@@ -41,6 +32,8 @@ class Request {
   }
 
   post<T>(options: Omit<RequestOptions, 'method'>): Promise<T> {
+    // const { status, message, data } = await this.request<T>({ ...options, method: 'POST' });
+
     return this.request<T>({ ...options, method: 'POST' });
   }
 }
