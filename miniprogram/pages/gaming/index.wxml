@@ -1,172 +1,231 @@
 <view class="run-game" mut-bind:tap="handleGlobalClick">
-    <page-title background="rgba(0,0,0,0)"></page-title>
+    <page-title background="rgba(0,0,0,0)">
+        <!--        <view slot="title"> {{ game.gameName }}</view>-->
+    </page-title>
 
-    <view class="run-game-title">
-        <!--            返回按钮-->
-        <mp-icon icon="back" size="12" bindtap="onBackClick"></mp-icon>
+    <!--    <view class="run-game-title">-->
+    <!--        &lt;!&ndash;            返回按钮&ndash;&gt;-->
+    <!--        <mp-icon icon="back" size="12" bindtap="onBackClick"></mp-icon>-->
 
-        <!--            比赛logo-->
-        <image class="run-game-title--logo"
-               src="{{ game.gameLogo }}"></image>
+    <!--       <view class="run-game-title&#45;&#45;info">-->
+    <!--           &lt;!&ndash;            比赛logo&ndash;&gt;-->
+    <!--           <image class="run-game-title&#45;&#45;logo"-->
+    <!--                  src="{{ game.gameLogo }}"></image>-->
 
-        <!--            比赛名称-->
-        <text class="run-game-title--name">{{game.gameName}}</text>
+    <!--           &lt;!&ndash;            比赛名称&ndash;&gt;-->
+    <!--           <text class="run-game-title&#45;&#45;name">{{game.gameName}}</text>-->
+    <!--        </view>-->
 
-        <!--        设置比赛名称与logo-->
-        <mp-icon extClass="run-game-title--modify" icon="pencil" size="12" bindtap="onModifyGameNameAndLogo"></mp-icon>
-    </view>
+    <!--        <view class="run-game-title&#45;&#45;handle">-->
+    <!--            &lt;!&ndash;        设置比赛名称与logo&ndash;&gt;-->
+    <!--            <mp-icon extClass="run-game-title&#45;&#45;modify" icon="pencil" size="12" bindtap="onModifyGameNameAndLogo"></mp-icon>-->
+    <!--        </view>-->
+    <!--    </view>-->
 
-    <view class="run-game-content">
-        <!--        &lt;!&ndash; 比赛信息 &ndash;&gt;-->
-        <!--        <view class="game-info">-->
-        <!--            <text class="game-period">Quarter 1</text>-->
-        <!--            <text class="game-time">9:22</text>-->
-        <!--            <text class="game-type">Regular Season</text>-->
-        <!--        </view>-->
+    <!--    <view class="run-game-content">-->
+    <!--        &lt;!&ndash;        &lt;!&ndash; 比赛信息 &ndash;&gt;&ndash;&gt;-->
+    <!--        &lt;!&ndash;        <view class="game-info">&ndash;&gt;-->
+    <!--        &lt;!&ndash;            <text class="game-period">Quarter 1</text>&ndash;&gt;-->
+    <!--        &lt;!&ndash;            <text class="game-time">9:22</text>&ndash;&gt;-->
+    <!--        &lt;!&ndash;            <text class="game-type">Regular Season</text>&ndash;&gt;-->
+    <!--        &lt;!&ndash;        </view>&ndash;&gt;-->
 
-        <!-- 比分展示 -->
-        <view class="score-board">
-            <!-- 主队 -->
-            <view class="team home-team">
-                <view class="team-info" style="opacity: {{ homeTeam.selected ? 1 : selectedOpacity }}"
-                      data-team="homeTeam" mut-bind:tap="handleTeamClick">
-                    <image class="team-logo" src="{{homeTeam.logo}}" mode="aspectFit"></image>
-                    <input class="team-name" data-team="homeTeam" bindinput="handleInput" value="{{homeTeam.name}}"/>
-                    <text class="team-score">{{homeTeam.score}}</text>
+    <!--        &lt;!&ndash; 比分展示 &ndash;&gt;-->
+    <!--        <view class="score-board">-->
+    <!--            &lt;!&ndash; 主队 &ndash;&gt;-->
+    <!--            <view class="team home-team">-->
+    <!--                <view class="team-info" style="opacity: {{ homeTeam.selected ? 1 : selectedOpacity }}"-->
+    <!--                      data-team="homeTeam" mut-bind:tap="handleTeamClick">-->
+    <!--                    <image class="team-logo" src="{{homeTeam.logo}}" mode="aspectFit"></image>-->
+    <!--                    <input class="team-name" data-team="homeTeam" bindinput="handleInput" value="{{homeTeam.name}}"/>-->
+    <!--                    <text class="team-score">{{homeTeam.score}}</text>-->
+    <!--                </view>-->
+
+    <!--                <view class="team-dots">-->
+    <!--                    &lt;!&ndash;            暂停节点&ndash;&gt;-->
+    <!--                    <animation-change-status id="home-status-pause-ani" triggerTime="{{homeTeam.pauseTriggerTime}}"-->
+    <!--                                             currentTriggerTime="{{homeTeam.pauseTriggerTime}}"-->
+    <!--                                             dot-style="dot-pause-style"-->
+    <!--                                             dot-active-style="dot-pause-active-style"></animation-change-status>-->
+
+    <!--                    &lt;!&ndash;            犯规节点&ndash;&gt;-->
+    <!--                    <animation-change-status id="home-status-foul-ani" triggerTime="{{homeTeam.foulTriggerTime}}"-->
+    <!--                                             currentTriggerTime="{{homeTeam.foulTriggerTime}}"-->
+    <!--                                             dot-style="dot-foul-style"-->
+    <!--                                             dot-active-style="dot-foul-active-style"></animation-change-status>-->
+    <!--                </view>-->
+    <!--            </view>-->
+
+    <!--            &lt;!&ndash; 比赛信息 &ndash;&gt;-->
+    <!--            <view class="game-info">-->
+    <!--                <text class="game-period">{{ game.point }}</text>-->
+    <!--                <text class="game-time">{{ game.date }}</text>-->
+    <!--            </view>-->
+
+    <!--            &lt;!&ndash; 客队 &ndash;&gt;-->
+    <!--            <view class="team away-team">-->
+    <!--                <view class="team-info" style="opacity: {{ awayTeam.selected ? 1 : selectedOpacity }}"-->
+    <!--                      data-team="awayTeam" mut-bind:tap="handleTeamClick">-->
+    <!--                    <image class="team-logo" src="{{awayTeam.logo}}" mode="aspectFit"></image>-->
+    <!--                    <input class="team-name" data-team="awayTeam" bindinput="handleInput" value="{{awayTeam.name}}"/>-->
+    <!--                    <text class="team-score">{{awayTeam.score}}</text>-->
+    <!--                </view>-->
+
+    <!--                <view class="team-dots">-->
+    <!--                    &lt;!&ndash;            暂停节点&ndash;&gt;-->
+    <!--                    <animation-change-status id="home-status-pause-ani" triggerTime="{{awayTeam.pauseTriggerTime}}"-->
+    <!--                                             currentTriggerTime="{{awayTeam.pauseTriggerTime}}"-->
+    <!--                                             dot-style="dot-pause-style"-->
+    <!--                                             dot-active-style="dot-pause-active-style"></animation-change-status>-->
+
+    <!--                    &lt;!&ndash;            犯规节点&ndash;&gt;-->
+    <!--                    <animation-change-status id="home-status-foul-ani" triggerTime="{{awayTeam.foulTriggerTime}}"-->
+    <!--                                             currentTriggerTime="{{awayTeam.foulTriggerTime}}"-->
+    <!--                                             dot-style="dot-foul-style"-->
+    <!--                                             dot-active-style="dot-foul-active-style"></animation-change-status>-->
+    <!--                </view>-->
+    <!--            </view>-->
+    <!--        </view>-->
+
+    <!--        &lt;!&ndash; 控制按钮 &ndash;&gt;-->
+    <!--        <view class="control-buttons">-->
+    <!--            <button class="control-btn" mut-bind:tap="onStartGame">Start</button>-->
+    <!--            <button class="control-btn" mut-bind:tap="onPauseGame">Pause</button>-->
+    <!--            <button class="control-btn" mut-bind:tap="onFoul">Foul</button>-->
+    <!--        </view>-->
+
+    <!--        &lt;!&ndash; 得分按钮 &ndash;&gt;-->
+    <!--        <view class="score-buttons">-->
+    <!--            <button class="score-btn" mut-bind:tap="onScore" data-points="1">+1</button>-->
+    <!--            <button class="score-btn" mut-bind:tap="onScore" data-points="2">+2</button>-->
+    <!--            <button class="score-btn" mut-bind:tap="onScore" data-points="3">+3</button>-->
+    <!--            <button class="score-btn minus" mut-bind:tap="onScore" data-points="-1">-1</button>-->
+    <!--        </view>-->
+
+    <!--        &lt;!&ndash;        控制按钮&ndash;&gt;-->
+    <!--        &lt;!&ndash;        <view class="control-buttons">&ndash;&gt;-->
+    <!--        &lt;!&ndash;            <button class="control-btn" bindtap="onStartGame">重置操作</button>&ndash;&gt;-->
+    <!--        &lt;!&ndash;            <button class="control-btn" bindtap="onFoul">结束本节</button>&ndash;&gt;-->
+    <!--        &lt;!&ndash;            <button class="control-btn">结束比赛</button>&ndash;&gt;-->
+    <!--        &lt;!&ndash;        </view>&ndash;&gt;-->
+
+    <!--        &lt;!&ndash; 修改队员选择区域 &ndash;&gt;-->
+    <!--        &lt;!&ndash;        <view class="player-selector"&ndash;&gt;-->
+    <!--        &lt;!&ndash;              bindtouchstart="handleTouchStart"&ndash;&gt;-->
+    <!--        &lt;!&ndash;              bindtouchmove="handleTouchMove"&ndash;&gt;-->
+    <!--        &lt;!&ndash;              bindtouchend="handleTouchEnd">&ndash;&gt;-->
+    <!--        &lt;!&ndash;            <text class="section-title">Select Player</text>&ndash;&gt;-->
+    <!--        &lt;!&ndash;            <view class="player-list" catchtap="handlePlayerTap">&ndash;&gt;-->
+    <!--        &lt;!&ndash;                <view class="player-item {{currentPlayer === index ? 'active' : ''}}"&ndash;&gt;-->
+    <!--        &lt;!&ndash;                      wx:for="{{4}}" wx:key="index"&ndash;&gt;-->
+    <!--        &lt;!&ndash;                      data-player="{{index}}"&ndash;&gt;-->
+    <!--        &lt;!&ndash;                      catchtap="selectPlayer">&ndash;&gt;-->
+    <!--        &lt;!&ndash;                    Player {{index + 1}}&ndash;&gt;-->
+    <!--        &lt;!&ndash;                </view>&ndash;&gt;-->
+    <!--        &lt;!&ndash;            </view>&ndash;&gt;-->
+    <!--        &lt;!&ndash;            &lt;!&ndash; 添加拖动提示器 &ndash;&gt;&ndash;&gt;-->
+    <!--        &lt;!&ndash;            <view class="drag-indicator">&ndash;&gt;-->
+    <!--        &lt;!&ndash;                <view class="drag-line"></view>&ndash;&gt;-->
+    <!--        &lt;!&ndash;            </view>&ndash;&gt;-->
+    <!--        &lt;!&ndash;        </view>&ndash;&gt;-->
+
+    <!--        &lt;!&ndash; 时间轴 &ndash;&gt;-->
+    <!--        <view class="timeline">-->
+    <!--            <view class="timeline-container">-->
+    <!--                &lt;!&ndash; 时间标记 &ndash;&gt;-->
+    <!--                <view class="time-marks">-->
+    <!--                    <text>0:00</text>-->
+    <!--                    <text>10:00</text>-->
+    <!--                </view>-->
+    <!--                &lt;!&ndash; 进度条 &ndash;&gt;-->
+    <!--                <view class="progress-bar">-->
+    <!--                    <view class="progress" style="width: {{gameProgress}}%"></view>-->
+    <!--                    &lt;!&ndash; 时间节点指示器 &ndash;&gt;-->
+    <!--                    <view class="quarter-marks">-->
+    <!--                        <view class="quarter-mark" wx:for="{{4}}" wx:key="index"-->
+    <!--                              style="left: {{index * 25}}%"></view>-->
+    <!--                    </view>-->
+    <!--                </view>-->
+    <!--            </view>-->
+    <!--        </view>-->
+
+    <!--        &lt;!&ndash; 队员选择抽屉 &ndash;&gt;-->
+    <!--        <mp-half-screen-dialog-->
+    <!--                show="{{showPlayerDrawer}}"-->
+    <!--                title="Player Stats"-->
+    <!--                subTitle="Select a player to record stats"-->
+    <!--                bindclose="onPlayerDrawerClose">-->
+    <!--            <view>-->
+    <!--                <view class="player-stats-list">-->
+    <!--                    <view class="player-stat-item" wx:for="{{4}}" wx:key="index"-->
+    <!--                          bindtap="selectPlayerFromDrawer" data-player="{{index}}">-->
+    <!--                        <view class="player-info">-->
+    <!--                            &lt;!&ndash;                            <image class="player-avatar" src="{{playerAvatars[index]}}" mode="aspectFill"></image>&ndash;&gt;-->
+    <!--                            <image class="player-avatar" src="" mode="aspectFill"></image>-->
+    <!--                            <view class="player-details">-->
+    <!--                                <text class="player-name">Player {{index + 1}}</text>-->
+    <!--                                <text class="player-stats">{{playerStats[index].points}} pts</text>-->
+    <!--                                <text class="player-stats">Fouls: {{playerStats[index].fouls}}</text>-->
+    <!--                                <text class="player-stats">FG: {{playerStats[index].fieldGoals}}</text>-->
+    <!--                                <text class="player-stats">FT: {{playerStats[index].freeThrows}}</text>-->
+    <!--                            </view>-->
+    <!--                        </view>-->
+    <!--                    </view>-->
+    <!--                </view>-->
+    <!--            </view>-->
+    <!--        </mp-half-screen-dialog>-->
+    <!--    </view>-->
+
+    <page-card>
+        <view class="run-game-top">
+            <!--            顶部score-->
+            <view class="handle-team">
+                <!--                主队-->
+                <view>
+                    <avatar avatarUrl="{{ homeTeam.logo }}" nickname="{{ homeTeam.name }}" showPosition="top"></avatar>
                 </view>
 
-                <view class="team-dots">
-                    <!--            暂停节点-->
-                    <animation-change-status id="home-status-pause-ani" triggerTime="{{homeTeam.pauseTriggerTime}}"
-                                             currentTriggerTime="{{homeTeam.pauseTriggerTime}}"
-                                             dot-style="dot-pause-style"
-                                             dot-active-style="dot-pause-active-style"></animation-change-status>
+                <!--                分数等节点-->
+                <view class="score-node">
+                    <view>
+                        <!--                        时间-->
+                        <view>
+                            <!--                            比赛节数-->
+                            <text>{{ game.point }}</text>
 
-                    <!--            犯规节点-->
-                    <animation-change-status id="home-status-foul-ani" triggerTime="{{homeTeam.foulTriggerTime}}"
-                                             currentTriggerTime="{{homeTeam.foulTriggerTime}}"
-                                             dot-style="dot-foul-style"
-                                             dot-active-style="dot-foul-active-style"></animation-change-status>
-                </view>
-            </view>
+                            <!--                            比赛时间-->
+                            <text>{{ game.date }}</text>
+                        </view>
 
-            <!-- 比赛信息 -->
-            <view class="game-info">
-                <text class="game-period">{{ game.point }}</text>
-                <text class="game-time">{{ game.date }}</text>
-            </view>
+                        <!--                        分数-->
+                        <view>
+                            <!--                            主队-->
+                            <text>{{ homeTeam.score }}</text>
 
-            <!-- 客队 -->
-            <view class="team away-team">
-                <view class="team-info" style="opacity: {{ awayTeam.selected ? 1 : selectedOpacity }}"
-                      data-team="awayTeam" mut-bind:tap="handleTeamClick">
-                    <image class="team-logo" src="{{awayTeam.logo}}" mode="aspectFit"></image>
-                    <input class="team-name" data-team="awayTeam" bindinput="handleInput" value="{{awayTeam.name}}"/>
-                    <text class="team-score">{{awayTeam.score}}</text>
-                </view>
+                            <!--                            装饰-->
+                            <view>:</view>
 
-                <view class="team-dots">
-                    <!--            暂停节点-->
-                    <animation-change-status id="home-status-pause-ani" triggerTime="{{awayTeam.pauseTriggerTime}}"
-                                             currentTriggerTime="{{awayTeam.pauseTriggerTime}}"
-                                             dot-style="dot-pause-style"
-                                             dot-active-style="dot-pause-active-style"></animation-change-status>
+                            <!--                            客队-->
+                            <text>{{ awayTeam.score }}</text>
+                        </view>
 
-                    <!--            犯规节点-->
-                    <animation-change-status id="home-status-foul-ani" triggerTime="{{awayTeam.foulTriggerTime}}"
-                                             currentTriggerTime="{{awayTeam.foulTriggerTime}}"
-                                             dot-style="dot-foul-style"
-                                             dot-active-style="dot-foul-active-style"></animation-change-status>
-                </view>
-            </view>
-        </view>
-
-        <!-- 控制按钮 -->
-        <view class="control-buttons">
-            <button class="control-btn" mut-bind:tap="onStartGame">Start</button>
-            <button class="control-btn" mut-bind:tap="onPauseGame">Pause</button>
-            <button class="control-btn" mut-bind:tap="onFoul">Foul</button>
-        </view>
-
-        <!-- 得分按钮 -->
-        <view class="score-buttons">
-            <button class="score-btn" mut-bind:tap="onScore" data-points="1">+1</button>
-            <button class="score-btn" mut-bind:tap="onScore" data-points="2">+2</button>
-            <button class="score-btn" mut-bind:tap="onScore" data-points="3">+3</button>
-            <button class="score-btn minus" mut-bind:tap="onScore" data-points="-1">-1</button>
-        </view>
-
-        <!--        控制按钮-->
-        <!--        <view class="control-buttons">-->
-        <!--            <button class="control-btn" bindtap="onStartGame">重置操作</button>-->
-        <!--            <button class="control-btn" bindtap="onFoul">结束本节</button>-->
-        <!--            <button class="control-btn">结束比赛</button>-->
-        <!--        </view>-->
-
-        <!-- 修改队员选择区域 -->
-        <!--        <view class="player-selector"-->
-        <!--              bindtouchstart="handleTouchStart"-->
-        <!--              bindtouchmove="handleTouchMove"-->
-        <!--              bindtouchend="handleTouchEnd">-->
-        <!--            <text class="section-title">Select Player</text>-->
-        <!--            <view class="player-list" catchtap="handlePlayerTap">-->
-        <!--                <view class="player-item {{currentPlayer === index ? 'active' : ''}}"-->
-        <!--                      wx:for="{{4}}" wx:key="index"-->
-        <!--                      data-player="{{index}}"-->
-        <!--                      catchtap="selectPlayer">-->
-        <!--                    Player {{index + 1}}-->
-        <!--                </view>-->
-        <!--            </view>-->
-        <!--            &lt;!&ndash; 添加拖动提示器 &ndash;&gt;-->
-        <!--            <view class="drag-indicator">-->
-        <!--                <view class="drag-line"></view>-->
-        <!--            </view>-->
-        <!--        </view>-->
-
-        <!-- 时间轴 -->
-        <view class="timeline">
-            <view class="timeline-container">
-                <!-- 时间标记 -->
-                <view class="time-marks">
-                    <text>0:00</text>
-                    <text>10:00</text>
-                </view>
-                <!-- 进度条 -->
-                <view class="progress-bar">
-                    <view class="progress" style="width: {{gameProgress}}%"></view>
-                    <!-- 时间节点指示器 -->
-                    <view class="quarter-marks">
-                        <view class="quarter-mark" wx:for="{{4}}" wx:key="index"
-                              style="left: {{index * 25}}%"></view>
-                    </view>
-                </view>
-            </view>
-        </view>
-
-        <!-- 队员选择抽屉 -->
-        <mp-half-screen-dialog
-                show="{{showPlayerDrawer}}"
-                title="Player Stats"
-                subTitle="Select a player to record stats"
-                bindclose="onPlayerDrawerClose">
-            <view>
-                <view class="player-stats-list">
-                    <view class="player-stat-item" wx:for="{{4}}" wx:key="index"
-                          bindtap="selectPlayerFromDrawer" data-player="{{index}}">
-                        <view class="player-info">
-                            <!--                            <image class="player-avatar" src="{{playerAvatars[index]}}" mode="aspectFill"></image>-->
-                            <image class="player-avatar" src="" mode="aspectFill"></image>
-                            <view class="player-details">
-                                <text class="player-name">Player {{index + 1}}</text>
-                                <text class="player-stats">{{playerStats[index].points}} pts</text>
-                                <text class="player-stats">Fouls: {{playerStats[index].fouls}}</text>
-                                <text class="player-stats">FG: {{playerStats[index].fieldGoals}}</text>
-                                <text class="player-stats">FT: {{playerStats[index].freeThrows}}</text>
-                            </view>
+<!--                        展示内容-->
+                        <view>
+                            
                         </view>
                     </view>
+
+                    <view>
+                        <button class="control-btn" mut-bind:tap="onStartGame">Start</button>
+                        <button class="control-btn" mut-bind:tap="onPauseGame">Pause</button>
+                    </view>
+                </view>
+
+                <!--                客队-->
+                <view>
+                    <avatar avatarUrl="{{ awayTeam.logo }}" nickname="{{ awayTeam.name }}" showPosition="top"></avatar>
                 </view>
             </view>
-        </mp-half-screen-dialog>
-    </view>
+        </view>
+    </page-card>
 </view>

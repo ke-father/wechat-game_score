@@ -1,0 +1,58 @@
+$animation-duration: 0.6s;
+$animation-start-scale: 0.8;
+$animation-x: 100%;
+$animation-y: 0;
+
+.get-score {
+  display: inline-block;
+  position: relative;
+}
+
+.score-animation-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 2;
+
+  .score-animation {
+    position: absolute;
+    font-size: 32rpx;
+    font-weight: bold;
+    color: #07c160;
+    opacity: 1;
+    top: $animation-y;
+    left: $animation-x;
+    transform: translateY(0) $animation-start-scale;
+    will-change: transform, opacity;
+
+    &.active {
+      animation: scoreFloat $animation-duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+  }
+}
+
+@keyframes scoreFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale($animation-start-scale);
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(-20rpx) scale(1.1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-30rpx) scale(1);
+  }
+  85% {
+    opacity: 0.8;
+    transform: translateY(-40rpx) scale(0.95);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50rpx) scale(0.9);
+  }
+}

@@ -15,8 +15,4 @@
 
         <image wx:if="{{ showPosition === 'right' }}" src="{{ avatarUrl }}" mode="aspectFit"></image>
     </view>
-
-    <view class="avatar-bottom">
-        <slot name="bottom"></slot>
-    </view>
 </view>

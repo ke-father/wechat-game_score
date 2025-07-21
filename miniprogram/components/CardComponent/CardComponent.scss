@@ -1,12 +1,15 @@
+$card-padding-left: 21rpx;
+$card-padding-right: 21rpx;
+$card-padding-top: 21rpx;
+$card-padding-bottom: 21rpx;
+
+$card-padding: $card-padding-top $card-padding-right $card-padding-bottom $card-padding-left;
+
 .card {
   background: white;
   box-shadow: 0 3px 10px 0 rgba(238,238,238,.5);
-  padding: 30rpx;
+  padding: $card-padding;
   border-radius: 20rpx;
-  height: 100%;
-  width: 100%;
-  display: grid;
-  grid-template-rows: 200rpx 1fr;
 
   &-header {
     display: grid;

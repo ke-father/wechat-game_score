@@ -4,7 +4,7 @@ interface IProperty {
     avatarUrl: String;
     nickname: String;
     showNickname: Boolean;
-    showPosition: 'left' | 'right';
+    showPosition: 'left' | 'right' | 'top' | 'bottom';
 }
 
 interface IMethod {}

@@ -1,13 +1,28 @@
+$image-width: 70rpx;
+$image-height: 70rpx;
+
 .avatar {
-    height: 100%;
-    gap: 12rpx;
-    display: flex;
-    align-items: center;
     padding: 0 12rpx;
 
+    &-top {
+        display: flex;
+        align-items: center;
+        gap: 12rpx;
+    }
+
+    &-bottom {}
+
+    &-vertical {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+    }
+
     image {
-        width: 70rpx;
-        height: 70rpx;
+        width: $image-width;
+        height: $image-height;
     }
 
     text {

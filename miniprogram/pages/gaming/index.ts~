@@ -84,7 +84,7 @@ Page<IRunGameData, IRunGameCustom>({
         game: {
             gameLogo: "https://aprnine-game-score-application.oss-cn-nanjing.aliyuncs.com/base/basketball/basketBall_logo.png",
             gameName: "篮球联赛",
-            point: 1,
+            point: 0,
             date: 10 * 60 * 1000
         },
         selectedOpacity: .7,
