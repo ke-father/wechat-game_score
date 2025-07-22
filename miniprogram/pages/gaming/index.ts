@@ -1,5 +1,6 @@
 import {GAME_STATUS} from "../../types/gameStatus";
 import watch from "../../utils/dataUtils/watch";
+import { formatDate } from "../../utils/date/formatDate";
 
 interface ITeam {
     logo: string;
@@ -19,6 +20,12 @@ interface IGame {
     point: number
     // 单场比赛时间
     date: number
+    // 用于展示的字段
+    showDate: string
+    // 已进行比赛时间
+    time: number
+    // 用于展示的字段
+    showTime: string
 }
 
 interface IRunGameData {
@@ -32,6 +39,7 @@ interface IRunGameData {
     awayTeam: ITeam;
     // 比赛状态
     gameStatus: GAME_STATUS;
+    showGameStatus: string
     // 当前选择队伍
     currentTeam: 'homeTeam' | 'awayTeam' | undefined;
     // 当前选择队员
@@ -85,7 +93,10 @@ Page<IRunGameData, IRunGameCustom>({
             gameLogo: "https://aprnine-game-score-application.oss-cn-nanjing.aliyuncs.com/base/basketball/basketBall_logo.png",
             gameName: "篮球联赛",
             point: 1,
-            date: 10 * 60 * 1000
+            date: 10 * 60 * 1000,
+            showDate: '',
+            time: 5 * 60 * 1000,
+            showTime: ''
         },
         selectedOpacity: .7,
         pauseTriggerTime: 3,
@@ -108,6 +119,7 @@ Page<IRunGameData, IRunGameCustom>({
             selected: false
         },
         gameStatus: GAME_STATUS.WAITING,
+        showGameStatus: '未开始',
         currentTeam: undefined,
         currentPlayer: null,
         showPlayerDrawer: false,
@@ -135,6 +147,14 @@ Page<IRunGameData, IRunGameCustom>({
                 target: this.data,
                 handler: this.listenGameStatusChange
             }
+        })
+
+        // this.data.game.showTime = formatDate(this.data.game.time)
+        // this.data.game.showDate = formatDate(this.data.game.date)
+
+        this.setData({
+            'game.showTime': formatDate(this.data.game.time),
+            'game.showDate': formatDate(this.data.game.date)
         })
     },
 

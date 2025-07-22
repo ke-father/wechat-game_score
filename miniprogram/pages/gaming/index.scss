@@ -1,5 +1,13 @@
 @use "../../styles/global.scss";
 
+$image-width: 200rpx;
+$image-height: 200rpx;
+
+.avatar .avatar-image {
+  width: $image-width !important;
+  height: $image-height;
+}
+
 .run-game {
   width: 100%;
   height: 100%;
@@ -8,14 +16,77 @@
   &-top {
     .handle-team {
       display: flex;
-        justify-content: space-between;
+      justify-content: space-between;
 
       .homeTeam, .awayTeam {
+
       }
 
       .score-node {
+        flex: 1;
         display: flex;
         flex-direction: column;
+
+        &-container {
+          display: flex;
+          flex-direction: column;
+
+          .show-point {
+            display: flex;
+            justify-content: center;
+
+            text {
+              display: block;
+              flex: 1;
+              text-align: center;
+              font-size: 24rpx;
+              color: #6b7280;
+            }
+          }
+
+          .show-score {
+            display: flex;
+            justify-content: center;
+
+            text {
+              display: block;
+              flex: 1;
+              text-align: center;
+              font-size: 60rpx;
+              font-weight: 700;
+            }
+          }
+
+          .show-date {
+            display: flex;
+            justify-content: center;
+            font-size: 32rpx;
+            color: #3b82f6;
+          }
+        }
+
+        &-handler {
+          margin-top: 40rpx;
+          display: flex;
+          gap: 20rpx;
+
+          button {
+            flex: 1;
+            width: 0;
+            white-space: nowrap;
+            font-size: 30rpx;
+            font-weight: 500;
+          }
+
+          .start-btn {
+            background: #3b82f6;
+            color: white;
+          }
+
+          .reset-btn {
+            background: #e5e7eb;
+          }
+        }
       }
     }
   }

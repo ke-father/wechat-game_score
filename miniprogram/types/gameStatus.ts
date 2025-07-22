@@ -1,10 +1,10 @@
 export enum GAME_STATUS {
     // 未开始
-    WAITING = 'waiting',
+    WAITING = 'WAITING',
     // 进行中
-    PLAYING = 'playing',
+    PLAYING = 'PLAYING',
     // 暂停
-    PAUSED = 'paused',
+    PAUSED = 'PAUSED',
     // 已结束
-    FINISHED = 'finished'
+    FINISHED = 'FINISHED'
 }

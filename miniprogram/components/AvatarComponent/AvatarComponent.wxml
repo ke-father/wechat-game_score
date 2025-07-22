@@ -5,7 +5,7 @@
         <!--    <slot name="avatar"></slot>-->
 
         <view class="avatar-vertical">
-            <image wx:if="{{ showPosition === 'top' }}" src="{{ avatarUrl }}" mode="aspectFit"></image>
+            <image class="avatar-image" wx:if="{{ showPosition === 'top' }}" src="{{ avatarUrl }}" mode="aspectFit"></image>
 
             <text wx:if="{{ showNickname }}">{{ nickname }}</text>
 

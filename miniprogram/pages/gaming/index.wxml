@@ -181,24 +181,24 @@
             <!--            顶部score-->
             <view class="handle-team">
                 <!--                主队-->
-                <view>
+                <view class="homeTeam">
                     <avatar avatarUrl="{{ homeTeam.logo }}" nickname="{{ homeTeam.name }}" showPosition="top"></avatar>
                 </view>
 
                 <!--                分数等节点-->
                 <view class="score-node">
-                    <view>
+                    <view class="score-node-container">
                         <!--                        时间-->
-                        <view>
+                        <view class="show-point">
                             <!--                            比赛节数-->
-                            <text>{{ game.point }}</text>
+                            <text>第{{ game.point }}节</text>
 
                             <!--                            比赛时间-->
-                            <text>{{ game.date }}</text>
+                            <text>{{ game.showDate }}</text>
                         </view>
 
                         <!--                        分数-->
-                        <view>
+                        <view class="show-score">
                             <!--                            主队-->
                             <text>{{ homeTeam.score }}</text>
 
@@ -210,19 +210,21 @@
                         </view>
 
 <!--                        展示内容-->
-                        <view>
-                            
+                        <view class="show-date">
+                            <text>{{ game.showTime }}</text>
                         </view>
                     </view>
 
-                    <view>
-                        <button class="control-btn" mut-bind:tap="onStartGame">Start</button>
-                        <button class="control-btn" mut-bind:tap="onPauseGame">Pause</button>
+                    <view class="score-node-handler">
+                        <button class="start-btn" mut-bind:tap="onStartGame">
+                            {{ showGameStatus }}
+                        </button>
+                        <button class="reset-btn" mut-bind:tap="onPauseGame">重置</button>
                     </view>
                 </view>
 
                 <!--                客队-->
-                <view>
+                <view class="awayTeam">
                     <avatar avatarUrl="{{ awayTeam.logo }}" nickname="{{ awayTeam.name }}" showPosition="top"></avatar>
                 </view>
             </view>
