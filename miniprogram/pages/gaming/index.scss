@@ -13,6 +13,12 @@ $image-height: 200rpx;
   height: 100%;
   padding: 0 16rpx;
 
+  &-container {
+    display: flex;
+    flex-direction: column;
+    gap: 32rpx;
+  }
+
   &-top {
     .handle-team {
       display: flex;
@@ -85,6 +91,162 @@ $image-height: 200rpx;
 
           .reset-btn {
             background: #e5e7eb;
+          }
+        }
+      }
+    }
+
+    .handle-item {
+      display: flex;
+      gap: 16px;
+
+      .team {
+        width: 0;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .handle-btn {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        &-item {
+          display: flex;
+          gap: 3px;
+
+          .control-btn {
+            width: 42px;
+            padding: 6px !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28rpx;
+            font-weight: 400;
+          }
+
+          .remember-btn {
+            width: auto;
+            white-space: nowrap;
+            font-size: 28rpx;
+            font-weight: 400;
+          }
+        }
+      }
+    }
+  }
+
+  &-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20rpx;
+
+    &-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .header {
+        display: flex;
+        align-items: center;
+        gap: 20rpx;
+
+        .title {
+          font-size: 32rpx;
+          font-weight: 600;
+        }
+
+        .time {
+          font-size: 24rpx;
+          font-weight: 400;
+          color: #6b7280;
+        }
+      }
+
+      .team-switch {
+        display: flex;
+        gap: 18rpx;
+
+        button {
+          width: auto;
+          padding: 6rpx 12rpx;
+          font-size: 28rpx;
+          font-weight: 400;
+        }
+      }
+    }
+
+    &-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32rpx;
+
+      .info-item {
+        display: flex;
+        align-items: center;
+        gap: 20rpx;
+
+        &-logo {
+          width: 56rpx;
+          height: 56rpx;
+          border-radius: 56rpx;
+          overflow: hidden;
+          background: #3b82f6;
+          font-size: 28rpx;
+          font-weight: 700;
+          color: white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        &-title {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+
+          .name {
+            font-size: 28rpx;
+          }
+
+          .position {
+            font-size: 22rpx;
+            color: #6b7280;
+          }
+        }
+
+        &-record {
+          display: flex;
+          gap: 20rpx;
+
+          .item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .label {
+              font-size: 22rpx;
+              color: #6b7280;
+            }
+
+            .value {
+              font-size: 22rpx;
+              font-weight: 700;
+            }
+          }
+        }
+
+        &-handle {
+          display: flex;
+
+          button {
+            width: auto;
+            padding: 12rpx 24rpx;
+            font-size: 28rpx;
+            font-weight: 400;
           }
         }
       }

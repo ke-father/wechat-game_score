@@ -2,6 +2,26 @@ import {GAME_STATUS} from "../../types/gameStatus";
 import watch from "../../utils/dataUtils/watch";
 import { formatDate } from "../../utils/date/formatDate";
 
+// 队员
+interface IMember {
+    // 名称
+    name: string;
+    // logo
+    logo?: string;
+    // 号码
+    numberPlate: number;
+    // 位置 PG-控球后卫 SG-控球后卫 SF-控球前卫 PF-控球前卫 C-中锋
+    position?: 'PG' | 'SG' | 'SF' | 'PF' | 'C';
+    // 选中
+    selected?: boolean;
+    // 得分
+    score: number;
+    // 犯规
+    foul: number;
+
+}
+
+// 队伍
 interface ITeam {
     logo: string;
     name: string;
@@ -9,6 +29,7 @@ interface ITeam {
     pauseTriggerTime: number;
     foulTriggerTime: number;
     selected: boolean;
+    member?: IMember[];
 }
 
 interface IGame {
@@ -88,6 +109,9 @@ interface IRunGameCustom {
 }
 
 Page<IRunGameData, IRunGameCustom>({
+    onHide(): void | Promise<void> {
+        return undefined;
+    },
     data: {
         game: {
             gameLogo: "https://aprnine-game-score-application.oss-cn-nanjing.aliyuncs.com/base/basketball/basketBall_logo.png",
@@ -107,7 +131,15 @@ Page<IRunGameData, IRunGameCustom>({
             pauseTriggerTime: 0,
             foulTriggerTime: 0,
             // 是否选中
-            selected: false
+            selected: false,
+            member: Array.from({length: 5}, () => ({
+                name: 'Warriors',
+                logo: 'https://aprnine-game-score-application.oss-cn-nanjing.aliyuncs.com/base/basketball/CLE_logo.svg',
+                numberPlate: 0,
+                position: 'PG',
+                score: 0,
+                foul: 0
+            }))
         },
         awayTeam: {
             logo: "https://aprnine-game-score-application.oss-cn-nanjing.aliyuncs.com/base/basketball/GSW_logo.svg",
