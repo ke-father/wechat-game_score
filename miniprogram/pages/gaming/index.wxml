@@ -11,7 +11,13 @@
                     <!--                主队-->
                     <view class="homeTeam">
                         <avatar avatarUrl="{{ homeTeam.logo }}" nickname="{{ homeTeam.name }}"
-                                showPosition="top"></avatar>
+                                showPosition="top">
+                            <view class="style-list" slot="bottom">
+                                <animation-change-status triggerTime="5" currentTriggerTime="3" dot-style="full-dot" dot-active-style="full-dot-active"></animation-change-status>
+
+                                <animation-change-status triggerTime="3" currentTriggerTime="1" dot-style="pause-dot" dot-active-style="pause-dot-active"></animation-change-status>
+                            </view>
+                        </avatar>
                     </view>
 
                     <!--                分数等节点-->
@@ -55,7 +61,13 @@
                     <!--                客队-->
                     <view class="awayTeam">
                         <avatar avatarUrl="{{ awayTeam.logo }}" nickname="{{ awayTeam.name }}"
-                                showPosition="top"></avatar>
+                                showPosition="top">
+                            <view class="style-list" slot="bottom">
+                                <animation-change-status triggerTime="5" currentTriggerTime="3" dot-style="full-dot" dot-active-style="full-dot-active"></animation-change-status>
+
+                                <animation-change-status triggerTime="3" currentTriggerTime="2" dot-style="pause-dot" dot-active-style="pause-dot-active"></animation-change-status>
+                            </view>
+                        </avatar>
                     </view>
                 </view>
 
@@ -70,18 +82,18 @@
                         <view class="handle-btn">
                             <!--                        分数按钮-->
                             <view class="handle-btn-item">
-                                <button class="control-btn" type="primary" mut-bind:tap="onScore" data-points="1">+1
+                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="1">+1
                                 </button>
-                                <button class="control-btn" type="primary" mut-bind:tap="onScore" data-points="2">+2
+                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="2">+2
                                 </button>
-                                <button class="control-btn" type="primary" mut-bind:tap="onScore" data-points="3">+3
+                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="3">+3
                                 </button>
                             </view>
 
                             <!--                        操作按钮-->
                             <view class="handle-btn-item">
-                                <button class="remember-btn" type="warn" mut-bind:tap="onFoul">犯规</button>
-                                <button class="remember-btn" mut-bind:tap="onPauseGame">暂停</button>
+                                <button class="remember-btn red-btn" type="warn" mut-bind:tap="onFoul">犯规</button>
+                                <button class="remember-btn yellow-btn" mut-bind:tap="onPauseGame">暂停</button>
                             </view>
                         </view>
                     </view>
@@ -95,18 +107,18 @@
                         <view class="handle-btn">
                             <!--                        分数按钮-->
                             <view class="handle-btn-item">
-                                <button class="control-btn" type="primary" mut-bind:tap="onScore" data-points="1">+1
+                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="1">+1
                                 </button>
-                                <button class="control-btn" type="primary" mut-bind:tap="onScore" data-points="2">+2
+                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="2">+2
                                 </button>
-                                <button class="control-btn" type="primary" mut-bind:tap="onScore" data-points="3">+3
+                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="3">+3
                                 </button>
                             </view>
 
                             <!--                        操作按钮-->
                             <view class="handle-btn-item">
-                                <button class="remember-btn" type="warn" mut-bind:tap="onFoul">犯规</button>
-                                <button class="remember-btn" mut-bind:tap="onPauseGame">暂停</button>
+                                <button class="remember-btn red-btn" type="warn" mut-bind:tap="onFoul">犯规</button>
+                                <button class="remember-btn yellow-btn" mut-bind:tap="onPauseGame">暂停</button>
                             </view>
                         </view>
                     </view>
@@ -162,7 +174,7 @@
                             </view>
                         </view>
 
-<!--                        操作-->
+                        <!--                        操作-->
                         <view class="info-item-handle">
                             <button class="handle-btn">+2</button>
                             <button class="more">更多</button>

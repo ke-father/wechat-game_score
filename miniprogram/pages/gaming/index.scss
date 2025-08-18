@@ -1,7 +1,20 @@
 @use "../../styles/global.scss";
+@use "../../styles/buttonVariables.scss" as *;
 
 $image-width: 200rpx;
 $image-height: 200rpx;
+
+.full-dot, .pause-dot {
+  background: #e5e7eb;
+}
+
+.full-dot-active {
+  background: #ef4444;
+}
+
+.pause-dot-active {
+  background: #eab308;
+}
 
 .avatar .avatar-image {
   width: $image-width !important;
@@ -26,6 +39,15 @@ $image-height: 200rpx;
 
       .homeTeam, .awayTeam {
 
+      }
+
+      .style-list {
+        margin-top: 10rpx;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20rpx;
       }
 
       .score-node {
@@ -97,6 +119,7 @@ $image-height: 200rpx;
     }
 
     .handle-item {
+      margin-top: 30rpx;
       display: flex;
       gap: 16px;
 
@@ -106,6 +129,11 @@ $image-height: 200rpx;
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 16rpx;
+
+        & > text {
+          font-size: 28rpx;
+        }
       }
 
       .handle-btn {
@@ -185,9 +213,12 @@ $image-height: 200rpx;
       gap: 32rpx;
 
       .info-item {
+        padding: 20rpx;
         display: flex;
         align-items: center;
         gap: 20rpx;
+        background: #f3f4f6;
+        border-radius: 24rpx;
 
         &-logo {
           width: 56rpx;
@@ -219,6 +250,7 @@ $image-height: 200rpx;
         }
 
         &-record {
+          flex: 1;
           display: flex;
           gap: 20rpx;
 
@@ -241,12 +273,23 @@ $image-height: 200rpx;
 
         &-handle {
           display: flex;
+          gap: 6rpx;
 
           button {
             width: auto;
-            padding: 12rpx 24rpx;
+            padding: 8rpx 20rpx;
             font-size: 28rpx;
             font-weight: 400;
+          }
+
+          .handle-btn {
+            background: #dcfce7;
+            color: #16a34a;
+          }
+
+          .more {
+            background: #dbeafe;
+            color: #2563eb;
           }
         }
       }

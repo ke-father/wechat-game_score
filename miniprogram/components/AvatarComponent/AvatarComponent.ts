@@ -11,6 +11,10 @@ interface IMethod {}
 
 // @ts-ignore
 Component<IData, IProperty, IMethod>({
+    options: {
+        multipleSlots: true, // 支持多slot
+    },
+
     properties: {
         avatarUrl: {
             type: String,
