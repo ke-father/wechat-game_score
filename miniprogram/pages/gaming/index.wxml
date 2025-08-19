@@ -13,8 +13,10 @@
                         <avatar avatarUrl="{{ homeTeam.logo }}" nickname="{{ homeTeam.name }}"
                                 showPosition="top">
                             <view class="style-list" slot="bottom">
+<!--                                犯规节点-->
                                 <animation-change-status triggerTime="5" currentTriggerTime="3" dot-style="full-dot" dot-active-style="full-dot-active"></animation-change-status>
 
+                                <!--            暂停节点-->
                                 <animation-change-status triggerTime="3" currentTriggerTime="1" dot-style="pause-dot" dot-active-style="pause-dot-active"></animation-change-status>
                             </view>
                         </avatar>

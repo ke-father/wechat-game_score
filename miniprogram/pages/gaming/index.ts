@@ -151,7 +151,7 @@ Page<IRunGameData, IRunGameCustom>({
             selected: false
         },
         gameStatus: GAME_STATUS.WAITING,
-        showGameStatus: '未开始',
+        showGameStatus: '开始',
         currentTeam: undefined,
         currentPlayer: null,
         showPlayerDrawer: false,
