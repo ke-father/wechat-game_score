@@ -14,10 +14,10 @@
                                 showPosition="top">
                             <view class="style-list" slot="bottom">
 <!--                                犯规节点-->
-                                <animation-change-status triggerTime="5" currentTriggerTime="3" dot-style="full-dot" dot-active-style="full-dot-active"></animation-change-status>
+                                <animation-change-status triggerTime="{{ foulTriggerTime }}" currentTriggerTime="{{ homeTeam.foulTriggerTime }}" dot-style="full-dot" dot-active-style="full-dot-active"></animation-change-status>
 
                                 <!--            暂停节点-->
-                                <animation-change-status triggerTime="3" currentTriggerTime="1" dot-style="pause-dot" dot-active-style="pause-dot-active"></animation-change-status>
+                                <animation-change-status triggerTime="{{ pauseTriggerTime }}" currentTriggerTime="{{ homeTeam.pauseTriggerTime }}" dot-style="pause-dot" dot-active-style="pause-dot-active"></animation-change-status>
                             </view>
                         </avatar>
                     </view>
@@ -53,7 +53,7 @@
                         </view>
 
                         <view class="score-node-handler">
-                            <button class="start-btn" mut-bind:tap="onStartGame">
+                            <button class="start-btn" mut-bind:tap="onClickGame">
                                 {{ showGameStatus }}
                             </button>
                             <button class="reset-btn" mut-bind:tap="onPauseGame">重置</button>
@@ -65,9 +65,9 @@
                         <avatar avatarUrl="{{ awayTeam.logo }}" nickname="{{ awayTeam.name }}"
                                 showPosition="top">
                             <view class="style-list" slot="bottom">
-                                <animation-change-status triggerTime="5" currentTriggerTime="3" dot-style="full-dot" dot-active-style="full-dot-active"></animation-change-status>
+                                <animation-change-status triggerTime="{{ foulTriggerTime }}" currentTriggerTime="{{ awayTeam.foulTriggerTime }}" dot-style="full-dot" dot-active-style="full-dot-active"></animation-change-status>
 
-                                <animation-change-status triggerTime="3" currentTriggerTime="2" dot-style="pause-dot" dot-active-style="pause-dot-active"></animation-change-status>
+                                <animation-change-status triggerTime="{{ pauseTriggerTime }}" currentTriggerTime="{{ awayTeam.pauseTriggerTime }}" dot-style="pause-dot" dot-active-style="pause-dot-active"></animation-change-status>
                             </view>
                         </avatar>
                     </view>
@@ -84,18 +84,18 @@
                         <view class="handle-btn">
                             <!--                        分数按钮-->
                             <view class="handle-btn-item">
-                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="1">+1
+                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="1" data-team="homeTeam">+1
                                 </button>
-                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="2">+2
+                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="2" data-team="homeTeam">+2
                                 </button>
-                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="3">+3
+                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="3" data-team="homeTeam">+3
                                 </button>
                             </view>
 
                             <!--                        操作按钮-->
                             <view class="handle-btn-item">
-                                <button class="remember-btn red-btn" type="warn" mut-bind:tap="onFoul">犯规</button>
-                                <button class="remember-btn yellow-btn" mut-bind:tap="onPauseGame">暂停</button>
+                                <button class="remember-btn red-btn" type="warn" mut-bind:tap="onFoul" data-team="homeTeam">犯规</button>
+                                <button class="remember-btn yellow-btn" mut-bind:tap="onPauseGame" data-team="homeTeam">暂停</button>
                             </view>
                         </view>
                     </view>
@@ -109,18 +109,18 @@
                         <view class="handle-btn">
                             <!--                        分数按钮-->
                             <view class="handle-btn-item">
-                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="1">+1
+                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="1" data-team="awayTeam">+1
                                 </button>
-                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="2">+2
+                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="2" data-team="awayTeam">+2
                                 </button>
-                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="3">+3
+                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="3" data-team="awayTeam">+3
                                 </button>
                             </view>
 
                             <!--                        操作按钮-->
                             <view class="handle-btn-item">
-                                <button class="remember-btn red-btn" type="warn" mut-bind:tap="onFoul">犯规</button>
-                                <button class="remember-btn yellow-btn" mut-bind:tap="onPauseGame">暂停</button>
+                                <button class="remember-btn red-btn" type="warn" mut-bind:tap="onFoul" data-team="awayTeam">犯规</button>
+                                <button class="remember-btn yellow-btn" mut-bind:tap="onPauseGame" data-team="awayTeam">暂停</button>
                             </view>
                         </view>
                     </view>

@@ -1,6 +1,6 @@
 import {GAME_STATUS} from "../../types/gameStatus";
 import watch from "../../utils/dataUtils/watch";
-import { formatDate } from "../../utils/date/formatDate";
+import {formatDate} from "../../utils/date/formatDate";
 
 // 队员
 interface IMember {
@@ -47,6 +47,8 @@ interface IGame {
     time: number
     // 用于展示的字段
     showTime: string
+    // 比赛计时器
+    showTimer: any
 }
 
 interface IRunGameData {
@@ -56,6 +58,8 @@ interface IRunGameData {
     selectedOpacity: number
     // 暂停触发次数
     pauseTriggerTime: number
+    // 犯规暂停次数
+    foulTriggerTime: number
     homeTeam: ITeam;
     awayTeam: ITeam;
     // 比赛状态
@@ -85,9 +89,11 @@ interface IRunGameData {
 interface IRunGameCustom {
     onBackClick: () => void;
     onModifyGameNameAndLogo: () => void;
-    onStartGame: () => void;
-    onPauseGame: () => void;
-    onFoul: () => void;
+    onClickGame: (e: WechatMiniprogram.TouchEvent) => void;
+    onPauseGame: (e: WechatMiniprogram.TouchEvent) => void;
+    // 犯规
+    onFoul: (e: WechatMiniprogram.TouchEvent) => void;
+    // 得分
     onScore: (e: WechatMiniprogram.TouchEvent) => void;
     selectPlayer: (e: WechatMiniprogram.TouchEvent) => void;
     showPlayerDrawer: () => void;
@@ -106,6 +112,10 @@ interface IRunGameCustom {
      * @param oldValue 旧状态
      */
     listenGameStatusChange: (newValue: any, oldValue?: any) => void;
+    // 操作比赛状态 —— 暂停
+    handlePauseGame: () => void
+    // 操作比赛状态 —— 进行
+    handlePlayingGame: () => void
 }
 
 Page<IRunGameData, IRunGameCustom>({
@@ -120,10 +130,12 @@ Page<IRunGameData, IRunGameCustom>({
             date: 10 * 60 * 1000,
             showDate: '',
             time: 5 * 60 * 1000,
-            showTime: ''
+            showTime: '',
+            showTimer: null
         },
         selectedOpacity: .7,
         pauseTriggerTime: 3,
+        foulTriggerTime: 5,
         homeTeam: {
             logo: "https://aprnine-game-score-application.oss-cn-nanjing.aliyuncs.com/base/basketball/CLE_logo.svg",
             name: "Warriors",
@@ -190,12 +202,41 @@ Page<IRunGameData, IRunGameCustom>({
         })
     },
 
-    listenGameStatusChange (newValue: any, oldValue: any) {
-        console.log(newValue, oldValue)
+    listenGameStatusChange (newValue: GAME_STATUS) {
+        switch (newValue) {
+            case GAME_STATUS.PLAYING:
+                this.handlePlayingGame()
+                break
+            case GAME_STATUS.PAUSED:
+                this.handlePauseGame()
+                break
+        }
+    },
+
+    handlePlayingGame () {
+        this.data.game.showTimer && clearInterval(this.data.game.showTimer)
+        // 比赛开始
+        this.setData({
+            showGameStatus: '暂停'
+        })
+        this.data.game.showTimer = setInterval(() => {
+            this.data.game.time -= 1000
+            this.data.game.showTime = formatDate(this.data.game.time)
+            this.setData({
+                game: this.data.game
+            })
+        }, 1000)
+    },
+
+    handlePauseGame () {
+        this.data.game.showTimer && clearInterval(this.data.game.showTimer)
+        // 比赛开始
+        this.setData({
+            showGameStatus: '开始'
+        })
     },
 
     onBackClick() {
-        console.log(111)
         wx.navigateBack();
     },
 
@@ -204,46 +245,45 @@ Page<IRunGameData, IRunGameCustom>({
         console.log('修改比赛名称和logo');
     },
 
-    onStartGame() {
-        this.setData({ gameStatus: GAME_STATUS.PLAYING });
+    onClickGame() {
+        let status = this.data.gameStatus === GAME_STATUS.PLAYING ? GAME_STATUS.PAUSED : GAME_STATUS.PLAYING
+        this.setData({ gameStatus: status });
     },
 
     // 暂停
-    onPauseGame() {
-        if (this.data.currentTeam) {
-            // 获取当前队伍暂停次数
-            const currentTeamPauseTriggerTime = this.data[this.data.currentTeam].pauseTriggerTime + 1
-            // 如果当前队伍暂停次数大于设置的触发次数，直接返回
-            if (currentTeamPauseTriggerTime > this.data.pauseTriggerTime) return
-            // 更新数据
-            this.data[this.data.currentTeam].pauseTriggerTime = currentTeamPauseTriggerTime
+    onPauseGame(e: WechatMiniprogram.TouchEvent) {
+        const team: 'homeTeam' | 'awayTeam'  = e.currentTarget.dataset.team
+        // 获取当前队伍暂停次数
+        const currentTeamPauseTriggerTime = this.data[team].pauseTriggerTime + 1
+        // 如果当前队伍暂停次数大于设置的触发次数，直接返回
+        if (currentTeamPauseTriggerTime > this.data.pauseTriggerTime) return
+        // 更新数据
+        this.data[team].pauseTriggerTime = currentTeamPauseTriggerTime
 
-            // 更新视图
-            this.setData({
-                [this.data.currentTeam]: this.data[this.data.currentTeam]
-            })
-        } else {
-            this.setData({ gameStatus: GAME_STATUS.PAUSED });
-        }
+        // 更新视图
+        this.setData({
+            [team]: this.data[team]
+        })
     },
 
-    onFoul() {
-        if (!this.data.currentTeam) return;
-
-        const currentTeamFoulTriggerTime = this.data[this.data.currentTeam].foulTriggerTime + 1
+    onFoul(e: WechatMiniprogram.TouchEvent) {
+        const team = e.currentTarget.dataset.team
+        const currentTeamFoulTriggerTime = this.data[team as 'homeTeam' | 'awayTeam'].foulTriggerTime + 1
 
         this.setData({
-            [`${this.data.currentTeam}.foulTriggerTime`]: currentTeamFoulTriggerTime
+            [`${team}.foulTriggerTime`]: currentTeamFoulTriggerTime
         })
     },
 
     onScore(e: WechatMiniprogram.TouchEvent) {
-        if (!this.data.currentTeam) return;
-
+        // 获取得分节点
         const points = parseInt(e.currentTarget.dataset.points);
-
+        // 获取得分队伍
+        const team = e.currentTarget.dataset.team
+        // 获取当前队伍得分
+        const currentScore = this.data[team as 'homeTeam' | 'awayTeam'].score
         this.setData({
-            [`${this.data.currentTeam}.score`]: this.data[this.data.currentTeam].score + points
+            [`${team}.score`]: currentScore + points
         });
     },
 
@@ -306,8 +346,7 @@ Page<IRunGameData, IRunGameCustom>({
     },
 
     // 处理队伍名称输入
-    handleInput (e) {
-        console.log(e)
+    handleInput () {
 
         // return {
         //     // @ts-ignore
@@ -317,7 +356,6 @@ Page<IRunGameData, IRunGameCustom>({
 
     // 关于全局点击操作
     handleGlobalClick () {
-        console.log('global')
         // 去除队伍选择
         this.data.homeTeam.selected = false
         this.data.awayTeam.selected = false
