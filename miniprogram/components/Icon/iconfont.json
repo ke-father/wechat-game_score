@@ -1,0 +1,44 @@
+{
+  "id": "4736143",
+  "name": "game_score",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "879161",
+      "name": "菜单",
+      "font_class": "ego-menu",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "11391538",
+      "name": "我的",
+      "font_class": "wode",
+      "unicode": "e639",
+      "unicode_decimal": 58937
+    },
+    {
+      "icon_id": "15399063",
+      "name": "比赛记录",
+      "font_class": "bisaijilu",
+      "unicode": "e672",
+      "unicode_decimal": 58994
+    },
+    {
+      "icon_id": "21308637",
+      "name": "比赛记录",
+      "font_class": "bisaijilu1",
+      "unicode": "e6a7",
+      "unicode_decimal": 59047
+    },
+    {
+      "icon_id": "34210325",
+      "name": "比赛",
+      "font_class": "bisai",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    }
+  ]
+}

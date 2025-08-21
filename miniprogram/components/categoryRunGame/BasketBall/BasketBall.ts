@@ -1,4 +1,6 @@
-import {GAME_STATUS} from "../../../types/gameStatus";
+// import {GAME_STATUS} from "../../types/gameStatus";
+// import watch from "../../utils/dataUtils/watch";
+// import {formatDate} from "../../utils/date/formatDate";
 
 // 队员
 interface IMember {
@@ -45,6 +47,8 @@ interface IGame {
     time: number
     // 用于展示的字段
     showTime: string
+    // 比赛计时器
+    showTimer: any
 }
 
 interface IRunGameData {
@@ -54,6 +58,8 @@ interface IRunGameData {
     selectedOpacity: number
     // 暂停触发次数
     pauseTriggerTime: number
+    // 犯规暂停次数
+    foulTriggerTime: number
     homeTeam: ITeam;
     awayTeam: ITeam;
     // 比赛状态
@@ -83,9 +89,11 @@ interface IRunGameData {
 interface IRunGameCustom {
     onBackClick: () => void;
     onModifyGameNameAndLogo: () => void;
-    onStartGame: () => void;
-    onPauseGame: () => void;
-    onFoul: () => void;
+    onClickGame: (e: WechatMiniprogram.TouchEvent) => void;
+    onPauseGame: (e: WechatMiniprogram.TouchEvent) => void;
+    // 犯规
+    onFoul: (e: WechatMiniprogram.TouchEvent) => void;
+    // 得分
     onScore: (e: WechatMiniprogram.TouchEvent) => void;
     selectPlayer: (e: WechatMiniprogram.TouchEvent) => void;
     showPlayerDrawer: () => void;
@@ -104,11 +112,16 @@ interface IRunGameCustom {
      * @param oldValue 旧状态
      */
     listenGameStatusChange: (newValue: any, oldValue?: any) => void;
+    // 操作比赛状态 —— 暂停
+    handlePauseGame: () => void
+    // 操作比赛状态 —— 进行
+    handlePlayingGame: () => void
 }
 
-// @ts-ignore
-Component<IRunGameData, {}, IRunGameCustom, []>({
-    properties: {},
+Page<IRunGameData, IRunGameCustom>({
+    onHide(): void | Promise<void> {
+        return undefined;
+    },
     data: {
         game: {
             gameLogo: "https://aprnine-game-score-application.oss-cn-nanjing.aliyuncs.com/base/basketball/basketBall_logo.png",
@@ -117,10 +130,12 @@ Component<IRunGameData, {}, IRunGameCustom, []>({
             date: 10 * 60 * 1000,
             showDate: '',
             time: 5 * 60 * 1000,
-            showTime: ''
+            showTime: '',
+            showTimer: null
         },
         selectedOpacity: .7,
         pauseTriggerTime: 3,
+        foulTriggerTime: 5,
         homeTeam: {
             logo: "https://aprnine-game-score-application.oss-cn-nanjing.aliyuncs.com/base/basketball/CLE_logo.svg",
             name: "Warriors",
@@ -148,7 +163,7 @@ Component<IRunGameData, {}, IRunGameCustom, []>({
             selected: false
         },
         gameStatus: GAME_STATUS.WAITING,
-        showGameStatus: '未开始',
+        showGameStatus: '开始',
         currentTeam: undefined,
         currentPlayer: null,
         showPlayerDrawer: false,
@@ -168,158 +183,205 @@ Component<IRunGameData, {}, IRunGameCustom, []>({
         touchStartY: 0,
         isDragging: false
     },
-    methods: {
-        onBackClick() {
-            console.log(111)
-            wx.navigateBack();
-        },
 
-        onModifyGameNameAndLogo() {
-            // TODO: 实现修改比赛名称和logo的功能
-            console.log('修改比赛名称和logo');
-        },
-
-        onStartGame() {
-            this.setData({ gameStatus: GAME_STATUS.PLAYING });
-        },
-
-        // 暂停
-        onPauseGame() {
-            if (this.data.currentTeam) {
-                // 获取当前队伍暂停次数
-                const currentTeamPauseTriggerTime = this.data[this.data.currentTeam].pauseTriggerTime + 1
-                // 如果当前队伍暂停次数大于设置的触发次数，直接返回
-                if (currentTeamPauseTriggerTime > this.data.pauseTriggerTime) return
-                // 更新数据
-                this.data[this.data.currentTeam].pauseTriggerTime = currentTeamPauseTriggerTime
-
-                // 更新视图
-                this.setData({
-                    [this.data.currentTeam]: this.data[this.data.currentTeam]
-                })
-            } else {
-                this.setData({ gameStatus: GAME_STATUS.PAUSED });
+    // 生命周期 —— 挂载成功后
+    onReady(): void | Promise<void> {
+        watch(this, {
+            'gameStatus': {
+                target: this.data,
+                handler: this.listenGameStatusChange
             }
-        },
+        })
 
-        onFoul() {
-            if (!this.data.currentTeam) return;
+        // this.data.game.showTime = formatDate(this.data.game.time)
+        // this.data.game.showDate = formatDate(this.data.game.date)
 
-            const currentTeamFoulTriggerTime = this.data[this.data.currentTeam].foulTriggerTime + 1
+        this.setData({
+            'game.showTime': formatDate(this.data.game.time),
+            'game.showDate': formatDate(this.data.game.date)
+        })
+    },
 
-            this.setData({
-                [`${this.data.currentTeam}.foulTriggerTime`]: currentTeamFoulTriggerTime
-            })
-        },
-
-        onScore(e: WechatMiniprogram.TouchEvent) {
-            if (!this.data.currentTeam) return;
-
-            const points = parseInt(e.currentTarget.dataset.points);
-
-            this.setData({
-                [`${this.data.currentTeam}.score`]: this.data[this.data.currentTeam].score + points
-            });
-        },
-
-        selectPlayer(e: WechatMiniprogram.TouchEvent) {
-            // 阻止事件冒泡
-            const player = e.currentTarget.dataset.player;
-            this.setData({ currentPlayer: player });
-        },
-
-        showPlayerDrawer() {
-            this.setData({ showPlayerDrawer: true });
-        },
-
-        onPlayerDrawerClose() {
-            this.setData({ showPlayerDrawer: false });
-        },
-
-        selectPlayerFromDrawer(e: WechatMiniprogram.TouchEvent) {
-            const player = e.currentTarget.dataset.player;
-            this.setData({
-                currentPlayer: player,
-                showPlayerDrawer: false
-            });
-        },
-
-        // 处理触摸开始
-        handleTouchStart(e: WechatMiniprogram.TouchEvent) {
-            this.setData({
-                touchStartY: e.touches[0].clientY
-            });
-        },
-
-        // 处理触摸移动
-        handleTouchMove(e: WechatMiniprogram.TouchEvent) {
-            const touchY = e.touches[0].clientY;
-            const moveDistance = this.data.touchStartY - touchY;
-
-            // 如果向上拖动超过50px，标记为正在拖动
-            if (moveDistance > 50 && !this.data.isDragging) {
-                this.setData({ isDragging: true });
-            }
-        },
-
-        // 处理触摸结束
-        handleTouchEnd() {
-            if (this.data.isDragging) {
-                this.setData({
-                    showPlayerDrawer: true,
-                    isDragging: false
-                });
-            }
-            this.setData({ touchStartY: 0 });
-        },
-
-        // 处理点击队员
-        handlePlayerTap(e: WechatMiniprogram.TouchEvent) {
-            console.log(e)
-            // 阻止事件冒泡，确保点击队员时不会触发拖动事件
-            // e.stopPropagation();
-        },
-
-        // 处理队伍名称输入
-        handleInput (e: any) {
-            console.log(e)
-
-            // return {
-            //     // @ts-ignore
-            //     value: this.data[team].name
-            // }
-        },
-
-        // 关于全局点击操作
-        handleGlobalClick () {
-            console.log('global')
-            // 去除队伍选择
-            this.data.homeTeam.selected = false
-            this.data.awayTeam.selected = false
-            this.data.currentTeam = undefined
-
-            this.setData({
-                homeTeam: this.data.homeTeam,
-                awayTeam: this.data.awayTeam
-            })
-        },
-
-        // 关于队伍点击
-        handleTeamClick (e: any) {
-            // 获取绑定数据
-            const { team } = e.currentTarget.dataset
-
-            // 获取另一个数据内容
-            const otherTeam = team === 'homeTeam' ? 'awayTeam' : 'homeTeam'
-            const teamName = team === 'homeTeam' ? 'homeTeam' : 'awayTeam'
-            this.data[otherTeam].selected = false
-            this.data[teamName].selected = true
-            this.data.currentTeam = team
-
-            this.setData({
-                [otherTeam]: this.data[otherTeam],
-                [teamName]: this.data[teamName]
-            })
+    listenGameStatusChange (newValue: GAME_STATUS) {
+        switch (newValue) {
+            case GAME_STATUS.PLAYING:
+                this.handlePlayingGame()
+                break
+            case GAME_STATUS.PAUSED:
+                this.handlePauseGame()
+                break
         }
+    },
+
+    handlePlayingGame () {
+        this.data.game.showTimer && clearInterval(this.data.game.showTimer)
+        // 比赛开始
+        this.setData({
+            showGameStatus: '暂停'
+        })
+        this.data.game.showTimer = setInterval(() => {
+            this.data.game.time -= 1000
+            this.data.game.showTime = formatDate(this.data.game.time)
+            this.setData({
+                game: this.data.game
+            })
+        }, 1000)
+    },
+
+    handlePauseGame () {
+        this.data.game.showTimer && clearInterval(this.data.game.showTimer)
+        // 比赛开始
+        this.setData({
+            showGameStatus: '开始'
+        })
+    },
+
+    onBackClick() {
+        wx.navigateBack();
+    },
+
+    onModifyGameNameAndLogo() {
+        // TODO: 实现修改比赛名称和logo的功能
+        console.log('修改比赛名称和logo');
+    },
+
+    onClickGame() {
+        let status = this.data.gameStatus === GAME_STATUS.PLAYING ? GAME_STATUS.PAUSED : GAME_STATUS.PLAYING
+        this.setData({ gameStatus: status });
+    },
+
+    // 暂停
+    onPauseGame(e: WechatMiniprogram.TouchEvent) {
+        const team: 'homeTeam' | 'awayTeam'  = e.currentTarget.dataset.team
+        // 获取当前队伍暂停次数
+        const currentTeamPauseTriggerTime = this.data[team].pauseTriggerTime + 1
+        // 如果当前队伍暂停次数大于设置的触发次数，直接返回
+        if (currentTeamPauseTriggerTime > this.data.pauseTriggerTime) return
+        // 更新数据
+        this.data[team].pauseTriggerTime = currentTeamPauseTriggerTime
+
+        // 更新视图
+        this.setData({
+            [team]: this.data[team]
+        })
+    },
+
+    onFoul(e: WechatMiniprogram.TouchEvent) {
+        const team = e.currentTarget.dataset.team
+        const currentTeamFoulTriggerTime = this.data[team as 'homeTeam' | 'awayTeam'].foulTriggerTime + 1
+
+        this.setData({
+            [`${team}.foulTriggerTime`]: currentTeamFoulTriggerTime
+        })
+    },
+
+    onScore(e: WechatMiniprogram.TouchEvent) {
+        // 获取得分节点
+        const points = parseInt(e.currentTarget.dataset.points);
+        // 获取得分队伍
+        const team = e.currentTarget.dataset.team
+        // 获取当前队伍得分
+        const currentScore = this.data[team as 'homeTeam' | 'awayTeam'].score
+        this.setData({
+            [`${team}.score`]: currentScore + points
+        });
+    },
+
+    selectPlayer(e: WechatMiniprogram.TouchEvent) {
+        // 阻止事件冒泡
+        const player = e.currentTarget.dataset.player;
+        this.setData({ currentPlayer: player });
+    },
+
+    showPlayerDrawer() {
+        this.setData({ showPlayerDrawer: true });
+    },
+
+    onPlayerDrawerClose() {
+        this.setData({ showPlayerDrawer: false });
+    },
+
+    selectPlayerFromDrawer(e: WechatMiniprogram.TouchEvent) {
+        const player = e.currentTarget.dataset.player;
+        this.setData({
+            currentPlayer: player,
+            showPlayerDrawer: false
+        });
+    },
+
+    // 处理触摸开始
+    handleTouchStart(e: WechatMiniprogram.TouchEvent) {
+        this.setData({
+            touchStartY: e.touches[0].clientY
+        });
+    },
+
+    // 处理触摸移动
+    handleTouchMove(e: WechatMiniprogram.TouchEvent) {
+        const touchY = e.touches[0].clientY;
+        const moveDistance = this.data.touchStartY - touchY;
+
+        // 如果向上拖动超过50px，标记为正在拖动
+        if (moveDistance > 50 && !this.data.isDragging) {
+            this.setData({ isDragging: true });
+        }
+    },
+
+    // 处理触摸结束
+    handleTouchEnd() {
+        if (this.data.isDragging) {
+            this.setData({
+                showPlayerDrawer: true,
+                isDragging: false
+            });
+        }
+        this.setData({ touchStartY: 0 });
+    },
+
+    // 处理点击队员
+    handlePlayerTap(e: WechatMiniprogram.TouchEvent) {
+        console.log(e)
+        // 阻止事件冒泡，确保点击队员时不会触发拖动事件
+        // e.stopPropagation();
+    },
+
+    // 处理队伍名称输入
+    handleInput () {
+
+        // return {
+        //     // @ts-ignore
+        //     value: this.data[team].name
+        // }
+    },
+
+    // 关于全局点击操作
+    handleGlobalClick () {
+        // 去除队伍选择
+        this.data.homeTeam.selected = false
+        this.data.awayTeam.selected = false
+        this.data.currentTeam = undefined
+
+        this.setData({
+            homeTeam: this.data.homeTeam,
+            awayTeam: this.data.awayTeam
+        })
+    },
+
+    // 关于队伍点击
+    handleTeamClick (e) {
+        // 获取绑定数据
+        const { team } = e.currentTarget.dataset
+
+        // 获取另一个数据内容
+        const otherTeam = team === 'homeTeam' ? 'awayTeam' : 'homeTeam'
+        const teamName = team === 'homeTeam' ? 'homeTeam' : 'awayTeam'
+        this.data[otherTeam].selected = false
+        this.data[teamName].selected = true
+        this.data.currentTeam = team
+
+        this.setData({
+            [otherTeam]: this.data[otherTeam],
+            [teamName]: this.data[teamName]
+        })
     }
 });

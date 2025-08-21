@@ -1,297 +1,124 @@
 @use "../../styles/global.scss";
 @use "../../styles/buttonVariables.scss" as *;
+@use "../../components/Icon/Icon.scss" as *;
 
-$image-width: 200rpx;
-$image-height: 200rpx;
-
-.full-dot, .pause-dot {
-  background: #e5e7eb;
-}
-
-.full-dot-active {
-  background: #ef4444;
-}
-
-.pause-dot-active {
-  background: #eab308;
-}
-
-.avatar .avatar-image {
-  width: $image-width !important;
-  height: $image-height;
-}
 
 .run-game {
   width: 100%;
   height: 100%;
   padding: 0 16rpx;
+  display: flex;
+  flex-direction: column;
 
   &-container {
+    flex: 1;
+    height: 100%;
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 32rpx;
-  }
 
-  &-top {
-    .handle-team {
-      display: flex;
-      justify-content: space-between;
-
-      .homeTeam, .awayTeam {
-
-      }
-
-      .style-list {
-        margin-top: 10rpx;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 20rpx;
-      }
-
-      .score-node {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-
-        &-container {
-          display: flex;
-          flex-direction: column;
-
-          .show-point {
-            display: flex;
-            justify-content: center;
-
-            text {
-              display: block;
-              flex: 1;
-              text-align: center;
-              font-size: 24rpx;
-              color: #6b7280;
-            }
-          }
-
-          .show-score {
-            display: flex;
-            justify-content: center;
-
-            text {
-              display: block;
-              flex: 1;
-              text-align: center;
-              font-size: 60rpx;
-              font-weight: 700;
-            }
-          }
-
-          .show-date {
-            display: flex;
-            justify-content: center;
-            font-size: 32rpx;
-            color: #3b82f6;
-          }
-        }
-
-        &-handler {
-          margin-top: 40rpx;
-          display: flex;
-          gap: 20rpx;
-
-          button {
-            flex: 1;
-            width: 0;
-            white-space: nowrap;
-            font-size: 30rpx;
-            font-weight: 500;
-          }
-
-          .start-btn {
-            background: #3b82f6;
-            color: white;
-          }
-
-          .reset-btn {
-            background: #e5e7eb;
-          }
-        }
-      }
+    .tool-bar {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
-    .handle-item {
-      margin-top: 30rpx;
-      display: flex;
-      gap: 16px;
+    .main {
+      //padding-top: 120rpx;
+      width: 100%;
+      flex: 1;
+      height: 100%;
+      position: relative;
 
-      .team {
-        width: 0;
-        flex: 1;
+      .info {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 16rpx;
-
-        & > text {
-          font-size: 28rpx;
-        }
+        gap: 32rpx;
       }
 
-      .handle-btn {
+      .member-list {
         width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
+        height: 100%;
+        position: relative;
 
-        &-item {
-          display: flex;
-          gap: 3px;
-
-          .control-btn {
-            width: 42px;
-            padding: 6px !important;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 28rpx;
-            font-weight: 400;
-          }
-
-          .remember-btn {
-            width: auto;
-            white-space: nowrap;
-            font-size: 28rpx;
-            font-weight: 400;
-          }
-        }
-      }
-    }
-  }
-
-  &-info {
-    display: flex;
-    flex-direction: column;
-    gap: 20rpx;
-
-    &-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      .header {
-        display: flex;
-        align-items: center;
-        gap: 20rpx;
-
-        .title {
-          font-size: 32rpx;
-          font-weight: 600;
-        }
-
-        .time {
-          font-size: 24rpx;
-          font-weight: 400;
-          color: #6b7280;
-        }
-      }
-
-      .team-switch {
-        display: flex;
-        gap: 18rpx;
-
-        button {
-          width: auto;
-          padding: 6rpx 12rpx;
-          font-size: 28rpx;
-          font-weight: 400;
-        }
-      }
-    }
-
-    &-list {
-      display: flex;
-      flex-direction: column;
-      gap: 32rpx;
-
-      .info-item {
-        padding: 20rpx;
-        display: flex;
-        align-items: center;
-        gap: 20rpx;
-        background: #f3f4f6;
-        border-radius: 24rpx;
-
-        &-logo {
-          width: 56rpx;
-          height: 56rpx;
-          border-radius: 56rpx;
-          overflow: hidden;
-          background: #3b82f6;
-          font-size: 28rpx;
-          font-weight: 700;
-          color: white;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        &-title {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-
-          .name {
-            font-size: 28rpx;
-          }
-
-          .position {
-            font-size: 22rpx;
-            color: #6b7280;
-          }
-        }
-
-        &-record {
-          flex: 1;
-          display: flex;
-          gap: 20rpx;
-
-          .item {
-            display: flex;
+        &-4 {
+          .member-item {
+            display: inline-flex;
             flex-direction: column;
-            align-items: center;
 
-            .label {
-              font-size: 22rpx;
-              color: #6b7280;
+            &-1 {
+              position: absolute;
+              top: 0;
+              left: 50%;
+              transform: translateX(-50%);
             }
 
-            .value {
-              font-size: 22rpx;
-              font-weight: 700;
+            &-2 {
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              transform: translateX(-50%);
+            }
+
+            &-3 {
+              position: absolute;
+              top: 50%;
+              left: 0;
+              transform: translateY(-50%);
+            }
+
+            &-4 {
+              position: absolute;
+              top: 50%;
+              right: 0;
+              transform: translateY(-50%);
             }
           }
         }
 
-        &-handle {
-          display: flex;
-          gap: 6rpx;
+        &-8 {
+          .member-item {
+            display: inline-flex;
+            flex-direction: column;
 
-          button {
-            width: auto;
-            padding: 8rpx 20rpx;
-            font-size: 28rpx;
-            font-weight: 400;
-          }
+            &-1 {
+              position: absolute;
+              top: 0;
+              left: 50%;
+              transform: translateX(-50%);
+            }
 
-          .handle-btn {
-            background: #dcfce7;
-            color: #16a34a;
-          }
+            &-2 {
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              transform: translateX(-50%);
+            }
 
-          .more {
-            background: #dbeafe;
-            color: #2563eb;
+            &-3 {
+              position: absolute;
+              top: 50%;
+              left: 0;
+              transform: translateY(-50%);
+            }
+
+            &-4 {
+              position: absolute;
+              top: 50%;
+              right: 0;
+              transform: translateY(-50%);
+            }
           }
         }
+
+        &-10 {}
       }
     }
   }

@@ -16,21 +16,25 @@ Component<IData, IProperty, IMethod>({
     },
 
     properties: {
+        // 头像图片链接
         avatarUrl: {
             type: String,
             value: '../../assets/images/basketBallTeam/CLE_logo.svg'
         },
 
+        // 昵称
         nickname: {
             type: String,
             value: '昵称'
         },
 
+        // 是否展示昵称
         showNickname: {
             type: Boolean,
             value: true
         },
 
+        // 头像展示位置
         showPosition: {
             type: String,
             value: 'left'

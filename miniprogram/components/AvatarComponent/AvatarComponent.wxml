@@ -1,19 +1,19 @@
 <!--avatar-->
 <view name="avatar-component" class="avatar">
     <view class="avatar-top">
-        <image wx:if="{{ showPosition === 'left' }}" src="{{ avatarUrl }}" mode="aspectFit"></image>
+        <AvatarImage wx:if="{{ showPosition === 'left' }}" src="{{ avatarUrl }}" mode="aspectFit"></AvatarImage>
         <!--    <slot name="avatar"></slot>-->
 
         <view class="avatar-vertical">
-            <image class="avatar-image" wx:if="{{ showPosition === 'top' }}" src="{{ avatarUrl }}" mode="aspectFit"></image>
+            <AvatarImage class="avatar-image" wx:if="{{ showPosition === 'top' }}" src="{{ avatarUrl }}" mode="aspectFit"></AvatarImage>
 
             <text wx:if="{{ showNickname }}">{{ nickname }}</text>
 
-            <image wx:if="{{ showPosition === 'bottom' }}" src="{{ avatarUrl }}" mode="aspectFit"></image>
+            <AvatarImage wx:if="{{ showPosition === 'bottom' }}" src="{{ avatarUrl }}" mode="aspectFit"></AvatarImage>
         </view>
         <!--    <slot name="nickname"></slot>-->
 
-        <image wx:if="{{ showPosition === 'right' }}" src="{{ avatarUrl }}" mode="aspectFit"></image>
+        <AvatarImage wx:if="{{ showPosition === 'right' }}" src="{{ avatarUrl }}" mode="aspectFit"></AvatarImage>
     </view>
 
     <view class="avatar-bottom">

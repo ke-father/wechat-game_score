@@ -1,189 +1,44 @@
-<view class="run-game" mut-bind:tap="handleGlobalClick">
-    <page-title background="rgba(0,0,0,0)">
-        <!--        <view slot="title"> {{ game.gameName }}</view>-->
-    </page-title>
+<view class="run-game">
+    <page-title background="rgba(0,0,0,0)"></page-title>
 
     <view class="run-game-container">
-        <page-card>
-            <view class="run-game-top">
-                <!--            顶部score-->
-                <view class="handle-team">
-                    <!--                主队-->
-                    <view class="homeTeam">
-                        <avatar avatarUrl="{{ homeTeam.logo }}" nickname="{{ homeTeam.name }}"
-                                showPosition="top">
-                            <view class="style-list" slot="bottom">
-<!--                                犯规节点-->
-                                <animation-change-status triggerTime="{{ foulTriggerTime }}" currentTriggerTime="{{ homeTeam.foulTriggerTime }}" dot-style="full-dot" dot-active-style="full-dot-active"></animation-change-status>
+        <!--            工具栏或者其他-->
+        <view class="tool-bar">
+            <button>
+                <view class="iconfont icon-ego-menu"></view>
+            </button>
+        </view>
 
-                                <!--            暂停节点-->
-                                <animation-change-status triggerTime="{{ pauseTriggerTime }}" currentTriggerTime="{{ homeTeam.pauseTriggerTime }}" dot-style="pause-dot" dot-active-style="pause-dot-active"></animation-change-status>
-                            </view>
-                        </avatar>
-                    </view>
+        <!--            主体区域-->
+        <view class="main">
+            <!--                展示分数-->
+            <view class="info">
+                <text>奖池：4200</text>
+                <text>盲注：20/40</text>
+            </view>
 
-                    <!--                分数等节点-->
-                    <view class="score-node">
-                        <view class="score-node-container">
-                            <!--                        时间-->
-                            <view class="show-point">
-                                <!--                            比赛节数-->
-                                <text>第{{ game.point }}节</text>
-
-                                <!--                            比赛时间-->
-                                <text>{{ game.showDate }}</text>
-                            </view>
-
-                            <!--                        分数-->
-                            <view class="show-score">
-                                <!--                            主队-->
-                                <text>{{ homeTeam.score }}</text>
-
-                                <!--                            装饰-->
-                                <view>:</view>
-
-                                <!--                            客队-->
-                                <text>{{ awayTeam.score }}</text>
-                            </view>
-
-                            <!--                        展示内容-->
-                            <view class="show-date">
-                                <text>{{ game.showTime }}</text>
-                            </view>
+            <!--                人员-->
+            <view class="member-list member-list-{{ currentMaxMemberListLength }}">
+                <view wx:for="{{memberList}}" class="member-item member-item-{{index + 1}}">
+                    <avatar nickname="{{item.name}}" avatarUrl="{{item.avatarUrl}}" showNickname="{{false}}" showPosition="top">
+                        <view slot="bottom">
+                            <text>{{ item.name }}</text>
                         </view>
-
-                        <view class="score-node-handler">
-                            <button class="start-btn" mut-bind:tap="onClickGame">
-                                {{ showGameStatus }}
-                            </button>
-                            <button class="reset-btn" mut-bind:tap="onPauseGame">重置</button>
-                        </view>
-                    </view>
-
-                    <!--                客队-->
-                    <view class="awayTeam">
-                        <avatar avatarUrl="{{ awayTeam.logo }}" nickname="{{ awayTeam.name }}"
-                                showPosition="top">
-                            <view class="style-list" slot="bottom">
-                                <animation-change-status triggerTime="{{ foulTriggerTime }}" currentTriggerTime="{{ awayTeam.foulTriggerTime }}" dot-style="full-dot" dot-active-style="full-dot-active"></animation-change-status>
-
-                                <animation-change-status triggerTime="{{ pauseTriggerTime }}" currentTriggerTime="{{ awayTeam.pauseTriggerTime }}" dot-style="pause-dot" dot-active-style="pause-dot-active"></animation-change-status>
-                            </view>
-                        </avatar>
-                    </view>
-                </view>
-
-                <!--            操作键位-->
-                <view class="handle-item">
-                    <!--                主队-->
-                    <view class="homeTeam team">
-                        <!--                    名称-->
-                        <text>{{ homeTeam.name }}</text>
-
-                        <!--                    按钮-->
-                        <view class="handle-btn">
-                            <!--                        分数按钮-->
-                            <view class="handle-btn-item">
-                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="1" data-team="homeTeam">+1
-                                </button>
-                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="2" data-team="homeTeam">+2
-                                </button>
-                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="3" data-team="homeTeam">+3
-                                </button>
-                            </view>
-
-                            <!--                        操作按钮-->
-                            <view class="handle-btn-item">
-                                <button class="remember-btn red-btn" type="warn" mut-bind:tap="onFoul" data-team="homeTeam">犯规</button>
-                                <button class="remember-btn yellow-btn" mut-bind:tap="onPauseGame" data-team="homeTeam">暂停</button>
-                            </view>
-                        </view>
-                    </view>
-
-                    <!--                客队-->
-                    <view class="awayTeam team">
-                        <!--                    名称-->
-                        <text>{{ awayTeam.name }}</text>
-
-                        <!--                    按钮-->
-                        <view class="handle-btn">
-                            <!--                        分数按钮-->
-                            <view class="handle-btn-item">
-                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="1" data-team="awayTeam">+1
-                                </button>
-                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="2" data-team="awayTeam">+2
-                                </button>
-                                <button class="control-btn green-btn" mut-bind:tap="onScore" data-points="3" data-team="awayTeam">+3
-                                </button>
-                            </view>
-
-                            <!--                        操作按钮-->
-                            <view class="handle-btn-item">
-                                <button class="remember-btn red-btn" type="warn" mut-bind:tap="onFoul" data-team="awayTeam">犯规</button>
-                                <button class="remember-btn yellow-btn" mut-bind:tap="onPauseGame" data-team="awayTeam">暂停</button>
-                            </view>
-                        </view>
-                    </view>
+                    </avatar>
                 </view>
             </view>
-        </page-card>
+        </view>
 
-        <page-card>
-            <view class="run-game-info">
-                <!--            头部-->
-                <view class="run-game-info-top">
-                    <view class="header">
-                        <text class="title">球员数据</text>
-                        <!--                    进行时间-->
-                        <text class="time">12:00</text>
-                    </view>
+        <!--            按钮区域-->
+        <view>
+            <!--                开始-->
+            <button>开始本局</button>
 
-                    <!--                队伍数据切换-->
-                    <view class="team-switch">
-                        <button type="primary">{{ homeTeam.name }}</button>
-                        <button>{{ awayTeam.name }}</button>
-                    </view>
-                </view>
+            <!--                结束本局-->
+            <button>结束本局</button>
 
-                <!--            球员数据-->
-                <view class="run-game-info-list">
-                    <view class="info-item" wx:for="{{homeTeam.member}}" wx:for-item="team" wx:for-index="index"
-                          wx:key="index">
-                        <!--                        logo-->
-                        <view class="info-item-logo">30</view>
-
-                        <!--                        名称-->
-                        <view class="info-item-title">
-                            <!--                            名称-->
-                            <text class="name">史蒂芬·库里</text>
-
-                            <!--                            位置-->
-                            <text class="position">小前锋</text>
-                        </view>
-
-                        <!--                        信息-->
-                        <view class="info-item-record">
-                            <!--                            得分-->
-                            <view class="score item">
-                                <text class="label">得分</text>
-                                <text class="score-num value" style="color: #16a34a">28</text>
-                            </view>
-
-                            <!--                            犯规-->
-                            <view class="full item">
-                                <text class="label">犯规</text>
-                                <text class="full-num value" style="color: #dc2626">2</text>
-                            </view>
-                        </view>
-
-                        <!--                        操作-->
-                        <view class="info-item-handle">
-                            <button class="handle-btn">+2</button>
-                            <button class="more">更多</button>
-                        </view>
-                    </view>
-                </view>
-            </view>
-        </page-card>
+            <!--                加人-->
+            <button>+</button>
+        </view>
     </view>
 </view>

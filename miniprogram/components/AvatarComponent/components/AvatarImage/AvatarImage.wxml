@@ -1,0 +1,7 @@
+<view class="avatar-image">
+    <image wx:if="{{ avatarUrl }}" src="{{ avatarUrl }}" mode="aspectFit"></image>
+
+    <view class="avatar-text" wx:else>
+        <text class="initial">{{ showText }}</text>
+    </view>
+</view>

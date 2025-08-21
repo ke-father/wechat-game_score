@@ -1,5 +1,6 @@
 {
   "component": true,
   "usingComponents": {
+    "AvatarImage": "/components/AvatarComponent/components/AvatarImage/AvatarImage"
   }
 }
