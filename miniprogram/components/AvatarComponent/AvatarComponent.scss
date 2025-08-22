@@ -1,5 +1,5 @@
-$image-width: 70rpx;
-$image-height: 70rpx;
+$image-width: 50rpx;
+$image-height: 50rpx;
 
 .avatar {
     height: 100%;
@@ -12,6 +12,10 @@ $image-height: 70rpx;
         display: flex;
         align-items: center;
         gap: 12rpx;
+
+        .image-container {
+            position: relative;
+        }
     }
 
     &-bottom {

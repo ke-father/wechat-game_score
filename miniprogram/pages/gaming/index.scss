@@ -2,11 +2,14 @@
 @use "../../styles/buttonVariables.scss" as *;
 @use "../../components/Icon/Icon.scss" as *;
 
+page {
+  height: 100%;
+}
 
 .run-game {
   width: 100%;
   height: 100%;
-  padding: 0 16rpx;
+  padding: 24rpx 32rpx;
   display: flex;
   flex-direction: column;
 
@@ -16,17 +19,20 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 32rpx;
+    gap: 64rpx;
 
-    .tool-bar {
-      width: 100%;
-      height: 100%;
+    .menu-btn {
       position: absolute;
       top: 0;
       left: 0;
+      padding: 0;
+      width: auto;
+      background: none;
+      display: inline-block;
     }
 
     .main {
+      padding-bottom: 32rpx;
       //padding-top: 120rpx;
       width: 100%;
       flex: 1;
@@ -35,7 +41,7 @@
 
       .info {
         position: absolute;
-        top: 30%;
+        top: 40%;
         left: 50%;
         transform: translate(-50%, -50%);
         display: flex;
@@ -48,11 +54,14 @@
         height: 100%;
         position: relative;
 
+        .member-item {
+          display: inline-flex;
+          flex-direction: column;
+          position: absolute;
+        }
+
         &-4 {
           .member-item {
-            display: inline-flex;
-            flex-direction: column;
-
             &-1 {
               position: absolute;
               top: 0;
@@ -62,22 +71,160 @@
 
             &-2 {
               position: absolute;
+              top: 50%;
+              right: 0;
+              transform: translateY(-50%);
+            }
+
+            &-3 {
+              position: absolute;
               bottom: 0;
               left: 50%;
               transform: translateX(-50%);
             }
 
-            &-3 {
+            &-4 {
               position: absolute;
               top: 50%;
               left: 0;
               transform: translateY(-50%);
             }
+          }
+        }
+
+        &-5 {
+          .member-item {
+            &-1 {
+              position: absolute;
+              top: 0;
+              left: 50%;
+              transform: translateX(-50%);
+            }
+
+            &-2 {
+              position: absolute;
+              top: 30%;
+              right: 0;
+              transform: translateY(-50%);
+            }
+
+            &-3 {
+              position: absolute;
+              top: 70%;
+              right: 0;
+              transform: translateY(-50%);
+            }
 
             &-4 {
               position: absolute;
+              bottom: 0;
+              left: 50%;
+              transform: translateX(-50%);
+            }
+
+            &-5 {
+              position: absolute;
+              top: 50%;
+              left: 0;
+              transform: translateY(-50%);
+            }
+          }
+        }
+
+        &-6 {
+          .member-item {
+            &-1 {
+              position: absolute;
+              top: 0;
+              left: 50%;
+              transform: translateX(-50%);
+            }
+
+            &-2 {
+              position: absolute;
+              top: 30%;
+              right: 0;
+              transform: translateY(-50%);
+            }
+
+            &-3 {
+              position: absolute;
+              top: 70%;
+              right: 0;
+              transform: translateY(-50%);
+            }
+
+            &-4 {
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              transform: translateX(-50%);
+            }
+
+            &-5 {
+              position: absolute;
+              top: 70%;
+              left: 0;
+              transform: translateY(-50%);
+            }
+
+            &-6 {
+              position: absolute;
+              top: 30%;
+              left: 0;
+              transform: translateY(-50%);
+            }
+          }
+        }
+
+        &-7 {
+          .member-item {
+            &-1 {
+              position: absolute;
+              top: 0;
+              left: 50%;
+              transform: translateX(-50%);
+            }
+
+            &-2 {
+              position: absolute;
+              top: 20%;
+              right: 0;
+              transform: translateY(-50%);
+            }
+
+            &-3 {
+              position: absolute;
               top: 50%;
               right: 0;
+              transform: translateY(-50%);
+            }
+
+            &-4 {
+              position: absolute;
+              top: 80%;
+              right: 0;
+              transform: translateY(-50%);
+            }
+
+            &-5 {
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              transform: translateX(-50%);
+            }
+
+            &-6 {
+              position: absolute;
+              top: 70%;
+              left: 0;
+              transform: translateY(-50%);
+            }
+
+            &-7 {
+              position: absolute;
+              top: 30%;
+              left: 0;
               transform: translateY(-50%);
             }
           }
@@ -85,9 +232,6 @@
 
         &-8 {
           .member-item {
-            display: inline-flex;
-            flex-direction: column;
-
             &-1 {
               position: absolute;
               top: 0;
@@ -97,15 +241,75 @@
 
             &-2 {
               position: absolute;
-              bottom: 0;
-              left: 50%;
-              transform: translateX(-50%);
+              top: 20%;
+              right: 0;
+              transform: translateY(-50%);
             }
 
             &-3 {
               position: absolute;
               top: 50%;
+              right: 0;
+              transform: translateY(-50%);
+            }
+
+            &-4 {
+              position: absolute;
+              top: 80%;
+              right: 0;
+              transform: translateY(-50%);
+            }
+
+            &-5 {
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              transform: translateX(-50%);
+            }
+
+            &-6 {
+              position: absolute;
+              top: 80%;
               left: 0;
+              transform: translateY(-50%);
+            }
+
+            &-7 {
+              position: absolute;
+              top: 50%;
+              left: 0;
+              transform: translateY(-50%);
+            }
+
+            &-8 {
+              position: absolute;
+              top: 20%;
+              left: 0;
+              transform: translateY(-50%);
+            }
+          }
+        }
+
+        &-9 {
+          .member-item {
+            &-1 {
+              position: absolute;
+              top: 0;
+              left: 35%;
+              transform: translateX(-50%);
+            }
+
+            &-2 {
+              position: absolute;
+              top: 0;
+              left: 65%;
+              transform: translateX(-50%);
+            }
+
+            &-3 {
+              position: absolute;
+              top: 25%;
+              right: 0;
               transform: translateY(-50%);
             }
 
@@ -115,10 +319,160 @@
               right: 0;
               transform: translateY(-50%);
             }
+
+            &-5 {
+              position: absolute;
+              top: 75%;
+              right: 0;
+              transform: translateY(-50%);
+            }
+
+            &-6 {
+              position: absolute;
+              bottom: 0;
+              left: 65%;
+              transform: translateX(-50%);
+            }
+
+            &-7 {
+              position: absolute;
+              bottom: 0;
+              left: 35%;
+              transform: translateX(-50%);
+            }
+
+            &-8 {
+              position: absolute;
+              top: 70%;
+              left: 0;
+              transform: translateY(-50%);
+            }
+
+            &-9 {
+              position: absolute;
+              top: 30%;
+              left: 0;
+              transform: translateY(-50%);
+            }
           }
         }
 
-        &-10 {}
+        &-10 {
+          .member-item {
+            &-1 {
+              position: absolute;
+              top: 0;
+              left: 35%;
+              transform: translateX(-50%);
+            }
+
+            &-2 {
+              position: absolute;
+              top: 0;
+              left: 65%;
+              transform: translateX(-50%);
+            }
+
+            &-3 {
+              position: absolute;
+              top: 25%;
+              right: 0;
+              transform: translateY(-50%);
+            }
+
+            &-4 {
+              position: absolute;
+              top: 50%;
+              right: 0;
+              transform: translateY(-50%);
+            }
+
+            &-5 {
+              position: absolute;
+              top: 75%;
+              right: 0;
+              transform: translateY(-50%);
+            }
+
+            &-6 {
+              position: absolute;
+              bottom: 0;
+              left: 65%;
+              transform: translateX(-50%);
+            }
+
+            &-7 {
+              position: absolute;
+              bottom: 0;
+              left: 35%;
+              transform: translateX(-50%);
+            }
+
+            &-8 {
+              position: absolute;
+              top: 75%;
+              left: 0;
+              transform: translateY(-50%);
+            }
+
+            &-9 {
+              position: absolute;
+              top: 50%;
+              left: 0;
+              transform: translateY(-50%);
+            }
+
+            &-10 {
+              position: absolute;
+              top: 25%;
+              left: 0;
+              transform: translateY(-50%);
+            }
+          }
+        }
+      }
+
+      .avatar-border {
+        position: absolute;
+        height: 90rpx;
+        width: 90rpx;
+        border-radius: 50rpx;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: none;
+        border: 8rpx solid #ffaf14;
+      }
+
+      .member-info {
+        margin-top: 12rpx;
+        display: flex;
+        flex-direction: column;
+
+        .name, .score {
+          text-align: center;
+          display: inline-block;
+          background: rgba(0,0,0,.3);
+          font-size: 24rpx;
+          font-weight: 500;
+        }
+
+        .name {
+          color: white;
+        }
+
+        .score {
+          color: #ffaf14;
+        }
+      }
+    }
+
+    .handler {
+      display: flex;
+      gap: 32rpx;
+
+      button {
+        width: auto;
       }
     }
   }

@@ -2,35 +2,38 @@
     <page-title background="rgba(0,0,0,0)"></page-title>
 
     <view class="run-game-container">
-        <!--            工具栏或者其他-->
-        <view class="tool-bar">
-            <button>
-                <view class="iconfont icon-ego-menu"></view>
-            </button>
-        </view>
 
         <!--            主体区域-->
         <view class="main">
             <!--                展示分数-->
             <view class="info">
-                <text>奖池：4200</text>
+                <text>得分池：4200</text>
                 <text>盲注：20/40</text>
             </view>
 
             <!--                人员-->
             <view class="member-list member-list-{{ currentMaxMemberListLength }}">
-                <view wx:for="{{memberList}}" class="member-item member-item-{{index + 1}}">
-                    <avatar nickname="{{item.name}}" avatarUrl="{{item.avatarUrl}}" showNickname="{{false}}" showPosition="top">
-                        <view slot="bottom">
-                            <text>{{ item.name }}</text>
+                <view wx:for="{{memberList}}" wx:key="index" class="member-item member-item-{{index + 1}}">
+                    <avatar nickname="{{item.name}}" avatarUrl="{{item.avatarUrl}}" showNickname="{{false}}"
+                            showPosition="top">
+                        <view class="avatar-border" slot="avatar"></view>
+
+                        <view class="member-info" slot="bottom">
+                            <text class="name">{{ item.name }}</text>
+                            <text class="score">{{ item.currentScore }}</text>
                         </view>
                     </avatar>
                 </view>
             </view>
         </view>
 
+        <!--        工具区域 或者 其他-->
+        <button class="menu-btn">
+            <view class="iconfont icon-ego-menu"></view>
+        </button>
+
         <!--            按钮区域-->
-        <view>
+        <view class="handler">
             <!--                开始-->
             <button>开始本局</button>
 

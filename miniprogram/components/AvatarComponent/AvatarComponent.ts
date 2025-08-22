@@ -1,4 +1,6 @@
-interface IData {}
+interface IData {
+    initialText: string
+}
 
 interface IProperty {
     avatarUrl: String;
@@ -9,6 +11,7 @@ interface IProperty {
 
 interface IMethod {}
 
+// @ts-ignore
 // @ts-ignore
 Component<IData, IProperty, IMethod>({
     options: {
@@ -40,11 +43,17 @@ Component<IData, IProperty, IMethod>({
             value: 'left'
         }
     },
-    data: {},
+
+    data: {
+        // initialText: (this.properties.nickname as string)?.slice(0, 1)
+    },
 
     pageLifetimes: {
         show() {
-            console.log(this.data, this.dataset)
+            console.log('avatarComponent show: ', this.properties.nickname)
+            this.setData({
+                initialText: (this.properties.nickname as string)?.slice(0, 1)
+            })
         }
     },
 

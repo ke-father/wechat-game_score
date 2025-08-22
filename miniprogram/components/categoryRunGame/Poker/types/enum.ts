@@ -27,7 +27,7 @@ export enum POKER_BEHAVIOR_TYPE {
 }
 
 // 行动
-export enum POKEY_ACTION_TYPE {
+export enum POKER_ACTION_TYPE {
     // 翻前
     PRE_FLOP = 'PRE_FLOP',
     // 翻后
@@ -38,7 +38,7 @@ export enum POKEY_ACTION_TYPE {
     RIVER = 'RIVER'
 }
 
-export enum POKEY_COMMON_TYPE {
+export enum POKER_COMMON_TYPE {
     // 公共牌
     COMMON_CARDS = 'COMMON_CARDS',
     // 底牌
