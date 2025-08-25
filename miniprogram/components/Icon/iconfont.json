@@ -6,9 +6,37 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "5050195",
+      "name": "成员-添加",
+      "font_class": "addMember",
+      "unicode": "e7f8",
+      "unicode_decimal": 59384
+    },
+    {
+      "icon_id": "7594152",
+      "name": "pause",
+      "font_class": "pause",
+      "unicode": "ea81",
+      "unicode_decimal": 60033
+    },
+    {
+      "icon_id": "16683361",
+      "name": "成员添加",
+      "font_class": "memberAdd",
+      "unicode": "e82c",
+      "unicode_decimal": 59436
+    },
+    {
+      "icon_id": "42852004",
+      "name": "播放",
+      "font_class": "play",
+      "unicode": "e8e8",
+      "unicode_decimal": 59624
+    },
+    {
       "icon_id": "879161",
       "name": "菜单",
-      "font_class": "ego-menu",
+      "font_class": "menu",
       "unicode": "e605",
       "unicode_decimal": 58885
     },
