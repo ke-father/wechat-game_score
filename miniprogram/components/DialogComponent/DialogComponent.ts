@@ -1,4 +1,6 @@
 interface IDialogData {
+    // 控制弹框
+    visible: boolean
     showButtons: Array<IButtonConfig>;
 }
 
@@ -8,8 +10,8 @@ type IButtonConfig = {
 }
 
 interface IDialogProperty {
-    // 是否开启弹框
-    openDialog: boolean;
+    // 是否展示遮罩
+    showModal: string
     // 弹框标题
     dialogTitle: string;
     // 弹框按钮
@@ -23,15 +25,19 @@ interface IDialogMethod {
 
 // @ts-ignore
 Component<IDialogData, IDialogProperty, IDialogMethod>({
+    data: {
+        visible: false,
+    },
+
     options: {
         multipleSlots: true
     },
 
     properties: {
-        openDialog: {
+        showModal: {
             type: Boolean,
             value: false
-        },
+        }
         // dialogTitle: {
         //     type: String,
         //     value: '提示'
@@ -42,8 +48,17 @@ Component<IDialogData, IDialogProperty, IDialogMethod>({
     },
 
     methods: {
-        handleDialogClose () {
-            this.triggerEvent('closeDialog', false)
-        }
+        open () {
+            console.log(11111111)
+            this.setData({
+                visible: true
+            })
+        },
+
+        close () {
+            this.setData({
+                visible: false
+            })
+        },
     }
 });

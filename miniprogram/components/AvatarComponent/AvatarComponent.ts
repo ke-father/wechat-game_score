@@ -46,13 +46,15 @@ Component<IData, IProperty, IMethod>({
 
     data: {
         // initialText: (this.properties.nickname as string)?.slice(0, 1)
+        initialText: '',
     },
 
     pageLifetimes: {
         show() {
             console.log('avatarComponent show: ', this.properties.nickname)
             this.setData({
-                initialText: (this.properties.nickname as string)?.slice(0, 1)
+                // @ts-ignore
+                initialText: this.properties.nickname.slice(0, 1)
             })
         }
     },

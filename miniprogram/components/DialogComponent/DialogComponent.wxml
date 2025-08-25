@@ -1,7 +1,8 @@
 <!--    创建比赛提示弹框-->
 <mp-dialog
         ext-class="common-dialog"
-        show="{{ openDialog }}"
+        show="{{ visible }}"
+        mask="{{ showModal }}"
         mask-closable="{{false}}"
         title="{{ dialogTitle }}"
         buttons="{{ dialogButtons }}">

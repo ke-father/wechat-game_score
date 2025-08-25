@@ -1,6 +1,6 @@
 @use "../../styles/global.scss";
 @use "../../styles/buttonVariables.scss" as *;
-@use "../../components/Icon/Icon.scss" as *;
+@use "../../components/Icon/iconfont.scss" as *;
 
 page {
   height: 100%;
@@ -19,7 +19,6 @@ page {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 64rpx;
 
     .menu-btn {
       position: absolute;
@@ -33,7 +32,6 @@ page {
 
     .main {
       padding-bottom: 32rpx;
-      //padding-top: 120rpx;
       width: 100%;
       flex: 1;
       height: 100%;
@@ -41,7 +39,7 @@ page {
 
       .info {
         position: absolute;
-        top: 40%;
+        top: 45%;
         left: 50%;
         transform: translate(-50%, -50%);
         display: flex;
@@ -434,14 +432,18 @@ page {
 
       .avatar-border {
         position: absolute;
-        height: 90rpx;
-        width: 90rpx;
+        height: 100rpx;
+        width: 100rpx;
         border-radius: 50rpx;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         background: none;
-        border: 8rpx solid #ffaf14;
+        border: 8rpx solid rgba(0,0,0,.2);
+
+        &.active {
+          border: 8rpx solid #ffaf14;
+        }
       }
 
       .member-info {
@@ -468,12 +470,134 @@ page {
     }
 
     .handler {
+      position: absolute;
+      right: 0;
       display: flex;
       gap: 32rpx;
 
       button {
+        padding: 0;
         width: auto;
       }
     }
   }
 }
+
+
+
+.handle-operation {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30rpx;
+
+  .bet-list {
+    display: flex;
+    gap: 32rpx;
+
+    .item-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      width: 80rpx;
+      height: 80rpx;
+      border-radius: 80rpx;
+      border: 2px solid #20a09e;
+      background: linear-gradient(to right, #156969, #1c9f99, #156969);
+    }
+  }
+
+  .action-bet {
+    width: 100%;
+  }
+
+  .action-list {
+    display: flex;
+    gap: 140rpx;
+
+    .item-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      width: 100rpx;
+      height: 100rpx;
+      border-radius: 100rpx;
+
+      &.fold {
+        border: 2px solid #f85333;
+        background: linear-gradient(to right, #cb2806, #f85333, #cb2806);
+      }
+
+      &.check {
+        border: 2px solid #ce9b20;
+        background: linear-gradient(to right, #a37f11, #ce9b20, #a37f11);
+      }
+
+      &.bet {
+        border: 2px solid #20a09e;
+        background: linear-gradient(to right, #156969, #1c9f99, #156969);
+      }
+    }
+  }
+}
+
+//.handle-operation {
+//  display: flex;
+//  flex-direction: column;
+//  align-items: center;
+//  gap: 80rpx;
+//
+//  .bet-list {
+//    display: flex;
+//    gap: 32rpx;
+//
+//    .item-btn {
+//      display: flex;
+//      justify-content: center;
+//      align-items: center;
+//      color: white;
+//      width: 80rpx;
+//      height: 80rpx;
+//      border-radius: 80rpx;
+//      border: 2px solid #20a09e;
+//      background: linear-gradient(to right, #156969, #1c9f99, #156969);
+//    }
+//  }
+//
+//  .action-bet {
+//    width: 100%;
+//  }
+//
+//  .action-list {
+//    display: flex;
+//    gap: 32rpx;
+//
+//    .item-btn {
+//      display: flex;
+//      justify-content: center;
+//      align-items: center;
+//      color: white;
+//      width: 120rpx;
+//      height: 120rpx;
+//      border-radius: 120rpx;
+//
+//      &.fold {
+//        border: 2px solid #f85333;
+//        background: linear-gradient(to right, #cb2806, #f85333, #cb2806);
+//      }
+//
+//      &.check {
+//        border: 2px solid #ce9b20;
+//        background: linear-gradient(to right, #a37f11, #ce9b20, #a37f11);
+//      }
+//
+//      &.bet {
+//        border: 2px solid #20a09e;
+//        background: linear-gradient(to right, #156969, #1c9f99, #156969);
+//      }
+//    }
+//  }
+//}

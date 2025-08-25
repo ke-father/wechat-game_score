@@ -7,8 +7,9 @@
         <view class="main">
             <!--                展示分数-->
             <view class="info">
-                <text>得分池：4200</text>
+                <text>得分池：{{ IntegralPool }}</text>
                 <text>盲注：20/40</text>
+                <text>时间：00:00</text>
             </view>
 
             <!--                人员-->
@@ -16,11 +17,12 @@
                 <view wx:for="{{memberList}}" wx:key="index" class="member-item member-item-{{index + 1}}">
                     <avatar nickname="{{item.name}}" avatarUrl="{{item.avatarUrl}}" showNickname="{{false}}"
                             showPosition="top">
-                        <view class="avatar-border" slot="avatar"></view>
+                        <view class="avatar-border {{ currentMemberIndex === index && 'active' }}" slot="avatar"></view>
 
                         <view class="member-info" slot="bottom">
                             <text class="name">{{ item.name }}</text>
                             <text class="score">{{ item.currentScore }}</text>
+                            <text class="position">{{ item.currentPosition }}</text>
                         </view>
                     </avatar>
                 </view>
@@ -29,19 +31,59 @@
 
         <!--        工具区域 或者 其他-->
         <button class="menu-btn">
-            <view class="iconfont icon-ego-menu"></view>
+            <view class="iconfont icon-menu"></view>
         </button>
 
         <!--            按钮区域-->
         <view class="handler">
             <!--                开始-->
-            <button>开始本局</button>
+            <button bind:tap="startGame">
+                <view class="iconfont icon-play"></view>
+            </button>
 
             <!--                结束本局-->
-            <button>结束本局</button>
+            <button>
+                <view class="iconfont icon-pause"></view>
+            </button>
 
             <!--                加人-->
-            <button>+</button>
+            <button>
+                <view class="iconfont icon-addMember"></view>
+            </button>
+        </view>
+
+        <view class="handle-operation">
+            <view class="action-bet">
+                <slider show-value min="{{20}}" max="{{60}}" value="{{50}}"></slider>
+            </view>
+
+            <view class="action-list">
+                <view class="fold item-btn">弃牌</view>
+                <view class="check item-btn">过牌</view>
+            </view>
         </view>
     </view>
+
+    <!--    <DialogComponent id="CHandleOperationDialog" openDialog="{{ handleOperationDialog }}">-->
+    <!--        <view slot="content">-->
+    <!--            <view class="handle-operation">-->
+    <!--                <view class="bet-list">-->
+    <!--                    <text class="item-btn x2">X2</text>-->
+    <!--                    <text class="item-btn x3">X3</text>-->
+    <!--                    <text class="item-btn x5">X5</text>-->
+    <!--                </view>-->
+
+    <!--                <view class="action-bet">-->
+    <!--                    加注-->
+    <!--                    <slider show-value min="{{20}}" max="{{60}}" value="{{50}}"></slider>-->
+    <!--                </view>-->
+
+    <!--                <view class="action-list">-->
+    <!--                    <view class="fold item-btn">弃牌</view>-->
+    <!--                    <view class="check item-btn">过牌</view>-->
+    <!--                    <view class="bet item-btn">加注</view>-->
+    <!--                </view>-->
+    <!--            </view>-->
+    <!--        </view>-->
+    <!--    </DialogComponent>-->
 </view>
