@@ -7,14 +7,26 @@
         <view class="main">
             <!--                展示分数-->
             <view class="info">
-                <text>得分池：{{ IntegralPool }}</text>
-                <text>盲注：20/40</text>
-                <text>时间：00:00</text>
+                <view class="score">
+                    得分池：<text>{{ IntegralPool }}</text>
+                </view>
+                <text class="explain">盲注：20/40</text>
+                <text class="time">时间：00:00</text>
             </view>
 
             <!--                人员-->
             <view class="member-list member-list-{{ currentMaxMemberListLength }}">
                 <view wx:for="{{memberList}}" wx:key="index" class="member-item member-item-{{index + 1}}">
+                    <!--                    位置-->
+                    <view class="member-position">
+                        <text class="item-label {{ item.currentPosition }}"
+                              wx:if="{{ item.currentPosition === 'BTN' }}">庄家</text>
+                        <text class="item-label {{ item.currentPosition }}"
+                              wx:elif="{{ item.currentPosition === 'BB' }}">小盲</text>
+                        <text class="item-label {{ item.currentPosition }}"
+                              wx:elif="{{ item.currentPosition === 'SB' }}">大盲</text>
+                    </view>
+
                     <avatar nickname="{{item.name}}" avatarUrl="{{item.avatarUrl}}" showNickname="{{false}}"
                             showPosition="top">
                         <view class="avatar-border {{ currentMemberIndex === index && 'active' }}" slot="avatar"></view>
@@ -22,9 +34,25 @@
                         <view class="member-info" slot="bottom">
                             <text class="name">{{ item.name }}</text>
                             <text class="score">{{ item.currentScore }}</text>
-                            <text class="position">{{ item.currentPosition }}</text>
                         </view>
                     </avatar>
+
+                    <!--                    下注行为池-->
+                    <view class="place-bet-pool">
+                        <!--                        除了跟注外所有的行为标签-->
+                        <view class="raise item-label" wx:if="{{ item.currentAction.action === 'RAISE' }}">下注</view>
+                        <view class="call item-label" wx:elif="{{ item.currentAction.action === 'CALL' }}">跟注</view>
+                        <view class="fold item-label" wx:elif="{{ item.currentAction.action === 'FOLD' }}">弃牌</view>
+                        <view class="check item-label" wx:elif="{{ item.currentAction.action === 'CHECK' }}">check
+                        </view>
+                        <view class="allIn item-label" wx:elif="{{ item.currentAction.action === 'ALL_IN' }}">ALL IN
+                        </view>
+
+                        <!--                        下注分数-->
+                        <view wx:if="{{ item.currentAction.score }}" class="score">
+                            {{ item.currentAction.score }}
+                        </view>
+                    </view>
                 </view>
             </view>
         </view>
@@ -52,14 +80,19 @@
             </button>
         </view>
 
+        <!--        操作栏-->
         <view class="handle-operation">
             <view class="action-bet">
-                <slider show-value min="{{20}}" max="{{60}}" value="{{50}}"></slider>
+                <slider show-value min="{{handleOperationData.sliderMin}}" max="{{handleOperationData.sliderMax}}"
+                        value="{{handleOperationData.sliderValue}}"></slider>
             </view>
 
             <view class="action-list">
                 <view class="fold item-btn">弃牌</view>
                 <view class="check item-btn">过牌</view>
+                <view class="bet item-btn">下注</view>
+                <view class="call item-btn">跟注</view>
+                <view class="allIn item-btn">ALL IN</view>
             </view>
         </view>
     </view>

@@ -36,6 +36,12 @@ export enum POKER_BEHAVIOR_TYPE {
     RAISE = 'RAISE',
     // 弃牌
     FOLD = 'FOLD',
+    // All In
+    ALL_IN = 'ALL_IN',
+    // 过牌
+    CHECK = 'CHECK',
+    // 等待
+    WAIT = 'WAIT'
 }
 
 // 行动

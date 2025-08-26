@@ -2,6 +2,11 @@
 @use "../../styles/buttonVariables.scss" as *;
 @use "../../components/Icon/iconfont.scss" as *;
 
+$raise-bg-color: linear-gradient(to right, #156969, #1c9f99, #156969);
+$check-bg-color: linear-gradient(to right, #a37f11, #ce9b20, #a37f11);
+$fold-bg-color: linear-gradient(to right, #cb2806, #f85333, #cb2806);
+
+
 page {
   height: 100%;
 }
@@ -39,12 +44,38 @@ page {
 
       .info {
         position: absolute;
-        top: 45%;
+        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         display: flex;
         flex-direction: column;
-        gap: 32rpx;
+        gap: 16rpx;
+        text-align: center;
+        background: rgba(0,0,0,.2);
+
+        view {
+          padding: 8rpx 20rpx;
+        }
+
+        .score {
+          font-size: 28rpx;
+          display: inline-block;
+          color: #ffffff;
+
+          text {
+            color: #ff9e00;
+          }
+        }
+
+        .explain {
+          font-size: 28rpx;
+          color: #ffffff;
+        }
+
+        .time {
+          font-size: 28rpx;
+          color: #ffffff;
+        }
       }
 
       .member-list {
@@ -58,374 +89,408 @@ page {
           position: absolute;
         }
 
+        $x-offset: 50%;
+        $y-offset: 50%;
+
         &-4 {
           .member-item {
-            &-1 {
-              position: absolute;
-              top: 0;
+            &-1, &-3 {
               left: 50%;
               transform: translateX(-50%);
+
+              .place-bet-pool {
+                left: 50%;
+                transform: translateX(-50%);
+              }
+            }
+
+            &-2, &-4 {
+              top: 50%;
+              transform: translateY(-50%);
+
+              .place-bet-pool {
+                top: 50%;
+                transform: translateY(-50%);
+              }
+            }
+
+            &-1 {
+              top: 0;
+
+              .place-bet-pool {
+                bottom: -70%;
+              }
             }
 
             &-2 {
-              position: absolute;
-              top: 50%;
               right: 0;
-              transform: translateY(-50%);
+
+              .place-bet-pool {
+                left: -70%;
+              }
             }
 
             &-3 {
-              position: absolute;
               bottom: 0;
-              left: 50%;
-              transform: translateX(-50%);
+
+              .place-bet-pool {
+                top: -70%;
+              }
             }
 
             &-4 {
-              position: absolute;
-              top: 50%;
               left: 0;
-              transform: translateY(-50%);
+
+              .place-bet-pool {
+                right: -70%;
+              }
             }
           }
         }
 
         &-5 {
           .member-item {
-            &-1 {
-              position: absolute;
-              top: 0;
+            &-1, &-4 {
               left: 50%;
               transform: translateX(-50%);
+
+              .place-bet-pool {
+                left: 50%;
+                transform: translateX(-50%);
+              }
+            }
+
+            &-2, &-3 {
+              right: 0;
+              transform: translateY(-50%);
+
+              .place-bet-pool {
+                left: -70%;
+                top: 50%;
+                transform: translateY(-50%);
+              }
+            }
+
+            &-1 {
+              top: 0;
+
+              .place-bet-pool {
+                bottom: -70%;
+              }
             }
 
             &-2 {
-              position: absolute;
               top: 30%;
-              right: 0;
-              transform: translateY(-50%);
             }
 
             &-3 {
-              position: absolute;
               top: 70%;
-              right: 0;
-              transform: translateY(-50%);
             }
 
             &-4 {
-              position: absolute;
               bottom: 0;
-              left: 50%;
-              transform: translateX(-50%);
+
+              .place-bet-pool {
+                top: -70%;
+              }
             }
 
             &-5 {
-              position: absolute;
               top: 50%;
               left: 0;
               transform: translateY(-50%);
+
+              .place-bet-pool {
+                right: -70%;
+                top: 50%;
+                transform: translateY(-50%);
+              }
             }
           }
         }
 
         &-6 {
           .member-item {
-            &-1 {
-              position: absolute;
-              top: 0;
+            &-1, &-4 {
               left: 50%;
               transform: translateX(-50%);
+
+              .place-bet-pool {
+                left: 50%;
+                transform: translateX(-50%);
+              }
+            }
+
+            &-2, &-3, &-5, &-6 {
+              transform: translateY(-50%);
+
+              .place-bet-pool {
+                top: 50%;
+                transform: translateY(-50%);
+              }
+            }
+
+            &-2, &-3 {
+              right: 0;
+            }
+
+            &-5, &-6 {
+              left: 0;
+            }
+
+            &-1 {
+              top: 0;
+
+              .place-bet-pool {
+                bottom: -70%;
+              }
             }
 
             &-2 {
-              position: absolute;
               top: 30%;
-              right: 0;
-              transform: translateY(-50%);
+
+              .place-bet-pool {
+                left: -70%;
+              }
             }
 
             &-3 {
-              position: absolute;
               top: 70%;
-              right: 0;
-              transform: translateY(-50%);
+
+              .place-bet-pool {
+                left: -70%;
+              }
             }
 
             &-4 {
-              position: absolute;
               bottom: 0;
-              left: 50%;
-              transform: translateX(-50%);
+
+              .place-bet-pool {
+                top: -70%;
+              }
             }
 
             &-5 {
-              position: absolute;
               top: 70%;
-              left: 0;
-              transform: translateY(-50%);
+
+              .place-bet-pool {
+                right: -70%;
+              }
             }
 
             &-6 {
-              position: absolute;
               top: 30%;
-              left: 0;
+
+              .place-bet-pool {
+                right: -70%;
+              }
+            }
+          }
+        }
+
+        &-7, &-8 {
+          .member-item {
+            &-1, &-5 {
+              left: 50%;
+              transform: translateX(-50%);
+
+              .place-bet-pool {
+                left: 50%;
+                transform: translateX(-50%);
+              }
+            }
+
+            &-2, &-3, &-4, &-6, &-7, &-8 {
               transform: translateY(-50%);
+
+              .place-bet-pool {
+                top: 50%;
+                transform: translateY(-50%);
+              }
+            }
+
+            &-2, &-3, &-4 {
+              right: 0;
+
+              .place-bet-pool {
+                left: -70%;
+              }
+            }
+
+            &-6, &-7, &-8 {
+              left: 0;
+
+              .place-bet-pool {
+                right: -70%;
+              }
+            }
+
+            &-1 {
+              top: 0;
+              left: 50%;
+
+              .place-bet-pool {
+                bottom: -70%;
+              }
+            }
+
+            &-2 {
+              top: 20%;
+            }
+
+            &-3 {
+              top: 50%;
+            }
+
+            &-4 {
+              top: 80%;
+            }
+
+            &-5 {
+              bottom: 0;
+
+              .place-bet-pool {
+                top: -70%;
+              }
+            }
+
+            &-6 {
+              top: 80%;
+            }
+
+            &-7 {
+              top: 50%;
+            }
+
+            &-8 {
+              top: 20%;
             }
           }
         }
 
         &-7 {
           .member-item {
-            &-1 {
-              position: absolute;
-              top: 0;
-              left: 50%;
-              transform: translateX(-50%);
-            }
-
-            &-2 {
-              position: absolute;
-              top: 20%;
-              right: 0;
-              transform: translateY(-50%);
-            }
-
-            &-3 {
-              position: absolute;
-              top: 50%;
-              right: 0;
-              transform: translateY(-50%);
-            }
-
-            &-4 {
-              position: absolute;
-              top: 80%;
-              right: 0;
-              transform: translateY(-50%);
-            }
-
-            &-5 {
-              position: absolute;
-              bottom: 0;
-              left: 50%;
-              transform: translateX(-50%);
-            }
-
             &-6 {
-              position: absolute;
               top: 70%;
-              left: 0;
-              transform: translateY(-50%);
             }
 
             &-7 {
-              position: absolute;
               top: 30%;
-              left: 0;
-              transform: translateY(-50%);
             }
           }
         }
 
-        &-8 {
+        &-9, &-10 {
           .member-item {
-            &-1 {
-              position: absolute;
+            &-1, &-2, &-6, &-7 {
+              transform: translateX(-50%);
+
+              .place-bet-pool {
+                left: 50%;
+                transform: translateX(-50%);
+              }
+            }
+
+            &-3, &-4, &-5, &-8, &-9, &-10 {
+              transform: translateY(-50%);
+
+              .place-bet-pool {
+                top: 50%;
+                transform: translateY(-50%);
+              }
+            }
+
+            &-3, &-4, &-5 {
+              right: 0;
+
+              .place-bet-pool {
+                left: -70%;
+              }
+            }
+
+            &-8, &-9, &-10 {
+              left: 0;
+
+              .place-bet-pool {
+                right: -70%;
+              }
+            }
+
+            &-1, &-2 {
               top: 0;
-              left: 50%;
-              transform: translateX(-50%);
+
+              .place-bet-pool {
+                bottom: -70%;
+              }
             }
 
-            &-2 {
-              position: absolute;
-              top: 20%;
-              right: 0;
-              transform: translateY(-50%);
+            &-1, &-7 {
+              left: 40%;
             }
 
-            &-3 {
-              position: absolute;
+            &-2, &-6 {
+              left: 60%;
+            }
+
+            &-3, &-10 {
+              top: 25%;
+            }
+
+            &-4, &-9 {
               top: 50%;
-              right: 0;
-              transform: translateY(-50%);
             }
 
-            &-4 {
-              position: absolute;
-              top: 80%;
-              right: 0;
-              transform: translateY(-50%);
+            &-5, &-8 {
+              top: 75%;
             }
 
-            &-5 {
-              position: absolute;
+            &-6, &-7 {
               bottom: 0;
-              left: 50%;
-              transform: translateX(-50%);
-            }
 
-            &-6 {
-              position: absolute;
-              top: 80%;
-              left: 0;
-              transform: translateY(-50%);
-            }
-
-            &-7 {
-              position: absolute;
-              top: 50%;
-              left: 0;
-              transform: translateY(-50%);
-            }
-
-            &-8 {
-              position: absolute;
-              top: 20%;
-              left: 0;
-              transform: translateY(-50%);
+              .place-bet-pool {
+                top: -70%;
+              }
             }
           }
         }
 
         &-9 {
           .member-item {
-            &-1 {
-              position: absolute;
-              top: 0;
-              left: 35%;
-              transform: translateX(-50%);
-            }
-
-            &-2 {
-              position: absolute;
-              top: 0;
-              left: 65%;
-              transform: translateX(-50%);
-            }
-
-            &-3 {
-              position: absolute;
-              top: 25%;
-              right: 0;
-              transform: translateY(-50%);
-            }
-
-            &-4 {
-              position: absolute;
-              top: 50%;
-              right: 0;
-              transform: translateY(-50%);
-            }
-
-            &-5 {
-              position: absolute;
-              top: 75%;
-              right: 0;
-              transform: translateY(-50%);
-            }
-
-            &-6 {
-              position: absolute;
-              bottom: 0;
-              left: 65%;
-              transform: translateX(-50%);
-            }
-
-            &-7 {
-              position: absolute;
-              bottom: 0;
-              left: 35%;
-              transform: translateX(-50%);
-            }
-
             &-8 {
-              position: absolute;
-              top: 70%;
-              left: 0;
-              transform: translateY(-50%);
+              top: 65%;
             }
 
             &-9 {
-              position: absolute;
-              top: 30%;
-              left: 0;
-              transform: translateY(-50%);
+              top: 35%;
             }
           }
         }
+      }
 
-        &-10 {
-          .member-item {
-            &-1 {
-              position: absolute;
-              top: 0;
-              left: 35%;
-              transform: translateX(-50%);
-            }
+      .member-position {
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -70%);
 
-            &-2 {
-              position: absolute;
-              top: 0;
-              left: 65%;
-              transform: translateX(-50%);
-            }
+        .item-label {
+          border-radius: 4rpx;
+          padding: 0 8rpx;
+          display: inline-block;
+          white-space: nowrap;
+          font-size: 20rpx;
+          box-shadow: 2rpx 2rpx 2rpx rgba(0,0,0,.3);
+          color: white;
 
-            &-3 {
-              position: absolute;
-              top: 25%;
-              right: 0;
-              transform: translateY(-50%);
-            }
+          &.BTN {
+            border: 2px solid #FFD700;
+            background: linear-gradient(to bottom, #daa520, #ffd700);
+          }
 
-            &-4 {
-              position: absolute;
-              top: 50%;
-              right: 0;
-              transform: translateY(-50%);
-            }
-
-            &-5 {
-              position: absolute;
-              top: 75%;
-              right: 0;
-              transform: translateY(-50%);
-            }
-
-            &-6 {
-              position: absolute;
-              bottom: 0;
-              left: 65%;
-              transform: translateX(-50%);
-            }
-
-            &-7 {
-              position: absolute;
-              bottom: 0;
-              left: 35%;
-              transform: translateX(-50%);
-            }
-
-            &-8 {
-              position: absolute;
-              top: 75%;
-              left: 0;
-              transform: translateY(-50%);
-            }
-
-            &-9 {
-              position: absolute;
-              top: 50%;
-              left: 0;
-              transform: translateY(-50%);
-            }
-
-            &-10 {
-              position: absolute;
-              top: 25%;
-              left: 0;
-              transform: translateY(-50%);
-            }
+          &.BB, &.SB {
+            border: 2px solid #c0c0c0;
+            background: linear-gradient(to bottom, #c0c0c0, #f0f0f0);
           }
         }
       }
@@ -467,6 +532,45 @@ page {
           color: #ffaf14;
         }
       }
+
+      .place-bet-pool {
+        position: absolute;
+
+        .score {
+          text-align: center;
+          color: #666666;
+        }
+
+        .item-label {
+          text-align: center;
+          padding: 6rpx 8rpx;
+          color: white;
+          font-size: 24rpx;
+          border-radius: 4rpx;
+          box-shadow: 5px 5px 5px rgba(0,0,0,.3);
+          white-space: nowrap;
+
+          &.raise {
+            background: $raise-bg-color;
+          }
+
+          &.call {
+            background: $raise-bg-color;
+          }
+
+          &.allIn {
+            background: $raise-bg-color;
+          }
+
+          &.fold {
+            background: $fold-bg-color;
+          }
+
+          &.check {
+            background: $check-bg-color;
+          }
+        }
+      }
     }
 
     .handler {
@@ -482,8 +586,6 @@ page {
     }
   }
 }
-
-
 
 .handle-operation {
   width: 100%;
@@ -514,8 +616,9 @@ page {
   }
 
   .action-list {
-    display: flex;
-    gap: 140rpx;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 50rpx;
 
     .item-btn {
       display: flex;
@@ -528,17 +631,29 @@ page {
 
       &.fold {
         border: 2px solid #f85333;
-        background: linear-gradient(to right, #cb2806, #f85333, #cb2806);
+        background: $fold-bg-color;
       }
 
       &.check {
         border: 2px solid #ce9b20;
-        background: linear-gradient(to right, #a37f11, #ce9b20, #a37f11);
+        background: $check-bg-color;
       }
 
       &.bet {
         border: 2px solid #20a09e;
-        background: linear-gradient(to right, #156969, #1c9f99, #156969);
+        background: $raise-bg-color;
+      }
+
+      &.call {
+        border: 2px solid #20a09e;
+        background: $raise-bg-color;
+      }
+
+      &.allIn {
+        font-size: 28rpx;
+        border: 2px solid #20a09e;
+        background: $raise-bg-color;
+        white-space: nowrap;
       }
     }
   }
