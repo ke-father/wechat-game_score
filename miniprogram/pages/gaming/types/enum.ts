@@ -10,7 +10,6 @@ export enum GAME_STATUS {
     END = 'END'
 }
 
-// 位置相关
 export enum POKER_POSITION_TYPE {
     // 小盲
     BB = 'BB',

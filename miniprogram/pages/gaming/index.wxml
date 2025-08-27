@@ -84,15 +84,15 @@
         <view class="handle-operation">
             <view class="action-bet">
                 <slider show-value min="{{handleOperationData.sliderMin}}" max="{{handleOperationData.sliderMax}}"
-                        value="{{handleOperationData.sliderValue}}"></slider>
+                        value="{{handleOperationData.sliderValue}}" bind:change="sliderChange"></slider>
             </view>
 
             <view class="action-list">
-                <view class="fold item-btn">弃牌</view>
-                <view class="check item-btn">过牌</view>
-                <view class="bet item-btn">下注</view>
-                <view class="call item-btn">跟注</view>
-                <view class="allIn item-btn">ALL IN</view>
+                <view class="fold item-btn" bind:tap="memberActionByFold">弃牌</view>
+                <view class="check item-btn" bind:tap="memberActionByCheck">过牌</view>
+                <view class="bet item-btn" bind:tap="memberActionByBet">下注</view>
+                <view class="call item-btn" bind:tap="memberActionByCall">跟注</view>
+                <view class="allIn item-btn" bind:tap="memberActionByAllIn">ALL IN</view>
             </view>
         </view>
     </view>
