@@ -13,4 +13,6 @@
             <text wx:else class="page-title-content--title">{{ title }}</text>
         </view>
     </view>
+
+    <slot name="content"></slot>
 </view>

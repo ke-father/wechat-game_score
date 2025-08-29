@@ -5,7 +5,8 @@
 $raise-bg-color: linear-gradient(to right, #156969, #1c9f99, #156969);
 $check-bg-color: linear-gradient(to right, #a37f11, #ce9b20, #a37f11);
 $fold-bg-color: linear-gradient(to right, #cb2806, #f85333, #cb2806);
-
+$call-bg-color: linear-gradient(to right, #f97316, #ff9500, #f97316);
+$member-border-color: #d1d5db;
 
 page {
   height: 100%;
@@ -14,9 +15,77 @@ page {
 .run-game {
   width: 100%;
   height: 100%;
-  padding: 24rpx 32rpx;
   display: flex;
   flex-direction: column;
+
+  &-title {;
+    display: flex;
+    padding: 28rpx 28rpx 0;
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 16rpx;
+
+      .icon {
+        font-size: 32rpx;
+        color: #2563eb;
+      }
+
+      .name {
+        font-size: 36rpx;
+        color: #000000;
+      }
+    }
+  }
+
+  &-top {
+    padding: 28rpx 28rpx 14rpx;
+    display: flex;
+    gap: 20rpx;
+    box-shadow: 3rpx 3rpx 3rpx rgba(0,0,0,.2);
+
+    .game-info {
+      display: flex;
+      align-items: center;
+      gap: 16rpx;
+
+      .gap {
+        font-size: 24rpx;
+        color: #d4d7dd;
+      }
+
+      .info-item {
+        font-size: 26rpx;
+        color: #4b5563;
+      }
+    }
+
+    .menus {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 32rpx;
+
+      .menu-btn {
+        padding: 0;
+        width: auto;
+        background: none;
+        display: inline-block;
+      }
+
+      button {
+        margin: 0;
+        padding: 0;
+        width: auto;
+
+        .iconfont {
+          color: #4b5563;
+        }
+      }
+    }
+  }
 
   &-container {
     flex: 1;
@@ -25,24 +94,16 @@ page {
     display: flex;
     flex-direction: column;
 
-    .menu-btn {
-      position: absolute;
-      top: 0;
-      left: 0;
-      padding: 0;
-      width: auto;
-      background: none;
-      display: inline-block;
-    }
-
     .main {
-      padding-bottom: 32rpx;
+      padding: 44rpx 28rpx 24rpx;
       width: 100%;
       flex: 1;
       height: 100%;
       position: relative;
+      background: #f9fafb;
 
       .info {
+        z-index: 1;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -53,10 +114,6 @@ page {
         text-align: center;
         background: rgba(0,0,0,.2);
 
-        view {
-          padding: 8rpx 20rpx;
-        }
-
         .score {
           font-size: 28rpx;
           display: inline-block;
@@ -66,19 +123,10 @@ page {
             color: #ff9e00;
           }
         }
-
-        .explain {
-          font-size: 28rpx;
-          color: #ffffff;
-        }
-
-        .time {
-          font-size: 28rpx;
-          color: #ffffff;
-        }
       }
 
       .member-list {
+        z-index: 1;
         width: 100%;
         height: 100%;
         position: relative;
@@ -504,7 +552,7 @@ page {
         left: 50%;
         transform: translate(-50%, -50%);
         background: none;
-        border: 8rpx solid rgba(0,0,0,.2);
+        border: 8rpx solid $member-border-color;
 
         &.active {
           border: 8rpx solid #ffaf14;
@@ -519,7 +567,7 @@ page {
         .name, .score {
           text-align: center;
           display: inline-block;
-          background: rgba(0,0,0,.3);
+          background: $member-border-color;
           font-size: 24rpx;
           font-weight: 500;
         }
@@ -555,7 +603,7 @@ page {
           }
 
           &.call {
-            background: $raise-bg-color;
+            background: $call-bg-color;
           }
 
           &.allIn {
@@ -571,93 +619,120 @@ page {
           }
         }
       }
+
+      .poker-table {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        //box-shadow:
+        background: linear-gradient(to bottom right, #16a34a , #166534);
+        border-radius: 999px;
+        box-shadow: inset -30rpx -30rpx 30rpx 30rpx rgba(255,255,255,.1), 20rpx 20rpx 20rpx 20rpx rgba(0,0,0,.1);
+      }
     }
 
-    .handler {
-      position: absolute;
-      right: 0;
+    .handle-operation {
+      z-index: 1;
+      padding: 28rpx;
+      width: 100%;
       display: flex;
-      gap: 32rpx;
+      flex-direction: column;
+      align-items: center;
+      gap: 28rpx;
+      background: white;
 
-      button {
-        padding: 0;
-        width: auto;
+      .action-bet {
+        width: 100%;
+
+        .slider {
+
+          margin: 0;
+        }
+      }
+
+      .action-list {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20rpx;
+
+        .item-btn {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: white;
+          width: 100%;
+          height: 84rpx;
+          border-radius: 24rpx;
+
+          &.fold {
+            border: 2px solid #f85333;
+            background: $fold-bg-color;
+          }
+
+          &.check {
+            border: 2px solid #ce9b20;
+            background: $check-bg-color;
+          }
+
+          &.bet {
+            border: 2px solid #20a09e;
+            background: $raise-bg-color;
+          }
+
+          &.call {
+            border: 2px solid #ff9500;
+            background: $call-bg-color;
+          }
+
+          &.allIn {
+            font-size: 28rpx;
+            border: 2px solid #20a09e;
+            background: $raise-bg-color;
+            white-space: nowrap;
+          }
+        }
+      }
+
+      .action-behavior {
+        padding-top: 14rpx;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px solid #f3f4f6;
+
+        button {
+          margin: 0;
+          padding: 14rpx 28rpx;
+          width: auto;
+          display: flex;
+          align-items: center;
+          gap: 16rpx;
+          font-size: 25rpx;
+          border-radius: 25rpx;
+
+          .iconfont {
+            font-size: 24rpx;
+          }
+        }
+
+        .revocation {
+          background: #f3f4f6;
+          color: #7f7f7f;
+        }
+
+        .next {
+          background: #3b82f6;
+          color: white;
+        }
       }
     }
   }
 }
 
-.handle-operation {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30rpx;
-
-  .bet-list {
-    display: flex;
-    gap: 32rpx;
-
-    .item-btn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      width: 80rpx;
-      height: 80rpx;
-      border-radius: 80rpx;
-      border: 2px solid #20a09e;
-      background: linear-gradient(to right, #156969, #1c9f99, #156969);
-    }
-  }
-
-  .action-bet {
-    width: 100%;
-  }
-
-  .action-list {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 50rpx;
-
-    .item-btn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      width: 100rpx;
-      height: 100rpx;
-      border-radius: 100rpx;
-
-      &.fold {
-        border: 2px solid #f85333;
-        background: $fold-bg-color;
-      }
-
-      &.check {
-        border: 2px solid #ce9b20;
-        background: $check-bg-color;
-      }
-
-      &.bet {
-        border: 2px solid #20a09e;
-        background: $raise-bg-color;
-      }
-
-      &.call {
-        border: 2px solid #20a09e;
-        background: $raise-bg-color;
-      }
-
-      &.allIn {
-        font-size: 28rpx;
-        border: 2px solid #20a09e;
-        background: $raise-bg-color;
-        white-space: nowrap;
-      }
-    }
-  }
-}
 
 //.handle-operation {
 //  display: flex;

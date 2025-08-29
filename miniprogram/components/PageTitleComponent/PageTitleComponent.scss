@@ -5,7 +5,7 @@
 
   &-content {
     position: relative;
-    height: 120rpx;
+    height: 100rpx;
     display: flex;
     align-items: center;
 
@@ -28,8 +28,6 @@
     // 标题包装器
     .title-wrapper {
       width: 100%;
-      padding: 0 44px;
-      text-align: center;
 
       .page-title-content--title {
         font-size: 17px;

@@ -127,7 +127,7 @@ Page<IRunGameData, IRunGameCustom>({
 
     onLoad() {
         console.log('onLoad')
-        this.data.memberList = Array.from({length: 6}, (_, index) => {
+        this.data.memberList = Array.from({length: 10}, (_, index) => {
             const name = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'][index]
             const initScore = 1000
             return ({

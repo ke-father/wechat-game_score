@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "5387614",
+      "name": "选择器下一个",
+      "font_class": "next",
+      "unicode": "eb15",
+      "unicode_decimal": 60181
+    },
+    {
+      "icon_id": "44840436",
+      "name": "撤销",
+      "font_class": "revocation",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "1221518",
+      "name": "奖杯",
+      "font_class": "poker-logo",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
       "icon_id": "5050195",
       "name": "成员-添加",
       "font_class": "addMember",
