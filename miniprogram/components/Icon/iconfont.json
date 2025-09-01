@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "686497",
+      "name": "扑克-积分",
+      "font_class": "poker-score",
+      "unicode": "e676",
+      "unicode_decimal": 58998
+    },
+    {
       "icon_id": "5387614",
       "name": "选择器下一个",
       "font_class": "next",

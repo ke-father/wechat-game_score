@@ -45,8 +45,10 @@
         <view class="main">
             <!--                展示分数-->
             <view class="info">
-                <view class="score">
-                    得分池：<text>{{ IntegralPool }}</text>
+                <text class="title">底池</text>
+                <view class="number">
+                    <text class="iconfont icon-poker-score"></text>
+                    {{ IntegralPool }}
                 </view>
             </view>
 

@@ -76,7 +76,7 @@ interface IRunGameCustom {
     // 增加成员
     openAddMemberDialog: () => void
     // 操作成员执行
-    handleOperationMember: () => void
+    handleOperationMember: (isStart?: boolean) => void
     // 成员下注行为
     memberAction: (action: { action: POKER_BEHAVIOR_TYPE, score: number }) => void
     // 成员下注行为 —— 弃牌
@@ -95,6 +95,12 @@ interface IRunGameCustom {
     pre_Flop_MemberAction: () => void
     // 成员行为 —— 翻后
     Flop_MemberAction: () => void
+    // 成员行为 —— 转牌
+    Turn_MemberAction: () => void
+    // 成员行为 —— 河牌
+    River_MemberAction: () => void
+    // 成员行为 —— 结束本轮
+    end_memberAction: () => void
     // 获取当前下注最小值与最大值
     getMemberPoolScoreMinAndMax: () => {
         min: number,
@@ -223,13 +229,15 @@ Page<IRunGameData, IRunGameCustom>({
         }
     },
 
-    listenIsOpenChange (handleOperationData) {
+    listenIsOpenChange (isOpen) {
         // const isOpen = handleOperationData.isOpen
         // if (isOpen) {
         //     // 开牌进入下一阶段
         //     console.log('isOpen nextLevel')
         // }
-        console.log(handleOperationData)
+        if (!isOpen) return
+
+        this.handleOperationMember()
     },
 
     computedMemberListLength() {
@@ -287,7 +295,28 @@ Page<IRunGameData, IRunGameCustom>({
 
     memberActionByBet () {
         let member = this.data.memberList[this.data.currentMemberIndex]
+
+        // 判断下注的分数
+        let memberTotalScore = member.currentScore
+        // 代表allIn
+        if (this.data.handleOperationData.sliderValue === memberTotalScore) {
+            this.memberActionByAllIn()
+            return
+        }
+
+        if (!this.data.handleOperationData.sliderValue) {
+            this.memberActionByCheck()
+            return
+        }
+
         let score = this.data.handleOperationData.sliderValue + (member.currentAction.score || 0)
+        let raiseScore = this.data.raiseMember ? this.data.raiseMember.score : 0
+        // 表示call
+        if (score === raiseScore) {
+            this.memberActionByCall()
+            return
+        }
+
         this.memberAction({
             action: POKER_BEHAVIOR_TYPE.RAISE,
             score
@@ -400,8 +429,16 @@ Page<IRunGameData, IRunGameCustom>({
     },
 
     CollectScore () {
-        // 更新索引从小盲开始下注
-        this.data.currentMemberIndex = 0
+        // 查找小盲
+        this.data.memberList.map((member, index) => {
+            if (member.currentPosition === POKER_POSITION_TYPE.BB) this.data.currentMemberIndex = index
+            member.currentAction.score = 0
+            member.currentAction.action = member.currentAction.action !== POKER_BEHAVIOR_TYPE.FOLD ? POKER_BEHAVIOR_TYPE.WAIT : POKER_BEHAVIOR_TYPE.FOLD
+        })
+
+        this.setData({
+            memberList: this.data.memberList
+        })
     },
 
     pre_Flop_MemberAction() {
@@ -415,13 +452,11 @@ Page<IRunGameData, IRunGameCustom>({
             return
         }
 
-        let raiseMember = this.data.raiseMember?.member
+        let raiseMember = this.data.raiseMember ? this.data.raiseMember : null
 
         if (member?.currentPosition === POKER_POSITION_TYPE.SB && member.currentAction.score === 40){
             this.data.isOpen = false
-        } else if (raiseMember === member) this.data.isOpen = true
-
-        console.log(raiseMember === member, raiseMember, member, this.data.isOpen)
+        } else if (raiseMember && (raiseMember as any) === member) this.data.isOpen = true
 
         this.setData({
             handleOperationData: this.data.handleOperationData
@@ -429,20 +464,51 @@ Page<IRunGameData, IRunGameCustom>({
     },
 
     Flop_MemberAction () {
-
+        this.CollectScore()
     },
 
-    handleOperationMember() {
-        // 设置状态 当前操作索引
-        this.data.currentMemberIndex = 0
+    Turn_MemberAction () {
+        this.CollectScore()
+    },
+
+    River_MemberAction () {
+        this.CollectScore()
+    },
+
+    end_memberAction () {},
+
+    handleOperationMember(isStart = false) {
+        if (isStart) {
+            // 设置状态 当前操作索引
+            this.data.currentMemberIndex = 0
+            this.pre_Flop_MemberAction()
+            return
+        }
+
+
         // 设置当前行为
-        this.data.playStatus = POKER_ACTION_TYPE.PRE_FLOP
-        // 设置开始行动
-        this.pre_Flop_MemberAction()
+        switch (this.data.playStatus) {
+            case POKER_ACTION_TYPE.PRE_FLOP:
+                this.data.playStatus = POKER_ACTION_TYPE.FLOP
+                this.Flop_MemberAction()
+                break
+            case POKER_ACTION_TYPE.FLOP:
+                this.data.playStatus = POKER_ACTION_TYPE.TURN
+                this.Turn_MemberAction()
+                break
+            case POKER_ACTION_TYPE.TURN:
+                this.data.playStatus = POKER_ACTION_TYPE.RIVER
+                this.River_MemberAction()
+                break
+            case POKER_ACTION_TYPE.RIVER:
+                this.data.playStatus = POKER_ACTION_TYPE.PRE_FLOP
+                this.end_memberAction()
+                break
+        }
     },
 
     startGame() {
-        this.handleOperationMember()
+        this.handleOperationMember(true)
     },
 
     endGame() {
