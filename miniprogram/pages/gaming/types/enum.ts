@@ -45,6 +45,7 @@ export enum POKER_BEHAVIOR_TYPE {
 
 // 行动
 export enum POKER_ACTION_TYPE {
+    WAIT = 'WAIT',
     // 翻前
     PRE_FLOP = 'PRE_FLOP',
     // 翻后

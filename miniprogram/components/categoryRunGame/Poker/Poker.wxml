@@ -1,0 +1,133 @@
+<view class="run-game">
+    <page-title background="rgba(255,255,255)">
+        <view class="run-game-title" slot="title">
+            <view class="logo">
+                <view class="icon iconfont icon-poker-logo"></view>
+                <view class="name">德州扑克计分</view>
+            </view>
+        </view>
+
+        <view class="run-game-top" slot="content">
+            <view class="game-info">
+                <view class="info-item">第 1 轮</view>
+                <view class="gap">|</view>
+                <view class="info-item">底注 20 / 40</view>
+                <view class="gap">|</view>
+                <view class="info-item">00:00</view>
+            </view>
+
+            <view class="menus">
+                <!--        工具区域 或者 其他-->
+                <button class="menu-btn">
+                    <view class="iconfont icon-menu"></view>
+                </button>
+                <!--                开始-->
+                <button bind:tap="startGame">
+                    <view class="iconfont icon-play"></view>
+                </button>
+
+                <!--                结束本局-->
+                <button>
+                    <view class="iconfont icon-pause"></view>
+                </button>
+
+                <!--                加人-->
+                <button>
+                    <view class="iconfont icon-addMember"></view>
+                </button>
+            </view>
+        </view>
+    </page-title>
+
+    <view class="run-game-container">
+
+        <!--            主体区域-->
+        <view class="main">
+            <!--                展示分数-->
+            <view class="info">
+                <text class="title">底池</text>
+                <view class="number">
+                    <text class="iconfont icon-poker-score"></text>
+                    {{ IntegralPool }}
+                </view>
+            </view>
+
+            <!--                人员-->
+            <view class="member-list member-list-{{ currentMaxMemberListLength }}">
+                <view wx:for="{{memberList}}" wx:key="index" class="member-item member-item-{{index + 1}}">
+                    <!--                    位置-->
+                    <view class="member-position">
+                        <text class="item-label {{ item.currentPosition }}"
+                              wx:if="{{ item.currentPosition === 'BTN' }}">庄家</text>
+                        <text class="item-label {{ item.currentPosition }}"
+                              wx:elif="{{ item.currentPosition === 'BB' }}">小盲</text>
+                        <text class="item-label {{ item.currentPosition }}"
+                              wx:elif="{{ item.currentPosition === 'SB' }}">大盲</text>
+                    </view>
+
+                    <avatar nickname="{{item.name}}" avatarUrl="{{item.avatarUrl}}" showNickname="{{false}}"
+                            showPosition="top">
+                        <view class="avatar-border {{ currentMemberIndex === index && 'active' }}" slot="avatar"></view>
+
+                        <view class="member-info" slot="bottom">
+                            <text class="name">{{ item.name }}</text>
+                            <text class="score">{{ item.currentScore }}</text>
+                        </view>
+                    </avatar>
+
+                    <!--                    下注行为池-->
+                    <view class="place-bet-pool">
+                        <!--                        除了跟注外所有的行为标签-->
+                        <view class="raise item-label" wx:if="{{ item.currentAction.action === 'RAISE' }}">下注</view>
+                        <view class="call item-label" wx:elif="{{ item.currentAction.action === 'CALL' }}">跟注</view>
+                        <view class="fold item-label" wx:elif="{{ item.currentAction.action === 'FOLD' }}">弃牌</view>
+                        <view class="check item-label" wx:elif="{{ item.currentAction.action === 'CHECK' }}">check
+                        </view>
+                        <view class="allIn item-label" wx:elif="{{ item.currentAction.action === 'ALL_IN' }}">ALL IN
+                        </view>
+
+                        <!--                        下注分数-->
+                        <view wx:if="{{ item.currentAction.score }}" class="score">
+                            {{ item.currentAction.score }}
+                        </view>
+                    </view>
+                </view>
+            </view>
+
+            <view class="poker-table"></view>
+        </view>
+
+        <!--        操作栏-->
+        <view class="handle-operation">
+            <view class="action-bet">
+                <slider
+                        class="slider"
+                        block-size="{{12}}"
+                        show-value min="{{handleOperationData.sliderMin}}"
+                        max="{{handleOperationData.sliderMax}}"
+                        value="{{handleOperationData.sliderValue}}"
+                        bind:change="sliderChange">
+                </slider>
+            </view>
+
+            <view class="action-list">
+                <view class="check item-btn" bind:tap="memberActionByCheck">过牌</view>
+                <view class="call item-btn" bind:tap="memberActionByCall">跟注</view>
+                <view class="bet item-btn" bind:tap="memberActionByBet">加注</view>
+                <view class="fold item-btn" bind:tap="memberActionByFold">弃牌</view>
+            </view>
+
+            <view class="action-behavior">
+                <button class="behavior-btn revocation">
+                    <view class="iconfont icon-revocation"></view>
+                    撤销
+                </button>
+
+                <button class="behavior-btn next">
+                    下一轮
+                    <view class="iconfont icon-next"></view>
+                </button>
+            </view>
+        </view>
+    </view>
+</view>

@@ -1,4 +1,15 @@
-// 位置相关
+// 游戏阶段
+export enum GAME_STATUS {
+    // 等待
+    WAITING = 'WAITING',
+    // 比赛中
+    PLAYING = 'PLAYING',
+    // 暂停
+    PAUSED = 'PAUSED',
+    // 结束
+    END = 'END'
+}
+
 export enum POKER_POSITION_TYPE {
     // 小盲
     BB = 'BB',
@@ -13,7 +24,7 @@ export enum POKER_POSITION_TYPE {
     // 关位
     CO = 'CO',
     // 庄家
-    BU = 'BTN'
+    BTN = 'BTN'
 }
 
 // 行为
@@ -24,6 +35,12 @@ export enum POKER_BEHAVIOR_TYPE {
     RAISE = 'RAISE',
     // 弃牌
     FOLD = 'FOLD',
+    // All In
+    ALL_IN = 'ALL_IN',
+    // 过牌
+    CHECK = 'CHECK',
+    // 等待
+    WAIT = 'WAIT'
 }
 
 // 行动

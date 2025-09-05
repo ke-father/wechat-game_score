@@ -111,10 +111,17 @@
             </view>
 
             <view class="action-list">
-                <view class="check item-btn" bind:tap="memberActionByCheck">过牌</view>
-                <view class="call item-btn" bind:tap="memberActionByCall">跟注</view>
-                <view class="bet item-btn" bind:tap="memberActionByBet">加注</view>
-                <view class="fold item-btn" bind:tap="memberActionByFold">弃牌</view>
+                <button disabled="{{ playStatus === 'WAIT' }}" class="check item-btn" bind:tap="memberActionByCheck">
+                    过牌
+                </button>
+                <button disabled="{{ playStatus === 'WAIT' }}" class="call item-btn" bind:tap="memberActionByCall">
+                    跟注
+                </button>
+                <button disabled="{{ playStatus === 'WAIT' }}" class="bet item-btn" bind:tap="memberActionByBet">加注
+                </button>
+                <button disabled="{{ playStatus === 'WAIT' }}" class="fold item-btn" bind:tap="memberActionByFold">
+                    弃牌
+                </button>
             </view>
 
             <view class="action-behavior">
@@ -123,11 +130,27 @@
                     撤销
                 </button>
 
-                <button class="behavior-btn next">
+                <button class="behavior-btn next" bind:tap="endGame">
                     下一轮
                     <view class="iconfont icon-next"></view>
                 </button>
             </view>
         </view>
     </view>
+
+    <!--    收池-->
+    <DialogComponent id="CollectDialog" showModal>
+        <view class="collectDialog-content" slot="content">
+            <view>
+                <text>奖池</text>
+                <text>{{ IntegralPool }}</text>
+            </view>
+
+<!--            <view wx:for="{{}}"></view>-->
+        </view>
+
+        <view class="collectDialog-footer" slot="footer">
+            11111111
+        </view>
+    </DialogComponent>
 </view>
